@@ -1,6 +1,9 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest, ev: NextFetchEvent) {
+  if (req.nextUrl.pathname.endsWith("/joke")) {
+    return;
+  }
   if (
     req.nextUrl.pathname.startsWith("/wa/") &&
     !req.nextUrl.pathname.endsWith("/wa/")

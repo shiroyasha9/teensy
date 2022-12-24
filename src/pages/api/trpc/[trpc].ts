@@ -2,6 +2,7 @@ import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
 import { prisma } from "../../../db/client";
+import { Joke } from "../../../types";
 
 export const appRouter = trpc
   .router()
@@ -32,6 +33,24 @@ export const appRouter = trpc
             url: input.url,
           },
         });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  })
+  .query("getJoke", {
+    async resolve() {
+      try {
+        const res = await fetch(
+          "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw",
+        );
+        const data = (await res.json()) as Joke;
+
+        if (data.error) {
+          throw new Error("Joke API Error");
+        }
+
+        return data;
       } catch (e) {
         console.log(e);
       }
