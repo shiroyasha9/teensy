@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { nanoid } from "nanoid";
 import debounce from "lodash/debounce";
-import { trpc } from "../../utils/trpc";
+import { trpc } from "../utils/trpc";
 import copy from "copy-to-clipboard";
 import { Toaster, toast } from "react-hot-toast";
 
@@ -39,12 +39,15 @@ const CreateLink: NextPage = () => {
     }
   }, []);
 
-  const slugCheck = trpc.useQuery(["slugCheck", { slug: form.slug }], {
-    refetchOnReconnect: false,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-  const createSlug = trpc.useMutation(["createSlug"]);
+  const slugCheck = trpc.slugCheck.useQuery(
+    { slug: form.slug },
+    {
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  );
+  const createSlug = trpc.createSlug.useMutation();
 
   const input =
     "text-black my-1 py-2 px-3 sm:px-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-[#07779C] focus:ring-[#07779C] block w-full rounded-md sm:text-sm focus:ring-1";
