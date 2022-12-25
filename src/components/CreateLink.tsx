@@ -71,7 +71,7 @@ const CreateLink: NextPage = () => {
             value="Copy Link"
             className="m-5 cursor-pointer rounded-md bg-[#07779C]  py-2 px-3"
             onClick={() => {
-              copy(`${url}/${form.slug}`);
+              copy(`${window.location.protocol}//${url}/${form.slug}`);
               showToastMessage();
             }}
           />
