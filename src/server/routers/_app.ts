@@ -1,23 +1,28 @@
 import { z } from "zod";
-import { procedure, router } from "../trpc";
+
 import { prisma } from "../../db/client";
+import { procedure, router } from "../trpc";
 
 export const appRouter = router({
-  hello: procedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query(({ input }) => {
-      return {
-        greeting: `hello ${input.text}`,
-      };
-    }),
   slugCheck: procedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/slug-check",
+        tags: ["slug"],
+        summary:
+          "This endpoint can be used to check if a given slug is already in use",
+        headers: [{ name: "secret-key", required: true }],
+      },
+    })
     .input(
       z.object({
         slug: z.string(),
+      }),
+    )
+    .output(
+      z.object({
+        used: z.boolean(),
       }),
     )
     .query(async ({ input }) => {
@@ -30,10 +35,24 @@ export const appRouter = router({
       return { used: count > 0 };
     }),
   createSlug: procedure
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/create-slug",
+        tags: ["slug"],
+        summary: "This endpoint can be used to create a new slug i.e short url",
+        headers: [{ name: "secret-key", required: true }],
+      },
+    })
     .input(
       z.object({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/smallify).*/),
+      }),
+    )
+    .output(
+      z.object({
+        success: z.boolean(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -44,11 +63,12 @@ export const appRouter = router({
             url: input.url,
           },
         });
+        return { success: true };
       } catch (e) {
         console.log(e);
+        return { success: false };
       }
     }),
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;
