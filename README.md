@@ -1,4 +1,4 @@
-# smallify your URLs
+# Make your URLs teeny!
 
 so basically you can use this to shorten your URLs.
 
@@ -8,9 +8,15 @@ In layman terms, you can use this to get mini links from long links.
 
 ---
 
+## Special Mention
+
+Thanks to @anujjoshi63 for creating this wonderful project, letting me expand upon it, and do all sorts of creative and technical stuff with this project.
+
+Link to the orignal repo: [@anujjoshi63/smallurl](https://github.com/anujjoshi63/smallurl)
+
 ## Features
 
-🚀try it out: [smallify.live](https://smallify.live)
+🚀try it out: [teeny.tk](https://teeny.tk)
 
 ### for redirection _(example)_ add `/gh` or `/lmao` to the end of the url.
 
@@ -20,8 +26,6 @@ In layman terms, you can use this to get mini links from long links.
 
 #### add `/wa/<number>` to the end of the url to text them.
 
-try it out: [smallify.live/wa/](https://smallify.live/wa)
+try it out: [teeny.tk/wa/](https://teeny.tk/wa)
 
 ---
-
-Followed this: [TheoBr - Link Shortener](https://www.youtube.com/watch?v=qcyEtvSiM9c)
