@@ -47,7 +47,7 @@ export const appRouter = router({
     .input(
       z.object({
         slug: z.string(),
-        url: z.string().regex(/^(?!https:\/\/smallify).*/),
+        url: z.string().regex(/^(?!https:\/\/teeny).*/),
       }),
     )
     .output(

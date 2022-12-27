@@ -4,7 +4,7 @@ export default function Footer() {
   const router = useRouter();
   const at = router.asPath;
   return (
-    <div className="m-6 flex w-screen basis-2/12 flex-col justify-center gap-5 bg-gray-800 p-6 text-gray-50">
+    <div className="m-6 flex w-screen basis-2/12 flex-col justify-center gap-5  p-6 ">
       <div className="justify-center">
         {at === "/" ? (
           <Link href={"/wa"}>
@@ -14,13 +14,13 @@ export default function Footer() {
           </Link>
         ) : (
           <Link href={"/"}>
-            <button className="w-full">🤏 Smallify a link</button>
+            <button className="w-full">🤏 Teeny a link</button>
           </Link>
         )}
       </div>
       <div className="flex justify-center gap-10">
         <a
-          href="https://github.com/anujjoshi63/smallurl/"
+          href="https://github.com/shiroyasha9/teeny/"
           target="_blank"
           rel="noreferrer"
         >
@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
         </a>
         <a
-          href="https://www.buymeacoffee.com/anujjoshi"
+          href="https://www.buymeacoffee.com/mubinansari"
           target="_blank"
           rel="noreferrer"
         >

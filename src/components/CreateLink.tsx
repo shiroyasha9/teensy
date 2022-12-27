@@ -1,11 +1,11 @@
+import classNames from "classnames";
+import copy from "copy-to-clipboard";
+import debounce from "lodash/debounce";
+import { nanoid } from "nanoid";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import classNames from "classnames";
-import { nanoid } from "nanoid";
-import debounce from "lodash/debounce";
-import { trpc } from "../utils/trpc";
-import copy from "copy-to-clipboard";
 import { Toaster, toast } from "react-hot-toast";
+import { trpc } from "../utils/trpc";
 
 type Form = {
   slug: string;
@@ -14,8 +14,7 @@ type Form = {
 
 const CreateLink: NextPage = () => {
   const [form, setForm] = useState<Form>({ slug: "", url: "" });
-  // const url = "https://smallify.live";
-  const [url, setUrl] = useState("smallify.live");
+  const [url, setUrl] = useState("teeny.tk");
 
   const showToastMessage = () => {
     toast("Link Copied!", {
@@ -50,7 +49,7 @@ const CreateLink: NextPage = () => {
   const createSlug = trpc.createSlug.useMutation();
 
   const input =
-    "text-black my-1 py-2 px-3 sm:px-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-[#07779C] focus:ring-[#07779C] block w-full rounded-md sm:text-sm focus:ring-1";
+    "text-black my-1 py-2 px-3 sm:px-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-lemon-400 focus:ring-lemon-400 block w-full rounded-md sm:text-sm focus:ring-1";
 
   const slugInput = classNames(input, {
     "border-red-500": slugCheck.isFetched && slugCheck.data!.used,
@@ -60,11 +59,17 @@ const CreateLink: NextPage = () => {
   if (createSlug.status === "success") {
     return (
       <>
-        <h1 className="mb-5 flex cursor-default justify-center text-5xl">
-          smallify
+        <h1 className="mb-5 flex cursor-default justify-center text-5xl text-lemon-400">
+          teeny
         </h1>
-        <div className="flex items-center justify-center">
-          <a href={`/${form.slug}`}>
+        <div className="flex flex-col items-center justify-center">
+          <h3 className="mb-3 text-xl">
+            Successful! 🥳 Here&apos;s your teeny link:{" "}
+          </h3>
+          <a
+            href={`/${form.slug}`}
+            className="mt-1 rounded-2xl bg-gray-200/30 px-3 py-1"
+          >
             <h1>{`${url}/${form.slug}`}</h1>
           </a>
         </div>
@@ -72,7 +77,7 @@ const CreateLink: NextPage = () => {
           <input
             type="button"
             value="Copy Link"
-            className="m-5 cursor-pointer rounded-md bg-[#07779C]  py-2 px-3"
+            className="m-5 cursor-pointer rounded-md bg-lemon-400 py-2 px-3 font-semibold text-gray-950"
             onClick={() => {
               copy(`${window.location.protocol}//${url}/${form.slug}`);
               showToastMessage();
@@ -81,7 +86,7 @@ const CreateLink: NextPage = () => {
           <input
             type="button"
             value="Another one"
-            className="m-5 cursor-pointer rounded-md bg-[#07779C]  py-2 px-3"
+            className="m-5 cursor-pointer rounded-md bg-white py-2 px-3 font-semibold text-gray-950"
             onClick={() => {
               createSlug.reset();
               setForm({ slug: "", url: "" });
@@ -101,12 +106,12 @@ const CreateLink: NextPage = () => {
       }}
       className="flex h-screen w-full flex-col justify-center gap-4 p-6 sm:w-2/3   md:w-1/2 lg:w-1/3"
     >
-      <h1 className="mb-5 flex cursor-default justify-center text-5xl">
-        smallify
+      <h1 className="mb-5 flex cursor-default justify-center text-5xl text-lemon-400">
+        teeny
       </h1>
       <div>
         <span className="mr-2 whitespace-nowrap text-sm font-medium">
-          🤏 Link to smallify
+          🤏 Link to teenify
         </span>
         <div className="flex items-center">
           <input
@@ -155,7 +160,7 @@ const CreateLink: NextPage = () => {
           <input
             type="button"
             value="Generate an alias"
-            className="w-50 mt-1 w-full cursor-pointer rounded-md border-2 border-[#07779C] py-2 px-3"
+            className="w-50 mt-1 w-full cursor-pointer rounded-md border-2 border-lemon-400 py-2 px-3"
             onClick={() => {
               const slug = nanoid();
               setForm({
@@ -170,8 +175,8 @@ const CreateLink: NextPage = () => {
 
       <input
         type="submit"
-        value="Smallify"
-        className="cursor-pointer rounded-md bg-[#07779C] py-2 px-3 text-lg"
+        value="Teeny tiny it!"
+        className="cursor-pointer rounded-md bg-lemon-400 py-2 px-3 text-lg font-semibold text-gray-950"
         disabled={slugCheck.isFetched && slugCheck.data!.used}
       />
     </form>
