@@ -1,16 +1,17 @@
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 import Head from "next/head";
+
 const CreateLinkForm = dynamic(() => import("../components/CreateLink"), {
   ssr: true,
 });
 const Footer = dynamic(() => import("../components/Footer"), {
   ssr: true,
 });
+
 const Home: NextPage = () => {
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-gray-800 text-gray-50">
+    <>
       <Head>
         <title>Smallify your URLs</title>
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -32,13 +33,13 @@ const Home: NextPage = () => {
         <meta
           name="description"
           content="Smallify is a Customizable URL shortener. Paste URL, give it a name, done!"
-        ></meta>
+        />
       </Head>
-      <Suspense>
+      <div className="flex h-screen flex-col items-center justify-center bg-gray-800 text-gray-50">
         <CreateLinkForm />
-      </Suspense>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 };
 
