@@ -6,6 +6,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { trpc } from "../utils/trpc";
+import Button from "./Button";
 
 type Form = {
   slug: string;
@@ -74,19 +75,17 @@ const CreateLink: NextPage = () => {
           </a>
         </div>
         <div className="">
-          <input
-            type="button"
-            value="Copy Link"
-            className="m-5 cursor-pointer rounded-md bg-lemon-400 py-2 px-3 font-semibold text-gray-950"
+          <Button
+            title="Copy Link"
             onClick={() => {
               copy(`${window.location.protocol}//${url}/${form.slug}`);
               showToastMessage();
             }}
           />
-          <input
-            type="button"
-            value="Another one"
-            className="m-5 cursor-pointer rounded-md bg-white py-2 px-3 font-semibold text-gray-950"
+
+          <Button
+            title="Another one"
+            variant="secondary"
             onClick={() => {
               createSlug.reset();
               setForm({ slug: "", url: "" });
@@ -157,10 +156,10 @@ const CreateLink: NextPage = () => {
         </div>
         <div className="flex items-center justify-center gap-5">
           <div className="ml-2 flex flex-1 items-center justify-center">or</div>
-          <input
-            type="button"
-            value="Generate an alias"
-            className="w-50 mt-1 w-full cursor-pointer rounded-md border-2 border-lemon-400 py-2 px-3"
+          <Button
+            variant="outlined"
+            title="Generate an alias"
+            className="m-0 mt-1 w-full text-sm"
             onClick={() => {
               const slug = nanoid();
               setForm({
@@ -172,12 +171,15 @@ const CreateLink: NextPage = () => {
           />
         </div>
       </div>
-
-      <input
+      <Button
         type="submit"
-        value="Teeny tiny it!"
-        className="cursor-pointer rounded-md bg-lemon-400 py-2 px-3 text-lg font-semibold text-gray-950"
-        disabled={slugCheck.isFetched && slugCheck.data!.used}
+        title="Teeny tiny it!"
+        className="w-full self-center"
+        disabled={
+          (slugCheck.isFetched && slugCheck.data!.used) ||
+          !form.url ||
+          !form.slug
+        }
       />
     </form>
   );

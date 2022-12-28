@@ -6,4 +6,11 @@
   body {
     @apply h-screen bg-gradient-to-b from-purple-600 to-purple-900 text-gray-50;
   }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
 }

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Router from "next/router";
 import { useState } from "react";
+import Button from "../components/Button";
 import Footer from "../components/Footer";
 
 export default function WhatsAppPage() {
@@ -54,18 +55,18 @@ export default function WhatsAppPage() {
             </span>
             <input
               required
-              type="text"
+              type="number"
               placeholder="+1 999 999 9999"
-              className="my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 text-black placeholder-slate-400 shadow-sm focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 sm:text-sm"
+              className="my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-1 focus:ring-lemon-400 sm:text-sm"
               minLength={7}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>
-          <input
+          <Button
             type="submit"
-            value="WhatsApp them!"
-            className="mt-1 cursor-pointer rounded bg-lemon-400 py-2 px-3 font-semibold text-gray-950"
+            title="WhatsApp them!"
+            className="mx-0"
             disabled={phoneNumber.length < 8}
           />
         </form>
