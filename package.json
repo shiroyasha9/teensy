@@ -24,6 +24,7 @@
     "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-dom-confetti": "^0.2.0",
     "react-hot-toast": "^2.4.0",
     "swagger-ui-react": "^4.15.5",
     "trpc-openapi": "^1.0.0",
