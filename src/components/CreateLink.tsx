@@ -1,12 +1,11 @@
-import copy from "copy-to-clipboard";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
 import Input from "./Input";
+import Success from "./Success";
 
 type Form = {
   slug: string;
@@ -16,17 +15,6 @@ type Form = {
 const CreateLink: NextPage = () => {
   const [form, setForm] = useState<Form>({ slug: "", url: "" });
   const [url, setUrl] = useState("teeny.tk");
-
-  const showToastMessage = () => {
-    toast("Link Copied!", {
-      icon: "✅",
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
-  };
 
   useEffect(() => {
     if (window && window?.location?.hostname) {
@@ -49,43 +37,14 @@ const CreateLink: NextPage = () => {
   );
   const createSlug = trpc.createSlug.useMutation();
 
+  const resetFormHandler = () => {
+    createSlug.reset();
+    setForm({ slug: "", url: "" });
+  };
+
   if (createSlug.status === "success") {
     return (
-      <>
-        <h1 className="mb-5 flex cursor-default justify-center text-5xl text-lemon-400">
-          teeny
-        </h1>
-        <div className="flex flex-col items-center justify-center">
-          <h3 className="mb-3 text-xl">
-            Successful! 🥳 Here&apos;s your teeny link:{" "}
-          </h3>
-          <a
-            href={`/${form.slug}`}
-            className="mt-1 rounded-2xl bg-gray-200/30 px-3 py-1"
-          >
-            <h1>{`${url}/${form.slug}`}</h1>
-          </a>
-        </div>
-        <div className="">
-          <Button
-            title="Copy Link"
-            onClick={() => {
-              copy(`${window.location.protocol}//${url}/${form.slug}`);
-              showToastMessage();
-            }}
-          />
-
-          <Button
-            title="Another one"
-            variant="secondary"
-            onClick={() => {
-              createSlug.reset();
-              setForm({ slug: "", url: "" });
-            }}
-          />
-        </div>
-        <Toaster position="bottom-center" reverseOrder={false} />
-      </>
+      <Success url={url} slug={form.slug} resetHandler={resetFormHandler} />
     );
   }
 
