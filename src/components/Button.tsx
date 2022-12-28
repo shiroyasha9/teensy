@@ -1,5 +1,3 @@
-import classNames from "classnames";
-
 type ButtonProps = {
   title: string;
   variant?: "primary" | "secondary" | "outlined";
@@ -15,20 +13,17 @@ const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
     ...rest
   } = props;
 
-  const buttonClassNames = classNames({
-    "m-5 cursor-pointer rounded-md py-2 px-3 text-lg font-semibold text-gray-950":
-      true,
-    "bg-lemon-400": variant === "primary",
-    "bg-white": variant === "secondary",
-    "border-2 border-lemon-400 text-gray-50 font-normal":
-      variant === "outlined",
-    "bg-gray-200/70": disabled,
-  });
-
   return (
     <button
       {...rest}
-      className={`${buttonClassNames} ${overrideClassName}`}
+      className={`m-5 cursor-pointer rounded-md py-2 px-3 text-lg font-semibold text-gray-950 ${
+        variant === "primary" && "bg-lemon-400"
+      } ${variant === "secondary" && "bg-white"} ${
+        variant === "outlined" &&
+        "border-2 border-lemon-400 font-normal text-gray-50"
+      } ${
+        disabled && "cursor-not-allowed bg-gray-200/70"
+      } ${overrideClassName}`}
       disabled={disabled}
     >
       {title}
