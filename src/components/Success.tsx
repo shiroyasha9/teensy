@@ -26,11 +26,8 @@ const Success = () => {
   };
 
   return (
-    <>
-      <h1 className="mb-5 flex cursor-default justify-center text-5xl text-lemon-400">
-        teeny
-      </h1>
-      <div className="flex flex-col items-center justify-center">
+    <div className="flex h-[65vh] flex-col items-center justify-center md:h-[70vh]">
+      <div className="flex  flex-col items-center  justify-center">
         <h3 className="mb-3 text-xl">
           Successful! 🥳 Here&apos;s your teeny link:{" "}
         </h3>
@@ -57,7 +54,7 @@ const Success = () => {
         />
       </div>
       <Toaster position="bottom-center" reverseOrder={false} />
-    </>
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Confetti from "react-dom-confetti";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 import { isSuccessfulAtom } from "../stores";
 
 const CreateLinkForm = dynamic(() => import("../components/CreateLink"), {
@@ -54,11 +55,12 @@ const Home: NextPage = () => {
           content="Teeny is a Customizable URL shortener. Paste URL, give it a name, done!"
         />
       </Head>
-
-      <div className="flex h-screen flex-col items-center justify-center ">
-        <Confetti active={isSuccessful} config={config} />
-        {isSuccessful ? <Success /> : <CreateLinkForm />}
-
+      <div className="h-screen">
+        <Header />
+        <div className="flex flex-col items-center justify-center px-5">
+          <Confetti active={isSuccessful} config={config} />
+          {isSuccessful ? <Success /> : <CreateLinkForm />}
+        </div>
         <Footer />
       </div>
     </>

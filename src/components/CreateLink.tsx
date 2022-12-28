@@ -47,11 +47,8 @@ const CreateLink: NextPage = () => {
         e.preventDefault();
         createSlug.mutate({ ...form });
       }}
-      className="flex h-screen w-full flex-col justify-center gap-4 p-6 sm:w-2/3   md:w-1/2 lg:w-1/3"
+      className="flex h-[65vh] w-full flex-col justify-center gap-4 p-3 sm:w-2/3 md:h-[70vh]   md:w-1/2 lg:w-1/3"
     >
-      <h1 className="mb-5 flex cursor-default justify-center text-5xl text-lemon-400">
-        teeny
-      </h1>
       <div>
         <span className="mr-2 whitespace-nowrap text-sm font-medium">
           🤏 Link to teenify
