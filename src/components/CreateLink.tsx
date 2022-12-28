@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import copy from "copy-to-clipboard";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
@@ -7,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
+import Input from "./Input";
 
 type Form = {
   slug: string;
@@ -48,14 +48,6 @@ const CreateLink: NextPage = () => {
     },
   );
   const createSlug = trpc.createSlug.useMutation();
-
-  const input =
-    "text-black my-1 py-2 px-3 sm:px-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-lemon-400 focus:ring-lemon-400 block w-full rounded-md sm:text-sm focus:ring-1";
-
-  const slugInput = classNames(input, {
-    "border-red-500": slugCheck.isFetched && slugCheck.data!.used,
-    "text-red-500": slugCheck.isFetched && slugCheck.data!.used,
-  });
 
   if (createSlug.status === "success") {
     return (
@@ -113,12 +105,11 @@ const CreateLink: NextPage = () => {
           🤏 Link to teenify
         </span>
         <div className="flex items-center">
-          <input
+          <Input
             type="url"
             onChange={(e) => setForm({ ...form, url: e.target.value })}
             placeholder="e.g. https://github.com"
             required
-            className={input}
           />
         </div>
       </div>
@@ -136,7 +127,7 @@ const CreateLink: NextPage = () => {
           <span className="mr-1 whitespace-nowrap font-medium">
             {url.replaceAll(/https?:\/\//gi, "")}/
           </span>
-          <input
+          <Input
             type="text"
             onChange={(e) => {
               setForm({
@@ -147,7 +138,7 @@ const CreateLink: NextPage = () => {
             }}
             minLength={1}
             placeholder="alias e.g. ig for instagram"
-            className={slugInput}
+            invalid={slugCheck.isFetched && slugCheck.data!.used}
             value={form.slug}
             pattern={"^[-a-zA-Z0-9]+$"}
             title="Only alphanumeric characters and hypens are allowed. No spaces."
