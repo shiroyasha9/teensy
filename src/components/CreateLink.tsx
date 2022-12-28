@@ -1,40 +1,36 @@
+import { useAtom, useSetAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import type { NextPage } from "next";
 import { useEffect } from "react";
-import { FormData } from "../types";
+import { formAtom, isSuccessfulAtom, teenyUrlAtom } from "../stores";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
 import Input from "./Input";
 
-type Props = {
-  url: string;
-  setUrl: React.Dispatch<React.SetStateAction<string>>;
-  form: FormData;
-  setForm: React.Dispatch<React.SetStateAction<FormData>>;
-  onSuccessHandler: () => void;
-};
+const CreateLink: NextPage = () => {
+  const [form, setForm] = useAtom(formAtom);
+  const [teenyUrl, setTeenyUrl] = useAtom(teenyUrlAtom);
+  const setIsSuccessful = useSetAtom(isSuccessfulAtom);
 
-const CreateLink: NextPage<Props> = (props) => {
-  const { url, setUrl, form, setForm, onSuccessHandler } = props;
   const createSlug = trpc.createSlug.useMutation();
 
   useEffect(() => {
     if (window && window?.location?.hostname) {
       const host = window.location.hostname;
       if (host === "localhost") {
-        setUrl(`localhost:${window.location.port}`);
+        setTeenyUrl(`localhost:${window.location.port}`);
       } else {
-        setUrl(host);
+        setTeenyUrl(host);
       }
     }
   }, []);
 
   useEffect(() => {
     if (createSlug.status === "success") {
-      onSuccessHandler();
+      setIsSuccessful(true);
     }
-  }, [createSlug, onSuccessHandler]);
+  }, [createSlug, setIsSuccessful]);
 
   const slugCheck = trpc.slugCheck.useQuery(
     { slug: form.slug },
@@ -81,7 +77,7 @@ const CreateLink: NextPage<Props> = (props) => {
         </span>
         <div className="flex items-center">
           <span className="mr-1 whitespace-nowrap font-medium">
-            {url.replaceAll(/https?:\/\//gi, "")}/
+            {teenyUrl.replaceAll(/https?:\/\//gi, "")}/
           </span>
           <Input
             type="text"

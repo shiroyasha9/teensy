@@ -1,9 +1,9 @@
+import { useAtomValue } from "jotai";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useState } from "react";
 import Footer from "../components/Footer";
-import { FormData } from "../types";
+import { isSuccessfulAtom } from "../stores";
 
 const CreateLinkForm = dynamic(() => import("../components/CreateLink"), {
   ssr: true,
@@ -15,18 +15,7 @@ const Success = dynamic(() => import("../components/Success"), {
 });
 
 const Home: NextPage = () => {
-  const [form, setForm] = useState<FormData>({ slug: "", url: "" });
-  const [url, setUrl] = useState("teeny.tk");
-  const [isSuccessful, setIsSuccessful] = useState(false);
-
-  const resetFormHandler = () => {
-    setIsSuccessful(false);
-    setForm({ slug: "", url: "" });
-  };
-
-  const onSuccessHandler = () => {
-    setIsSuccessful(true);
-  };
+  const isSuccessful = useAtomValue(isSuccessfulAtom);
 
   return (
     <>
@@ -51,17 +40,7 @@ const Home: NextPage = () => {
         />
       </Head>
       <div className="flex h-screen flex-col items-center justify-center ">
-        {isSuccessful ? (
-          <Success url={url} slug={form.slug} resetHandler={resetFormHandler} />
-        ) : (
-          <CreateLinkForm
-            url={url}
-            form={form}
-            setForm={setForm}
-            setUrl={setUrl}
-            onSuccessHandler={onSuccessHandler}
-          />
-        )}
+        {isSuccessful ? <Success /> : <CreateLinkForm />}
 
         <Footer />
       </div>

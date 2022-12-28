@@ -1,15 +1,19 @@
 import copy from "copy-to-clipboard";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Toaster, toast } from "react-hot-toast";
+import { formAtom, isSuccessfulAtom, teenyUrlAtom } from "../stores";
 import Button from "./Button";
 
-type Props = {
-  url: string;
-  slug: string;
-  resetHandler: () => void;
-};
+const Success = () => {
+  const [{ slug }, setForm] = useAtom(formAtom);
+  const teenyUrl = useAtomValue(teenyUrlAtom);
+  const setIsSuccessful = useSetAtom(isSuccessfulAtom);
 
-const Success = (props: Props) => {
-  const { url, slug, resetHandler } = props;
+  const resetHandler = () => {
+    setForm({ slug: "", url: "" });
+    setIsSuccessful(false);
+  };
+
   const showToastMessage = () => {
     toast("Link Copied!", {
       icon: "✅",
@@ -34,14 +38,14 @@ const Success = (props: Props) => {
           href={`/${slug}`}
           className="mt-1 rounded-2xl bg-gray-200/30 px-3 py-1"
         >
-          <h1>{`${url}/${slug}`}</h1>
+          <h1>{`${teenyUrl}/${slug}`}</h1>
         </a>
       </div>
       <div className="">
         <Button
           title="Copy Link"
           onClick={() => {
-            copy(`${window.location.protocol}//${url}/${slug}`);
+            copy(`${window.location.protocol}//${teenyUrl}/${slug}`);
             showToastMessage();
           }}
         />
