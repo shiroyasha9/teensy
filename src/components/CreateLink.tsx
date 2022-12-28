@@ -1,20 +1,23 @@
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { FormData } from "../types";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
 import Input from "./Input";
-import Success from "./Success";
 
-type Form = {
-  slug: string;
+type Props = {
   url: string;
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
+  form: FormData;
+  setForm: React.Dispatch<React.SetStateAction<FormData>>;
+  onSuccessHandler: () => void;
 };
 
-const CreateLink: NextPage = () => {
-  const [form, setForm] = useState<Form>({ slug: "", url: "" });
-  const [url, setUrl] = useState("teeny.tk");
+const CreateLink: NextPage<Props> = (props) => {
+  const { url, setUrl, form, setForm, onSuccessHandler } = props;
+  const createSlug = trpc.createSlug.useMutation();
 
   useEffect(() => {
     if (window && window?.location?.hostname) {
@@ -27,6 +30,12 @@ const CreateLink: NextPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (createSlug.status === "success") {
+      onSuccessHandler();
+    }
+  }, [createSlug, onSuccessHandler]);
+
   const slugCheck = trpc.slugCheck.useQuery(
     { slug: form.slug },
     {
@@ -35,18 +44,6 @@ const CreateLink: NextPage = () => {
       refetchOnWindowFocus: false,
     },
   );
-  const createSlug = trpc.createSlug.useMutation();
-
-  const resetFormHandler = () => {
-    createSlug.reset();
-    setForm({ slug: "", url: "" });
-  };
-
-  if (createSlug.status === "success") {
-    return (
-      <Success url={url} slug={form.slug} resetHandler={resetFormHandler} />
-    );
-  }
 
   return (
     <form

@@ -1,15 +1,33 @@
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useState } from "react";
+import Footer from "../components/Footer";
+import { FormData } from "../types";
 
 const CreateLinkForm = dynamic(() => import("../components/CreateLink"), {
   ssr: true,
+  loading: () => <p>Loading... ⏳</p>,
 });
-const Footer = dynamic(() => import("../components/Footer"), {
+const Success = dynamic(() => import("../components/Success"), {
   ssr: true,
+  loading: () => <p>Loading... ⏳</p>,
 });
 
 const Home: NextPage = () => {
+  const [form, setForm] = useState<FormData>({ slug: "", url: "" });
+  const [url, setUrl] = useState("teeny.tk");
+  const [isSuccessful, setIsSuccessful] = useState(false);
+
+  const resetFormHandler = () => {
+    setIsSuccessful(false);
+    setForm({ slug: "", url: "" });
+  };
+
+  const onSuccessHandler = () => {
+    setIsSuccessful(true);
+  };
+
   return (
     <>
       <Head>
@@ -33,7 +51,18 @@ const Home: NextPage = () => {
         />
       </Head>
       <div className="flex h-screen flex-col items-center justify-center ">
-        <CreateLinkForm />
+        {isSuccessful ? (
+          <Success url={url} slug={form.slug} resetHandler={resetFormHandler} />
+        ) : (
+          <CreateLinkForm
+            url={url}
+            form={form}
+            setForm={setForm}
+            setUrl={setUrl}
+            onSuccessHandler={onSuccessHandler}
+          />
+        )}
+
         <Footer />
       </div>
     </>
