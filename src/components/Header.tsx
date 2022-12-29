@@ -16,7 +16,7 @@ const Header = () => {
     <header className="body-font hidden md:block">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-5 md:flex-row">
         <Link href="/">
-          <span className="text-4xl text-lemon-400">teeny</span>
+          <span className="text-4xl text-lemon-400">teensy</span>
         </Link>
         <nav className="mt-3 flex flex-row flex-wrap items-center justify-center text-base md:ml-auto md:mt-0 md:flex-row">
           {at === "/" ? (
@@ -25,13 +25,13 @@ const Header = () => {
             </Link>
           ) : (
             <Link href={"/"} className="mr-0 hover:text-lemon-400 md:mr-5">
-              🤏 Teeny a link
+              🤏 Teensy a link
             </Link>
           )}
-          <a className="mr-0 hover:text-lemon-400 md:mr-5">🔗 My Teeny Links</a>
+          <a className="mr-0 hover:text-lemon-400 md:mr-5">🔗 My Teensies</a>
           <a
             className="mr-0 hover:text-lemon-400 md:mr-5"
-            href="https://github.com/shiroyasha9/teeny/"
+            href="https://github.com/shiroyasha9/teensy/"
             target="_blank"
             rel="noreferrer"
           >

@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Teeny",
-  "short_name": "teeny",
+  "name": "Teensy",
+  "short_name": "teensy",
   "description": "A Customizable URL shortener. Paste URL, give it a name, done!",
   "icons": [
     {

@@ -10,12 +10,12 @@ const MobileHeader = () => {
     <header className="body-font block md:hidden">
       <div className="container mx-auto flex flex-wrap items-center p-5 ">
         <Link href="/">
-          <span className="text-4xl text-lemon-400">teeny</span>
+          <span className="text-4xl text-lemon-400">teensy</span>
         </Link>
         <nav className="ml-auto mt-0 flex flex-row flex-wrap items-center justify-center text-base">
           <a
             className="mr-5 hover:text-lemon-400"
-            href="https://github.com/shiroyasha9/teeny/"
+            href="https://github.com/shiroyasha9/teensy/"
             target="_blank"
             rel="noreferrer"
           >
@@ -35,10 +35,10 @@ const MobileHeader = () => {
           </Link>
         ) : (
           <Link href={"/"} className="hover:text-lemon-400">
-            🤏 Teeny a link
+            🤏 Teensy a link
           </Link>
         )}
-        <a className="hover:text-lemon-400">🔗 My Teeny Links</a>
+        <a className="hover:text-lemon-400">🔗 My Teensies</a>
       </div>
     </header>
   );

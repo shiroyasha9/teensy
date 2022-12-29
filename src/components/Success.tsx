@@ -1,12 +1,12 @@
 import copy from "copy-to-clipboard";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { toast, Toaster } from "react-hot-toast";
-import { formAtom, isSuccessfulAtom, teenyUrlAtom } from "../stores";
+import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
 import Button from "./Button";
 
 const Success = () => {
   const [{ slug }, setForm] = useAtom(formAtom);
-  const teenyUrl = useAtomValue(teenyUrlAtom);
+  const teensyUrl = useAtomValue(teensyUrlAtom);
   const setIsSuccessful = useSetAtom(isSuccessfulAtom);
 
   const resetHandler = () => {
@@ -29,20 +29,20 @@ const Success = () => {
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center  justify-center">
         <h3 className="mb-3 text-xl">
-          Successful! 🥳 Here&apos;s your teeny link:{" "}
+          Successful! 🥳 Here&apos;s your teensy:{" "}
         </h3>
         <a
           href={`/${slug}`}
           className="mt-1 rounded-2xl bg-gray-200/30 px-3 py-1"
         >
-          <h1>{`${teenyUrl}/${slug}`}</h1>
+          <h1>{`${teensyUrl}/${slug}`}</h1>
         </a>
       </div>
       <div className="">
         <Button
           title="Copy Link"
           onClick={() => {
-            copy(`${window.location.protocol}//${teenyUrl}/${slug}`);
+            copy(`${window.location.protocol}//${teensyUrl}/${slug}`);
             showToastMessage();
           }}
         />

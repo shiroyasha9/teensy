@@ -3,14 +3,14 @@ import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import type { NextPage } from "next";
 import { useEffect } from "react";
-import { formAtom, isSuccessfulAtom, teenyUrlAtom } from "../stores";
+import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
 import Input from "./Input";
 
 const CreateLink: NextPage = () => {
   const [form, setForm] = useAtom(formAtom);
-  const [teenyUrl, setTeenyUrl] = useAtom(teenyUrlAtom);
+  const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const setIsSuccessful = useSetAtom(isSuccessfulAtom);
 
   const createSlug = trpc.createSlug.useMutation();
@@ -19,9 +19,9 @@ const CreateLink: NextPage = () => {
     if (window && window?.location?.hostname) {
       const host = window.location.hostname;
       if (host === "localhost") {
-        setTeenyUrl(`localhost:${window.location.port}`);
+        setTeensyUrl(`localhost:${window.location.port}`);
       } else {
-        setTeenyUrl(host);
+        setTeensyUrl(host);
       }
     }
   }, []);
@@ -51,7 +51,7 @@ const CreateLink: NextPage = () => {
     >
       <div>
         <span className="mr-2 whitespace-nowrap text-sm font-medium">
-          🤏 Link to teenify
+          🤏 Link to teensy
         </span>
         <div className="flex items-center">
           <Input
@@ -67,14 +67,14 @@ const CreateLink: NextPage = () => {
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium ">
           ✍️ Customize
           {slugCheck.data?.used && (
-            <span className="text-red-450 text-center font-medium">
+            <span className="text-center font-medium text-red-450">
               Already in use.
             </span>
           )}
         </span>
         <div className="flex items-center">
           <span className="mr-1 whitespace-nowrap font-medium">
-            {teenyUrl.replaceAll(/https?:\/\//gi, "")}/
+            {teensyUrl.replaceAll(/https?:\/\//gi, "")}/
           </span>
           <Input
             type="text"
@@ -113,7 +113,7 @@ const CreateLink: NextPage = () => {
       </div>
       <Button
         type="submit"
-        title="Teeny tiny it!"
+        title="Teensy it!"
         className="w-full self-center"
         disabled={
           (slugCheck.isFetched && slugCheck.data!.used) ||

@@ -34,23 +34,23 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Teeny your URLs</title>
+        <title>Teensy your URLs</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
         <meta name="theme-color" content="#712fb9" />
-        <meta property="og:url" content={"https://teeny.tk"} />
+        <meta property="og:url" content={"https://teensy.tech"} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Teeny your long boring URLs" />
+        <meta property="og:title" content="Teensy your long boring URLs" />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:description"
           content="A Customizable URL shortener. Paste URL, give it a name, done!"
         />
-        <meta property="og:image" content={"https://teeny.tk/teeny.png"} />
+        <meta property="og:image" content={"https://teensy.tech/teensy.png"} />
         <meta
           name="description"
-          content="Teeny is a Customizable URL shortener. Paste URL, give it a name, done!"
+          content="Teensy is a Customizable URL shortener. Paste URL, give it a name, done!"
         />
       </Head>
       <>

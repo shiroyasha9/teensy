@@ -1,4 +1,4 @@
-# Make your URLs teeny!
+# Make your URLs teensy!
 
 so basically you can use this to shorten your URLs.
 
@@ -16,7 +16,7 @@ Link to the orignal repo: [@anujjoshi63/smallurl](https://github.com/anujjoshi63
 
 ## Features
 
-🚀try it out: [teeny.tk](https://teeny.tk)
+🚀try it out: [teensy.tech](https://teensy.tech)
 
 ### for redirection _(example)_ add `/gh` or `/lmao` to the end of the url.
 
@@ -26,6 +26,6 @@ Link to the orignal repo: [@anujjoshi63/smallurl](https://github.com/anujjoshi63
 
 #### add `/wa/<number>` to the end of the url to text them.
 
-try it out: [teeny.tk/wa/](https://teeny.tk/wa)
+try it out: [teensy.tech/wa/](https://teensy.tech/wa)
 
 ---

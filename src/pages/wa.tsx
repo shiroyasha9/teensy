@@ -15,7 +15,7 @@ export default function WhatsAppPage() {
           rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>"
         />
-        <meta property="og:url" content={"https://teeny.tk/wa"} />
+        <meta property="og:url" content={"https://teensy.tech/wa"} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="WhatsApp without saving number!" />
         <meta name="twitter:card" content="summary" />
@@ -23,7 +23,7 @@ export default function WhatsAppPage() {
           property="og:description"
           content="No more saving unwanted contacts!"
         />
-        <meta property="og:image" content={"https://teeny.tk/wa.png"} />
+        <meta property="og:image" content={"https://teensy.tech/wa.png"} />
         <meta
           name="description"
           content="WhatsApp without saving their number!"
