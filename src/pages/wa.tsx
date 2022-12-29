@@ -2,7 +2,6 @@ import Head from "next/head";
 import Router from "next/router";
 import { useState } from "react";
 import Button from "../components/Button";
-import Footer from "../components/Footer";
 import Input from "../components/Input";
 
 export default function WhatsAppPage() {
@@ -30,11 +29,8 @@ export default function WhatsAppPage() {
           content="WhatsApp without saving their number!"
         />
       </Head>
-      <div className="flex h-screen flex-col items-center justify-center gap-10 px-4">
-        <h1 className="mb-5 flex cursor-default justify-center text-5xl text-lemon-400">
-          teeny
-        </h1>
-        <h1 className="text-2xl sm:text-xl">
+      <div className="flex flex-col items-center justify-center gap-10">
+        <h1 className="text-center text-2xl sm:text-xl">
           Want to WhatsApp someone without saving their number?
         </h1>
         <form
@@ -70,11 +66,10 @@ export default function WhatsAppPage() {
             disabled={phoneNumber.length < 8}
           />
         </form>
-        <p>
+        <p className="text-center">
           <span>you will be redirected to a page, click on</span>{" "}
           <span className="text-lemon-400">Continue to chat</span>
         </p>
-        <Footer />
       </div>
     </>
   );
