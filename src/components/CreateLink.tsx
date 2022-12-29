@@ -67,7 +67,7 @@ const CreateLink: NextPage = () => {
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium ">
           ✍️ Customize
           {slugCheck.data?.used && (
-            <span className="text-center font-medium text-red-500">
+            <span className="text-red-450 text-center font-medium">
               Already in use.
             </span>
           )}
