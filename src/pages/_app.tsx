@@ -7,6 +7,7 @@ import "../styles/globals.css";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
+import AuthModal from "../components/AuthModal";
 import { trpc } from "../utils/trpc";
 
 export const rubik = Rubik({
@@ -32,6 +33,7 @@ const MyApp: AppType<{ session: Session }> = ({
         </section>
         <Footer />
       </main>
+      <AuthModal />
     </SessionProvider>
   );
 };

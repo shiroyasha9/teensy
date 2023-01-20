@@ -1,9 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { useAtom } from "jotai";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { HiMailOpen, HiX } from "react-icons/hi";
+import { showAuthModalAtom } from "../stores";
 import { isValidEmail } from "../utils/functions";
 import Button from "./Button";
 import Input from "./Input";
@@ -54,16 +56,11 @@ const Confirm = ({ show = false, email = "" }) => (
   </Transition>
 );
 
-const AuthModal = ({
-  show,
-  onClose,
-}: {
-  show: boolean;
-  onClose: () => void;
-}) => {
+const AuthModal = () => {
   const [disabled, setDisabled] = useState(false);
   const [showConfirm, setConfirm] = useState(false);
   const [email, setEmail] = useState("");
+  const [showAuthModal, setShowAuthModal] = useAtom(showAuthModalAtom);
 
   const signInWithEmail = async () => {
     let toastId;
@@ -99,12 +96,12 @@ const AuthModal = ({
   };
 
   const closeModal = () => {
-    onClose();
+    setShowAuthModal(false);
   };
 
   // Reset modal
   useEffect(() => {
-    if (!show) {
+    if (!showAuthModal) {
       // Wait for 200ms for aniamtion to finish
       setTimeout(() => {
         setDisabled(false);
@@ -112,7 +109,7 @@ const AuthModal = ({
         setEmail("");
       }, 200);
     }
-  }, [show]);
+  }, [showAuthModal]);
 
   // Remove pending toasts if any
   useEffect(() => {
@@ -120,7 +117,7 @@ const AuthModal = ({
   }, []);
 
   return (
-    <Transition appear show={show} as={Fragment}>
+    <Transition appear show={showAuthModal} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-50 overflow-y-auto"
@@ -194,7 +191,7 @@ const AuthModal = ({
                     />
                     <Button
                       title="Login with Email"
-                      className="!m-0 w-full bg-purple-600 text-base font-normal text-white hover:bg-purple-900 disabled:opacity-50"
+                      className="!m-0 w-full !bg-purple-600 text-base font-normal text-white hover:!bg-purple-900 disabled:opacity-50"
                       disabled={disabled || !isValidEmail(email)}
                       onClick={signInWithEmail}
                     />

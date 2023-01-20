@@ -1,10 +1,10 @@
+import { useSetAtom } from "jotai";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import useMediaQuery from "../hooks/useMediaQuery";
-import AuthModal from "./AuthModal";
+import { showAuthModalAtom } from "../stores";
 import Button from "./Button";
 import MobileHeader from "./MobileHeader";
 
@@ -13,10 +13,8 @@ const Header = () => {
   const at = router.asPath;
   const isBreakpointReached = useMediaQuery(768);
   const { data: session } = useSession();
-  const [showModal, setShowModal] = useState(false);
+  const setShowAuthModal = useSetAtom(showAuthModalAtom);
 
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
   const user = session?.user;
 
   if (isBreakpointReached) return <MobileHeader />;
@@ -61,11 +59,10 @@ const Header = () => {
             variant="primary"
             title={user ? "Logout" : "Login"}
             className=" m-0 border-0 py-1 px-3 text-base focus:outline-none md:mt-0"
-            onClick={user ? () => signOut() : openModal}
+            onClick={() => (user ? signOut() : setShowAuthModal(true))}
           />
         </div>
       </header>
-      <AuthModal show={showModal} onClose={closeModal} />
     </>
   );
 };
