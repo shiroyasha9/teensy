@@ -37,9 +37,12 @@ const Header = () => {
               </Link>
             )}
             {user && (
-              <a className="mr-0 hover:text-lemon-400 md:mr-5">
+              <Link
+                className="mr-0 hover:text-lemon-400 md:mr-5"
+                href="/teensies"
+              >
                 🔗 My Teensies
-              </a>
+              </Link>
             )}
             <a
               className="mr-0 hover:text-lemon-400 md:mr-5"
