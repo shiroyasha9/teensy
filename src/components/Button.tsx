@@ -1,6 +1,6 @@
 type ButtonProps = {
   title: string;
-  variant?: "primary" | "secondary" | "outlined";
+  variant?: "primary" | "secondary" | "outlined" | "tertiary";
   type?: "button" | "submit" | "reset";
 };
 
@@ -21,8 +21,9 @@ const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
       } ${variant === "secondary" && "bg-white hover:bg-gray-200"} ${
         variant === "outlined" &&
         "border-2 border-lemon-400 font-normal text-gray-50 hover:border-lemon-200"
-      } ${
-        disabled && "cursor-not-allowed bg-gray-200/70"
+      } ${disabled && "cursor-not-allowed bg-gray-200/70"} ${
+        variant === "tertiary" &&
+        " bg-purple-600 text-white hover:!bg-purple-900 disabled:opacity-50"
       } ${overrideClassName}`}
       disabled={disabled}
     >
