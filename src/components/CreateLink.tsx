@@ -1,14 +1,13 @@
 import { useAtom, useSetAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
-import type { NextPage } from "next";
 import { useEffect } from "react";
 import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
 import Input from "./Input";
 
-const CreateLink: NextPage = () => {
+const CreateLink = () => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const setIsSuccessful = useSetAtom(isSuccessfulAtom);
