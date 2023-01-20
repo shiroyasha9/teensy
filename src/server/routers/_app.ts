@@ -26,7 +26,7 @@ export const appRouter = router({
       }),
     )
     .query(async ({ input }) => {
-      const count = await prisma.shortUrl.count({
+      const count = await prisma.teeny.count({
         where: {
           slug: input.slug,
         },
@@ -57,7 +57,7 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       try {
-        await prisma.shortUrl.create({
+        await prisma.teeny.create({
           data: {
             slug: input.slug,
             url: input.url,
