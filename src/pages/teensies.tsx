@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { RiDeleteBin7Line } from "react-icons/ri";
+import DeleteLink from "../components/DeleteLink";
 import EditLink from "../components/EditLink";
 import Modal from "../components/Modal";
 import { showAuthModalAtom } from "../stores";
@@ -15,6 +16,7 @@ export default function TeeniesPage() {
   const { data: session, status } = useSession();
   const setShowAuthModal = useSetAtom(showAuthModalAtom);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teeny | null>(null);
   const userTeensies = trpc.fetchUserSlugs.useQuery({
     email: session?.user?.email || "",
@@ -23,6 +25,11 @@ export default function TeeniesPage() {
   function handleEditClick(teensy: Teeny) {
     setCurrentTeensy(teensy);
     setShowEditModal(true);
+  }
+
+  function handleDeleteClick(teensy: Teeny) {
+    setCurrentTeensy(teensy);
+    setShowDeleteModal(true);
   }
 
   if (status === "loading" || !userTeensies.data) {
@@ -81,7 +88,10 @@ export default function TeeniesPage() {
                   />
                 </td>
                 <td>
-                  <RiDeleteBin7Line />
+                  <RiDeleteBin7Line
+                    className="cursor-pointer hover:text-lemon-400"
+                    onClick={() => handleDeleteClick(teensy)}
+                  />
                 </td>
               </tr>
             ))}
@@ -94,6 +104,18 @@ export default function TeeniesPage() {
           <EditLink
             onClose={() => {
               setShowEditModal(false);
+              userTeensies.refetch();
+            }}
+            currentTeensy={currentTeensy!}
+          />
+        </Modal>
+        <Modal
+          showModal={showDeleteModal}
+          closeModal={() => setShowDeleteModal(false)}
+        >
+          <DeleteLink
+            onClose={() => {
+              setShowDeleteModal(false);
               userTeensies.refetch();
             }}
             currentTeensy={currentTeensy!}

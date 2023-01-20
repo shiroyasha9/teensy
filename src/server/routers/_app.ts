@@ -148,6 +148,39 @@ export const appRouter = router({
         return { success: false };
       }
     }),
+  deleteSlug: procedure
+    .meta({
+      openapi: {
+        method: "DELETE",
+        path: "/delete-slug",
+        tags: ["slug"],
+        summary: "This endpoint can be used to delete a slug i.e short url",
+        headers: [{ name: "secret-key", required: true }],
+      },
+    })
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .output(
+      z.object({
+        success: z.boolean(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      try {
+        await prisma.teeny.delete({
+          where: {
+            id: input.id,
+          },
+        });
+        return { success: true };
+      } catch (e) {
+        console.log(e);
+        return { success: false };
+      }
+    }),
 });
 
 export type AppRouter = typeof appRouter;
