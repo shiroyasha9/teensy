@@ -1,0 +1,144 @@
+import { Teeny } from "@prisma/client";
+import { useAtom } from "jotai";
+import debounce from "lodash/debounce";
+import { nanoid } from "nanoid";
+import { useEffect } from "react";
+import { formAtom, teensyUrlAtom } from "../stores";
+import { trpc } from "../utils/trpc";
+import Button from "./Button";
+import Input from "./Input";
+
+type EditLinkProps = {
+  currentTeensy: Teeny;
+  onClose: () => void;
+};
+
+const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
+  const [form, setForm] = useAtom(formAtom);
+  const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
+
+  const updateSlug = trpc.updateSlug.useMutation();
+
+  useEffect(() => {
+    setForm({ url: currentTeensy.url, slug: currentTeensy.slug });
+  }, [currentTeensy, setForm]);
+
+  useEffect(() => {
+    if (window && window?.location?.hostname) {
+      const host = window.location.hostname;
+      if (host === "localhost") {
+        setTeensyUrl(`localhost:${window.location.port}`);
+      } else {
+        setTeensyUrl(host);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (updateSlug.status === "success") {
+      onClose();
+    }
+  }, [updateSlug, onClose]);
+
+  const slugCheck = trpc.slugCheck.useQuery(
+    { slug: form.slug },
+    {
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        updateSlug.mutate({ ...form, id: currentTeensy.id });
+      }}
+      className="flex w-full flex-col justify-center gap-4 p-3"
+    >
+      <div>
+        <span className="mr-2 whitespace-nowrap text-sm font-medium">
+          🤏 Link to teensy
+        </span>
+        <div className="flex items-center">
+          <Input
+            type="url"
+            onChange={(e) => setForm({ ...form, url: e.target.value })}
+            placeholder="e.g. https://github.com"
+            required
+            value={form.url}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col rounded-lg bg-gray-300 p-4">
+        <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium ">
+          ✍️ Customize
+          {slugCheck.data?.used && form.slug !== currentTeensy.slug && (
+            <span className="text-center font-medium text-red-450">
+              Already in use.
+            </span>
+          )}
+        </span>
+        <div className="flex items-center">
+          <span className="mr-1 whitespace-nowrap font-medium">
+            {teensyUrl.replaceAll(/https?:\/\//gi, "")}/
+          </span>
+          <Input
+            type="text"
+            onChange={(e) => {
+              setForm({
+                ...form,
+                slug: e.target.value,
+              });
+              debounce(slugCheck.refetch, 300);
+            }}
+            minLength={1}
+            placeholder="alias e.g. ig for instagram"
+            invalid={
+              slugCheck.isFetched &&
+              slugCheck.data!.used &&
+              form.slug !== currentTeensy.slug
+            }
+            value={form.slug}
+            pattern={"^[-a-zA-Z0-9]+$"}
+            title="Only alphanumeric characters and hypens are allowed. No spaces."
+            required
+          />
+        </div>
+        <div className="flex items-center justify-center gap-5">
+          <div className="ml-2 flex flex-1 items-center justify-center">or</div>
+          <Button
+            variant="outlined"
+            title="Generate an alias"
+            className="m-0 mt-1 w-full border-purple-600 text-sm !text-gray-950 hover:border-purple-900"
+            onClick={() => {
+              const slug = nanoid();
+              setForm({
+                ...form,
+                slug,
+              });
+              slugCheck.refetch();
+            }}
+          />
+        </div>
+      </div>
+      <Button
+        type="submit"
+        variant="tertiary"
+        title="Edit it!"
+        className="w-full self-center"
+        disabled={
+          (slugCheck.isFetched &&
+            slugCheck.data!.used &&
+            form.slug !== currentTeensy.slug) ||
+          !form.url ||
+          !form.slug
+        }
+      />
+    </form>
+  );
+};
+
+export default EditLink;
