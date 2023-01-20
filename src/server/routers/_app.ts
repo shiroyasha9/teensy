@@ -48,6 +48,7 @@ export const appRouter = router({
       z.object({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
+        ownerId: z.string().optional(),
       }),
     )
     .output(
@@ -61,6 +62,7 @@ export const appRouter = router({
           data: {
             slug: input.slug,
             url: input.url,
+            ownerId: input.ownerId,
           },
         });
         return { success: true };

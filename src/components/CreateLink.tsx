@@ -1,6 +1,7 @@
 import { useAtom, useSetAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
+import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
 import { trpc } from "../utils/trpc";
@@ -11,6 +12,7 @@ const CreateLink = () => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const setIsSuccessful = useSetAtom(isSuccessfulAtom);
+  const { data: session, status } = useSession();
 
   const createSlug = trpc.createSlug.useMutation();
 
@@ -44,7 +46,10 @@ const CreateLink = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createSlug.mutate({ ...form });
+        createSlug.mutate({
+          ...form,
+          ownerId: status === "authenticated" ? session?.user?.id : undefined,
+        });
       }}
       className="flex w-full flex-col justify-center gap-4 p-3 sm:w-2/3 md:w-1/2 lg:w-1/3"
     >
