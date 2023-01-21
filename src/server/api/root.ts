@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { prisma } from "../db";
-import { createTRPCRouter, publicProcedure } from "./trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "./trpc";
 
 /**
  * This is the primary router for your server.
@@ -13,21 +13,20 @@ export const appRouter = createTRPCRouter({
       openapi: {
         method: "GET",
         path: "/slug-check",
-        tags: ["slug"],
         summary:
-          "This endpoint can be used to check if a given slug is already in use",
+          "This endpoint can be used to check if a given teensy i.e. short url is already in use",
         headers: [{ name: "secret-key", required: true }],
       },
     })
     .input(
       z.object({
         slug: z.string(),
-      })
+      }),
     )
     .output(
       z.object({
         used: z.boolean(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       const count = await prisma.teensy.count({
@@ -38,22 +37,17 @@ export const appRouter = createTRPCRouter({
 
       return { used: count > 0 };
     }),
-  fetchUserSlugs: publicProcedure
+  fetchUserSlugs: protectedProcedure
     .meta({
       openapi: {
         method: "GET",
         path: "/fetch-user-slugs",
-        tags: ["slug"],
+        protect: true,
         summary:
-          "This endpoint can be used to fetch all the slugs of a given user.",
+          "This endpoint can be used to fetch all the teensies of a given user.",
         headers: [{ name: "secret-key", required: true }],
       },
     })
-    .input(
-      z.object({
-        email: z.string(),
-      })
-    )
     .output(
       z.object({
         teensies: z.array(
@@ -64,13 +58,13 @@ export const appRouter = createTRPCRouter({
             createdAt: z.date(),
             updatedAt: z.date(),
             ownerId: z.string().nullable(),
-          })
+          }),
         ),
-      })
+      }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ ctx }) => {
       const teensies = await prisma.teensy.findMany({
-        where: { owner: { email: input.email } },
+        where: { owner: { email: ctx.session.user.email } },
         orderBy: { createdAt: "desc" },
       });
 
@@ -81,8 +75,7 @@ export const appRouter = createTRPCRouter({
       openapi: {
         method: "POST",
         path: "/create-slug",
-        tags: ["slug"],
-        summary: "This endpoint can be used to create a new slug i.e short url",
+        summary: "This endpoint can be used to create a new teensy",
         headers: [{ name: "secret-key", required: true }],
       },
     })
@@ -91,12 +84,12 @@ export const appRouter = createTRPCRouter({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         ownerId: z.string().optional(),
-      })
+      }),
     )
     .output(
       z.object({
         success: z.boolean(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       try {
@@ -113,13 +106,13 @@ export const appRouter = createTRPCRouter({
         return { success: false };
       }
     }),
-  updateSlug: publicProcedure
+  updateSlug: protectedProcedure
     .meta({
       openapi: {
-        method: "POST",
+        method: "PATCH",
         path: "/update-slug",
-        tags: ["slug"],
-        summary: "This endpoint can be used to update a slug i.e short url",
+        protect: true,
+        summary: "This endpoint can be used to update a teensy",
         headers: [{ name: "secret-key", required: true }],
       },
     })
@@ -128,12 +121,12 @@ export const appRouter = createTRPCRouter({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         id: z.number(),
-      })
+      }),
     )
     .output(
       z.object({
         success: z.boolean(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       try {
@@ -152,25 +145,25 @@ export const appRouter = createTRPCRouter({
         return { success: false };
       }
     }),
-  deleteSlug: publicProcedure
+  deleteSlug: protectedProcedure
     .meta({
       openapi: {
         method: "DELETE",
         path: "/delete-slug",
-        tags: ["slug"],
-        summary: "This endpoint can be used to delete a slug i.e short url",
+        protect: true,
+        summary: "This endpoint can be used to delete a teensy",
         headers: [{ name: "secret-key", required: true }],
       },
     })
     .input(
       z.object({
         id: z.number(),
-      })
+      }),
     )
     .output(
       z.object({
         success: z.boolean(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       try {

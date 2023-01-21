@@ -2,6 +2,7 @@ import { Rubik } from "@next/font/google";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
+import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import AuthModal from "../components/AuthModal";
 import Footer from "../components/Footer";
@@ -17,6 +18,23 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const router = useRouter();
+
+  let content: React.ReactNode;
+  if (router.pathname === "/swagger") {
+    content = <Component {...pageProps} />;
+  } else {
+    content = (
+      <main className="h-screen">
+        <Header />
+        <section className="flex h-[65vh] flex-col items-center justify-center px-5 md:h-[70vh]">
+          <Component {...pageProps} />
+        </section>
+        <Footer />
+      </main>
+    );
+  }
+
   return (
     <SessionProvider session={session}>
       <style jsx global>{`
@@ -25,13 +43,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         }
       `}</style>
       <Toaster />
-      <main className="h-screen">
-        <Header />
-        <section className="flex h-[65vh] flex-col items-center justify-center px-5 md:h-[70vh]">
-          <Component {...pageProps} />
-        </section>
-        <Footer />
-      </main>
+      {content}
       <AuthModal />
     </SessionProvider>
   );

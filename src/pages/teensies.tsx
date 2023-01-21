@@ -1,6 +1,5 @@
 import type { Teensy } from "@prisma/client";
 import { useSetAtom } from "jotai";
-import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,15 +11,12 @@ import Modal from "../components/Modal";
 import { showAuthModalAtom } from "../stores";
 import { api } from "../utils/api";
 
-export default function TeeniesPage() {
-  const { data: session, status } = useSession();
+export default function TeensiesPage() {
   const setShowAuthModal = useSetAtom(showAuthModalAtom);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
-  const userTeensies = api.fetchUserSlugs.useQuery({
-    email: session?.user?.email || "",
-  });
+  const userTeensies = api.fetchUserSlugs.useQuery();
 
   function handleEditClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
@@ -32,13 +28,16 @@ export default function TeeniesPage() {
     setShowDeleteModal(true);
   }
 
-  if (status === "loading" || !userTeensies.data) {
+  if (userTeensies.isLoading) {
     return <p>Loading...</p>;
   }
 
-  if (status === "unauthenticated") {
-    setShowAuthModal(true);
-    return <p>You need to be logged in to see and modify your teenies.</p>;
+  if (userTeensies.isError || !userTeensies.data) {
+    if (userTeensies.error.data?.httpStatus === 401) {
+      setShowAuthModal(true);
+      return <p>You need to be logged in to see and modify your teenies.</p>;
+    }
+    return <p>Something went wrong. Please refresh the page.</p>;
   }
 
   return (

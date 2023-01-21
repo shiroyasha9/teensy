@@ -5,7 +5,11 @@ import "swagger-ui-react/swagger-ui.css";
 const SwaggerUI = dynamic(() => import("swagger-ui-react"), { ssr: false });
 
 const SwaggerPage: NextPage = () => {
-  return <SwaggerUI url="/api/openapi.json" />;
+  return (
+    <div className="h-screen overflow-scroll bg-white">
+      <SwaggerUI url="/api/openapi.json" />
+    </div>
+  );
 };
 
 export default SwaggerPage;
