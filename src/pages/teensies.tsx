@@ -1,4 +1,4 @@
-import { Teeny } from "@prisma/client";
+import { Teensy } from "@prisma/client";
 import { useSetAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -17,17 +17,17 @@ export default function TeeniesPage() {
   const setShowAuthModal = useSetAtom(showAuthModalAtom);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [currentTeensy, setCurrentTeensy] = useState<Teeny | null>(null);
+  const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const userTeensies = trpc.fetchUserSlugs.useQuery({
     email: session?.user?.email || "",
   });
 
-  function handleEditClick(teensy: Teeny) {
+  function handleEditClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
     setShowEditModal(true);
   }
 
-  function handleDeleteClick(teensy: Teeny) {
+  function handleDeleteClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
     setShowDeleteModal(true);
   }
@@ -57,7 +57,10 @@ export default function TeeniesPage() {
           property="og:description"
           content="Save your teensies to edit/delete them later!"
         />
-        <meta property="og:image" content={"https://teensy.tech/teeny.png"} />
+        <meta
+          property="og:image"
+          content={"https://teensy.tech/my-teensy-links.png"}
+        />
         <meta name="description" content="Edit/Delete your saved teensies." />
       </Head>
       <div className="flex flex-col items-center justify-center gap-10">

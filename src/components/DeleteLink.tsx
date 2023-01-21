@@ -1,9 +1,9 @@
-import { Teeny } from "@prisma/client";
+import { Teensy } from "@prisma/client";
 import { trpc } from "../utils/trpc";
 import Button from "./Button";
 
 type DeleteLinkProps = {
-  currentTeensy: Teeny;
+  currentTeensy: Teensy;
   onClose: () => void;
 };
 

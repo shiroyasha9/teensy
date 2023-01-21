@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Teeny" (
+CREATE TABLE "Teensy" (
     "id" SERIAL NOT NULL,
     "url" VARCHAR(2000) NOT NULL,
     "slug" TEXT NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE "Teeny" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "ownerId" TEXT,
 
-    CONSTRAINT "Teeny_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Teensy_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -59,10 +59,10 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Teeny_slug_key" ON "Teeny"("slug");
+CREATE UNIQUE INDEX "Teensy_slug_key" ON "Teensy"("slug");
 
 -- CreateIndex
-CREATE INDEX "Teeny_slug_idx" ON "Teeny"("slug");
+CREATE INDEX "Teensy_slug_idx" ON "Teensy"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
@@ -80,7 +80,7 @@ CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token"
 CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationToken"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "Teeny" ADD CONSTRAINT "Teeny_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Teensy" ADD CONSTRAINT "Teensy_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

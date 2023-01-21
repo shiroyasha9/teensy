@@ -26,7 +26,7 @@ export const appRouter = router({
       }),
     )
     .query(async ({ input }) => {
-      const count = await prisma.teeny.count({
+      const count = await prisma.teensy.count({
         where: {
           slug: input.slug,
         },
@@ -65,7 +65,7 @@ export const appRouter = router({
       }),
     )
     .query(async ({ input }) => {
-      const teensies = await prisma.teeny.findMany({
+      const teensies = await prisma.teensy.findMany({
         where: { owner: { email: input.email } },
         orderBy: { createdAt: "desc" },
       });
@@ -96,7 +96,7 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       try {
-        await prisma.teeny.create({
+        await prisma.teensy.create({
           data: {
             slug: input.slug,
             url: input.url,
@@ -133,7 +133,7 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       try {
-        await prisma.teeny.update({
+        await prisma.teensy.update({
           where: {
             id: input.id,
           },
@@ -170,7 +170,7 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       try {
-        await prisma.teeny.delete({
+        await prisma.teensy.delete({
           where: {
             id: input.id,
           },

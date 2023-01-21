@@ -13,7 +13,7 @@ const fetchSlug = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const data = await prisma.teeny.findFirst({
+  const data = await prisma.teensy.findFirst({
     where: {
       slug,
     },

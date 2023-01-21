@@ -11,7 +11,7 @@ datasource db {
   shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
 }
 
-model Teeny {
+model Teensy {
   id        Int      @id @default(autoincrement())
   url       String   @db.VarChar(2000)
   slug      String   @unique
@@ -60,7 +60,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  teenies       Teeny[]
+  teenies       Teensy[]
 }
 
 model VerificationToken {

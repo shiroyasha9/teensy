@@ -1,4 +1,4 @@
-import { Teeny } from "@prisma/client";
+import { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
@@ -9,7 +9,7 @@ import Button from "./Button";
 import Input from "./Input";
 
 type EditLinkProps = {
-  currentTeensy: Teeny;
+  currentTeensy: Teensy;
   onClose: () => void;
 };
 
