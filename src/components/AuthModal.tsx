@@ -64,9 +64,8 @@ const AuthModal = () => {
   const [showAuthModal, setShowAuthModal] = useAtom(showAuthModalAtom);
 
   const signInWithEmail = async () => {
-    let toastId: string;
+    const toastId = toast.loading("Loading...");
     try {
-      toastId = toast.loading("Loading...");
       setDisabled(true);
       // Perform sign in
       const res = await signIn("email", {
