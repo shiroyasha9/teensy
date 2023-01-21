@@ -21,6 +21,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.48.2
   '@typescript-eslint/parser': ^5.48.2
   autoprefixer: ^10.4.13
+  classnames: ^2.3.2
   copy-to-clipboard: ^3.3.3
   eslint: ^8.32.0
   eslint-config-next: 13.1.4
@@ -59,6 +60,7 @@ dependencies:
   '@trpc/next': 10.9.0_3xpffe6ccgcl6mqodjbsc3l66a
   '@trpc/react-query': 10.9.0_otezeanlcfehayqasmdzoxseqm
   '@trpc/server': 10.9.0
+  classnames: 2.3.2
   copy-to-clipboard: 3.3.3
   handlebars: 4.7.7
   jotai: 1.13.1_react@18.2.0

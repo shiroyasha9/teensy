@@ -145,7 +145,8 @@ const AuthModal = () => {
             />
             <Button
               title="Login with Email"
-              className="!m-0 w-full !bg-purple-600 text-base font-normal text-white hover:!bg-purple-900 disabled:opacity-50"
+              variant="tertiary"
+              className="!m-0 w-full text-base font-normal"
               disabled={disabled || !isValidEmail(email)}
               onClick={() => void signInWithEmail()}
             />
