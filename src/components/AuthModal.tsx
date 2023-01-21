@@ -64,7 +64,7 @@ const AuthModal = () => {
   const [showAuthModal, setShowAuthModal] = useAtom(showAuthModalAtom);
 
   const signInWithEmail = async () => {
-    let toastId;
+    let toastId: string;
     try {
       toastId = toast.loading("Loading...");
       setDisabled(true);
@@ -91,7 +91,7 @@ const AuthModal = () => {
     toast.loading("Redirecting...");
     setDisabled(true);
     // Perform sign in
-    signIn("google", {
+    void signIn("google", {
       callbackUrl: window.location.href,
     });
   };
@@ -148,7 +148,7 @@ const AuthModal = () => {
               title="Login with Email"
               className="!m-0 w-full !bg-purple-600 text-base font-normal text-white hover:!bg-purple-900 disabled:opacity-50"
               disabled={disabled || !isValidEmail(email)}
-              onClick={signInWithEmail}
+              onClick={() => void signInWithEmail()}
             />
             <Confirm show={showConfirm} email={email ?? ""} />
             <p className="my-2 text-center text-sm text-gray-400">or</p>

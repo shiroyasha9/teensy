@@ -1,10 +1,10 @@
-import { Teensy } from "@prisma/client";
+import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
 import { formAtom, teensyUrlAtom } from "../stores";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -17,7 +17,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
 
-  const updateSlug = trpc.updateSlug.useMutation();
+  const updateSlug = api.updateSlug.useMutation();
 
   useEffect(() => {
     setForm({ url: currentTeensy.url, slug: currentTeensy.slug });
@@ -40,7 +40,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
     }
   }, [updateSlug, onClose]);
 
-  const slugCheck = trpc.slugCheck.useQuery(
+  const slugCheck = api.slugCheck.useQuery(
     { slug: form.slug },
     {
       refetchOnReconnect: false,
@@ -119,7 +119,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
                 ...form,
                 slug,
               });
-              slugCheck.refetch();
+              void slugCheck.refetch();
             }}
           />
         </div>

@@ -1,5 +1,5 @@
-import { Teensy } from "@prisma/client";
-import { trpc } from "../utils/trpc";
+import type { Teensy } from "@prisma/client";
+import { api } from "../utils/api";
 import Button from "./Button";
 
 type DeleteLinkProps = {
@@ -8,7 +8,12 @@ type DeleteLinkProps = {
 };
 
 const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
-  const deleteTeensy = trpc.deleteSlug.useMutation();
+  const deleteTeensy = api.deleteSlug.useMutation();
+
+  async function deleteTeensyHandler() {
+    await deleteTeensy.mutateAsync({ id: currentTeensy.id });
+    onClose();
+  }
 
   return (
     <div className="flex w-full flex-col justify-center gap-4 p-8">
@@ -18,10 +23,7 @@ const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
       <div className="flex flex-row items-center justify-center gap-4">
         <Button
           variant="tertiary"
-          onClick={async () => {
-            await deleteTeensy.mutateAsync({ id: currentTeensy!.id });
-            onClose();
-          }}
+          onClick={() => void deleteTeensyHandler()}
           title="Delete"
         />
 

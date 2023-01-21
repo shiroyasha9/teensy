@@ -1,10 +1,14 @@
 import { z } from "zod";
+import { prisma } from "../db";
+import { createTRPCRouter, publicProcedure } from "./trpc";
 
-import { prisma } from "../../db/client";
-import { procedure, router } from "../trpc";
-
-export const appRouter = router({
-  slugCheck: procedure
+/**
+ * This is the primary router for your server.
+ *
+ * All routers added in /api/routers should be manually added here
+ */
+export const appRouter = createTRPCRouter({
+  slugCheck: publicProcedure
     .meta({
       openapi: {
         method: "GET",
@@ -18,12 +22,12 @@ export const appRouter = router({
     .input(
       z.object({
         slug: z.string(),
-      }),
+      })
     )
     .output(
       z.object({
         used: z.boolean(),
-      }),
+      })
     )
     .query(async ({ input }) => {
       const count = await prisma.teensy.count({
@@ -34,7 +38,7 @@ export const appRouter = router({
 
       return { used: count > 0 };
     }),
-  fetchUserSlugs: procedure
+  fetchUserSlugs: publicProcedure
     .meta({
       openapi: {
         method: "GET",
@@ -48,7 +52,7 @@ export const appRouter = router({
     .input(
       z.object({
         email: z.string(),
-      }),
+      })
     )
     .output(
       z.object({
@@ -60,9 +64,9 @@ export const appRouter = router({
             createdAt: z.date(),
             updatedAt: z.date(),
             ownerId: z.string().nullable(),
-          }),
+          })
         ),
-      }),
+      })
     )
     .query(async ({ input }) => {
       const teensies = await prisma.teensy.findMany({
@@ -72,7 +76,7 @@ export const appRouter = router({
 
       return { teensies };
     }),
-  createSlug: procedure
+  createSlug: publicProcedure
     .meta({
       openapi: {
         method: "POST",
@@ -87,12 +91,12 @@ export const appRouter = router({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         ownerId: z.string().optional(),
-      }),
+      })
     )
     .output(
       z.object({
         success: z.boolean(),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       try {
@@ -109,7 +113,7 @@ export const appRouter = router({
         return { success: false };
       }
     }),
-  updateSlug: procedure
+  updateSlug: publicProcedure
     .meta({
       openapi: {
         method: "POST",
@@ -124,12 +128,12 @@ export const appRouter = router({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         id: z.number(),
-      }),
+      })
     )
     .output(
       z.object({
         success: z.boolean(),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       try {
@@ -148,7 +152,7 @@ export const appRouter = router({
         return { success: false };
       }
     }),
-  deleteSlug: procedure
+  deleteSlug: publicProcedure
     .meta({
       openapi: {
         method: "DELETE",
@@ -161,12 +165,12 @@ export const appRouter = router({
     .input(
       z.object({
         id: z.number(),
-      }),
+      })
     )
     .output(
       z.object({
         success: z.boolean(),
-      }),
+      })
     )
     .mutation(async ({ input }) => {
       try {
@@ -183,4 +187,5 @@ export const appRouter = router({
     }),
 });
 
+// export type definition of API
 export type AppRouter = typeof appRouter;

@@ -1,4 +1,4 @@
-import { Teensy } from "@prisma/client";
+import type { Teensy } from "@prisma/client";
 import { useSetAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -10,7 +10,7 @@ import DeleteLink from "../components/DeleteLink";
 import EditLink from "../components/EditLink";
 import Modal from "../components/Modal";
 import { showAuthModalAtom } from "../stores";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 
 export default function TeeniesPage() {
   const { data: session, status } = useSession();
@@ -18,7 +18,7 @@ export default function TeeniesPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
-  const userTeensies = trpc.fetchUserSlugs.useQuery({
+  const userTeensies = api.fetchUserSlugs.useQuery({
     email: session?.user?.email || "",
   });
 
@@ -107,7 +107,7 @@ export default function TeeniesPage() {
           <EditLink
             onClose={() => {
               setShowEditModal(false);
-              userTeensies.refetch();
+              void userTeensies.refetch();
             }}
             currentTeensy={currentTeensy!}
           />
@@ -119,7 +119,7 @@ export default function TeeniesPage() {
           <DeleteLink
             onClose={() => {
               setShowDeleteModal(false);
-              userTeensies.refetch();
+              void userTeensies.refetch();
             }}
             currentTeensy={currentTeensy!}
           />

@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -14,7 +14,7 @@ const CreateLink = () => {
   const setIsSuccessful = useSetAtom(isSuccessfulAtom);
   const { data: session, status } = useSession();
 
-  const createSlug = trpc.createSlug.useMutation();
+  const createSlug = api.createSlug.useMutation();
 
   useEffect(() => {
     if (window && window?.location?.hostname) {
@@ -33,7 +33,7 @@ const CreateLink = () => {
     }
   }, [createSlug, setIsSuccessful]);
 
-  const slugCheck = trpc.slugCheck.useQuery(
+  const slugCheck = api.slugCheck.useQuery(
     { slug: form.slug },
     {
       refetchOnReconnect: false,
@@ -91,7 +91,7 @@ const CreateLink = () => {
             }}
             minLength={1}
             placeholder="alias e.g. ig for instagram"
-            invalid={slugCheck.isFetched && slugCheck.data!.used}
+            invalid={slugCheck.isFetched && slugCheck.data?.used}
             value={form.slug}
             pattern={"^[-a-zA-Z0-9]+$"}
             title="Only alphanumeric characters and hypens are allowed. No spaces."
@@ -110,7 +110,7 @@ const CreateLink = () => {
                 ...form,
                 slug,
               });
-              slugCheck.refetch();
+              void slugCheck.refetch();
             }}
           />
         </div>
@@ -120,7 +120,7 @@ const CreateLink = () => {
         title="Teensy it!"
         className="w-full self-center"
         disabled={
-          (slugCheck.isFetched && slugCheck.data!.used) ||
+          (slugCheck.isFetched && slugCheck.data?.used) ||
           !form.url ||
           !form.slug
         }

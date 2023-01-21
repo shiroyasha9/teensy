@@ -1,12 +1,13 @@
+import NextAuth, { type NextAuthOptions } from "next-auth";
+// Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { readFileSync } from "fs";
 import Handlebars from "handlebars";
-import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 import nodemailer from "nodemailer";
 import path from "path";
-import { prisma } from "../../../db/client";
+import { prisma } from "../../../server/db";
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_SERVER_HOST,
@@ -33,8 +34,8 @@ const sendVerificationRequest = ({
     encoding: "utf8",
   });
   const emailTemplate = Handlebars.compile(emailFile);
-  transporter.sendMail({
-    from: `"Teensy 🤏" ${process.env.EMAIL_FROM}`,
+  void transporter.sendMail({
+    from: `"Teensy 🤏" ${process.env.EMAIL_FROM || ""}`,
     to: identifier,
     subject: "Your sign-in link for Teensy",
     html: emailTemplate({
@@ -45,30 +46,42 @@ const sendVerificationRequest = ({
   });
 };
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/",
     signOut: "/",
     error: "/",
     verifyRequest: "/",
   },
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
-    }),
-    EmailProvider({
-      maxAge: 10 * 60,
-      sendVerificationRequest,
-    }),
-  ],
-  adapter: PrismaAdapter(prisma),
+  // Include user.id on session
   callbacks: {
-    session: async ({ session, token, user }) => {
-      if (session?.user) {
+    session({ session, user }) {
+      if (session.user) {
         session.user.id = user.id;
       }
       return session;
     },
   },
-});
+  // Configure one or more authentication providers
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID || "",
+      clientSecret: process.env.GOOGLE_SECRET || "",
+    }),
+    EmailProvider({
+      maxAge: 10 * 60,
+      sendVerificationRequest,
+    }),
+    /**
+     * ...add more providers here
+     *
+     * For example, the GitHub provider requires you to add the
+     * `refresh_token_expires_in` field to the Account model. Refer to the
+     * NextAuth.js docs for the provider you want to use. Example:
+     * @see https://next-auth.js.org/providers/github
+     */
+  ],
+};
+
+export default NextAuth(authOptions);

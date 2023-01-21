@@ -36,13 +36,13 @@ export default function WhatsAppPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            let sanitizedPhoneNumber = phoneNumber
+            const sanitizedPhoneNumber = phoneNumber
               .replaceAll("-", "")
               .replaceAll(" ", "")
               .replaceAll("+", "")
               .replace(/\D/g, "");
             console.log(sanitizedPhoneNumber);
-            Router.push(`/wa/${sanitizedPhoneNumber}`);
+            void Router.push(`/wa/${sanitizedPhoneNumber}`);
           }}
           className="flex flex-col gap-3"
         >

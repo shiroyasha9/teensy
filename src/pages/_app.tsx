@@ -1,20 +1,19 @@
 import { Rubik } from "@next/font/google";
-import type { AppType } from "next/app";
+import { type Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
+import { type AppType } from "next/app";
+import { Toaster } from "react-hot-toast";
+import AuthModal from "../components/AuthModal";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles/globals.css";
-
-import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "react-hot-toast";
-import AuthModal from "../components/AuthModal";
-import { trpc } from "../utils/trpc";
+import { api } from "../utils/api";
 
 export const rubik = Rubik({
   subsets: ["latin"],
 });
 
-const MyApp: AppType<{ session: Session }> = ({
+const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
@@ -38,4 +37,4 @@ const MyApp: AppType<{ session: Session }> = ({
   );
 };
 
-export default trpc.withTRPC(MyApp);
+export default api.withTRPC(MyApp);

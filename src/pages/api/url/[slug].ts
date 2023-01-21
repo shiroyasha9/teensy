@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-import { prisma } from "../../../db/client";
+import { prisma } from "../../../server/db";
 
 const fetchSlug = async (req: NextApiRequest, res: NextApiResponse) => {
   const slug = req.query["slug"];

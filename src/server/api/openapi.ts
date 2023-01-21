@@ -1,7 +1,7 @@
 import { generateOpenApiDocument } from "trpc-openapi";
-import { getBaseUrl } from "../utils/trpc";
+import { getBaseUrl } from "../../utils/api";
 
-import { appRouter } from "./routers/_app";
+import { appRouter } from "./root";
 
 export const openApiDocument = generateOpenApiDocument(appRouter, {
   title: "Teensy API",

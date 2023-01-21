@@ -62,7 +62,7 @@ const Header = () => {
             variant="primary"
             title={user ? "Logout" : "Login"}
             className=" m-0 border-0 py-1 px-3 text-base focus:outline-none md:mt-0"
-            onClick={() => (user ? signOut() : setShowAuthModal(true))}
+            onClick={() => (user ? void signOut() : setShowAuthModal(true))}
           />
         </div>
       </header>
