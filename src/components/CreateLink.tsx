@@ -3,7 +3,12 @@ import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
+import {
+  formAtom,
+  isSuccessfulAtom,
+  showAuthModalAtom,
+  teensyUrlAtom,
+} from "../stores";
 import { api } from "../utils/api";
 import Button from "./Button";
 import Input from "./Input";
@@ -13,6 +18,7 @@ const CreateLink = () => {
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const setIsSuccessful = useSetAtom(isSuccessfulAtom);
   const { data: session, status } = useSession();
+  const setShowAuthModal = useSetAtom(showAuthModalAtom);
 
   const createSlug = api.createSlug.useMutation();
 
@@ -111,13 +117,24 @@ const CreateLink = () => {
       <Button
         type="submit"
         title="Teensy it!"
-        className="w-full self-center"
+        className="mb-2 w-full self-center"
         disabled={
           (slugCheck.isFetched && slugCheck.data?.used) ||
           !form.url ||
           !form.slug
         }
       />
+      {!session?.user && status !== "loading" && (
+        <p className="text-center text-sm">
+          <span
+            className="cursor-pointer font-semibold text-lemon-400 hover:text-lemon-200"
+            onClick={() => setShowAuthModal(true)}
+          >
+            Login
+          </span>{" "}
+          to save this teensy to edit/delete it later.
+        </p>
+      )}
     </form>
   );
 };
