@@ -30,6 +30,7 @@ const CreateLink = () => {
       } else {
         setTeensyUrl(host);
       }
+      setForm({ slug: "", url: "" });
     }
   }, []);
 
