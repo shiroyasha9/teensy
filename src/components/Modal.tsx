@@ -48,7 +48,7 @@ const Modal = ({ children, showModal, closeModal }: ModalProps) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="relative my-8 inline-block w-full max-w-md transform overflow-hidden bg-white text-left align-middle shadow-xl transition-all sm:rounded-md">
+            <div className="relative my-8 inline-block w-[90%] max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
               {/* Close icon */}
               <button
                 onClick={closeModal}

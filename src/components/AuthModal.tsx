@@ -141,7 +141,7 @@ const AuthModal = () => {
               disabled={disabled}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="mb-3 focus:border-purple-600 focus:ring-purple-600"
+              className="mb-3 focus:!border-purple-600 focus:!ring-purple-600"
             />
             <Button
               title="Login with Email"
