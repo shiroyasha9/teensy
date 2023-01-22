@@ -57,20 +57,14 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
       }}
       className="flex w-full flex-col justify-center gap-4 p-3"
     >
-      <div>
-        <span className="mr-2 whitespace-nowrap text-sm font-medium">
-          🤏 Link to teensy
-        </span>
-        <div className="flex items-center">
-          <Input
-            type="url"
-            onChange={(e) => setForm({ ...form, url: e.target.value })}
-            placeholder="e.g. https://github.com"
-            required
-            value={form.url}
-          />
-        </div>
-      </div>
+      <Input
+        type="url"
+        label=" 🤏 Link to teensy"
+        onChange={(e) => setForm({ ...form, url: e.target.value })}
+        placeholder="e.g. https://github.com"
+        required
+        value={form.url}
+      />
 
       <div className="flex flex-col rounded-lg bg-gray-300 p-4">
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium ">
@@ -81,32 +75,29 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
             </span>
           )}
         </span>
-        <div className="flex items-center">
-          <span className="mr-1 whitespace-nowrap font-medium">
-            {teensyUrl.replaceAll(/https?:\/\//gi, "")}/
-          </span>
-          <Input
-            type="text"
-            onChange={(e) => {
-              setForm({
-                ...form,
-                slug: e.target.value,
-              });
-              debounce(slugCheck.refetch, 300);
-            }}
-            minLength={1}
-            placeholder="alias e.g. ig for instagram"
-            invalid={
-              slugCheck.isFetched &&
-              slugCheck.data!.used &&
-              form.slug !== currentTeensy.slug
-            }
-            value={form.slug}
-            pattern={"^[-a-zA-Z0-9]+$"}
-            title="Only alphanumeric characters and hypens are allowed. No spaces."
-            required
-          />
-        </div>
+        <Input
+          type="text"
+          label={`${teensyUrl.replaceAll(/https?:\/\//gi, "")}/`}
+          inlineLabel
+          onChange={(e) => {
+            setForm({
+              ...form,
+              slug: e.target.value,
+            });
+            debounce(slugCheck.refetch, 300);
+          }}
+          minLength={1}
+          placeholder="alias e.g. ig for instagram"
+          invalid={
+            slugCheck.isFetched &&
+            slugCheck.data!.used &&
+            form.slug !== currentTeensy.slug
+          }
+          value={form.slug}
+          pattern={"^[-a-zA-Z0-9]+$"}
+          title="Only alphanumeric characters and hypens are allowed. No spaces."
+          required
+        />
         <div className="flex items-center justify-center gap-5">
           <div className="ml-2 flex flex-1 items-center justify-center">or</div>
           <Button
