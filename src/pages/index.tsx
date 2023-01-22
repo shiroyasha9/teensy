@@ -3,12 +3,9 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Confetti from "react-dom-confetti";
+import CreateLinkForm from "../components/CreateLink";
 import { isSuccessfulAtom } from "../stores";
 
-const CreateLinkForm = dynamic(() => import("../components/CreateLink"), {
-  ssr: true,
-  loading: () => <p>Loading... ⏳</p>,
-});
 const Success = dynamic(() => import("../components/Success"), {
   ssr: true,
   loading: () => <p>Loading... ⏳</p>,
