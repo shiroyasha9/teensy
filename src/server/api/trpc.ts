@@ -123,6 +123,26 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 });
 
 /**
+ * Reusable function that enforces users are authorized to
+ * make changes to the teeny before running the procedure
+ */
+export const enforceUserIsAuthorized = async (
+  userId: string,
+  teensyId: number,
+) => {
+  try {
+    const teensy = await prisma.teensy.findUnique({
+      where: { id: teensyId },
+    });
+    if (!teensy || teensy.ownerId !== userId) {
+      throw new Error("Not authorized");
+    }
+  } catch (e) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+};
+
+/**
  * Protected (authed) procedure
  *
  * If you want a query or mutation to ONLY be accessible to logged in users, use

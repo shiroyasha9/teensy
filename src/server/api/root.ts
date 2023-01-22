@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { prisma } from "../db";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "./trpc";
+import {
+  createTRPCRouter,
+  enforceUserIsAuthorized,
+  protectedProcedure,
+  publicProcedure,
+} from "./trpc";
 
 /**
  * This is the primary router for your server.
@@ -128,8 +133,9 @@ export const appRouter = createTRPCRouter({
         success: z.boolean(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
+        await enforceUserIsAuthorized(ctx.session.user.id, input.id);
         await prisma.teensy.update({
           where: {
             id: input.id,
@@ -165,8 +171,9 @@ export const appRouter = createTRPCRouter({
         success: z.boolean(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       try {
+        await enforceUserIsAuthorized(ctx.session.user.id, input.id);
         await prisma.teensy.delete({
           where: {
             id: input.id,
