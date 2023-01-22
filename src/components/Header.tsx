@@ -7,6 +7,7 @@ import { HiBars3, HiXMark } from "react-icons/hi2";
 import { showAuthModalAtom } from "../stores";
 import Button from "./Button";
 import GitHubIcon from "./GitHubIcon";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   {
@@ -39,6 +40,7 @@ export default function Header() {
             </Link>
           </div>
           <div className="-my-2 -mr-2 flex items-center md:hidden">
+            <ThemeToggle />
             <GitHubIcon />
             <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-lemon-400 hover:text-lemon-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
               <span className="sr-only">Open menu</span>
@@ -57,6 +59,7 @@ export default function Header() {
             ))}
           </Popover.Group>
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+            <ThemeToggle />
             <GitHubIcon />
             <Button
               title={user ? "Logout" : "Login"}
