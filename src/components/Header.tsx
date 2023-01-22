@@ -14,7 +14,7 @@ const navItems = [
     href: "/",
   },
   {
-    name: "💬 Contacless WhatsApp",
+    name: "💬 Contactless WhatsApp",
     href: "/wa",
   },
   {
