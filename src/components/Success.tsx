@@ -1,6 +1,6 @@
 import copy from "copy-to-clipboard";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
 import Button from "./Button";
 
@@ -53,7 +53,6 @@ const Success = () => {
           onClick={resetHandler}
         />
       </div>
-      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 };

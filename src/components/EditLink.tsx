@@ -1,26 +1,27 @@
-import { useAtom, useSetAtom } from "jotai";
+import type { Teensy } from "@prisma/client";
+import { useAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import {
-  formAtom,
-  isSuccessfulAtom,
-  showAuthModalAtom,
-  teensyUrlAtom,
-} from "../stores";
+import { formAtom, teensyUrlAtom } from "../stores";
 import { api } from "../utils/api";
 import Button from "./Button";
 import Input from "./Input";
 
-const CreateLink = () => {
+type EditLinkProps = {
+  currentTeensy: Teensy;
+  onClose: () => void;
+};
+
+const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
-  const setIsSuccessful = useSetAtom(isSuccessfulAtom);
-  const { data: session, status } = useSession();
-  const setShowAuthModal = useSetAtom(showAuthModalAtom);
 
-  const createSlug = api.createSlug.useMutation();
+  const updateSlug = api.updateSlug.useMutation();
+
+  useEffect(() => {
+    setForm({ url: currentTeensy.url, slug: currentTeensy.slug });
+  }, [currentTeensy, setForm]);
 
   useEffect(() => {
     if (window && window?.location?.hostname) {
@@ -30,15 +31,14 @@ const CreateLink = () => {
       } else {
         setTeensyUrl(host);
       }
-      setForm({ slug: "", url: "" });
     }
   }, []);
 
   useEffect(() => {
-    if (createSlug.status === "success") {
-      setIsSuccessful(true);
+    if (updateSlug.status === "success") {
+      onClose();
     }
-  }, [createSlug, setIsSuccessful]);
+  }, [updateSlug, onClose]);
 
   const slugCheck = api.slugCheck.useQuery(
     { slug: form.slug },
@@ -53,27 +53,23 @@ const CreateLink = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createSlug.mutate({
-          ...form,
-          ownerId: status === "authenticated" ? session?.user?.id : undefined,
-        });
+        updateSlug.mutate({ ...form, id: currentTeensy.id });
       }}
-      className="flex w-full flex-col justify-center gap-4 p-3 sm:w-2/3 md:w-1/2 lg:w-1/3"
+      className="flex w-full flex-col justify-center gap-4 p-3"
     >
       <Input
         type="url"
+        label=" 🤏 Link to teensy"
         onChange={(e) => setForm({ ...form, url: e.target.value })}
         placeholder="e.g. https://github.com"
-        id="url"
-        value={form.url}
-        label="🤏 Link to teensy"
         required
+        value={form.url}
       />
 
-      <div className="flex flex-col rounded-lg bg-[#37415180] p-4">
+      <div className="flex flex-col rounded-lg bg-gray-300 p-4">
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium ">
           ✍️ Customize
-          {slugCheck.data?.used && (
+          {slugCheck.data?.used && form.slug !== currentTeensy.slug && (
             <span className="text-center font-medium text-red-450">
               Already in use.
             </span>
@@ -92,7 +88,11 @@ const CreateLink = () => {
           }}
           minLength={1}
           placeholder="alias e.g. ig for instagram"
-          invalid={slugCheck.isFetched && slugCheck.data?.used}
+          invalid={
+            slugCheck.isFetched &&
+            slugCheck.data!.used &&
+            form.slug !== currentTeensy.slug
+          }
           value={form.slug}
           pattern={"^[-a-zA-Z0-9]+$"}
           title="Only alphanumeric characters and hypens are allowed. No spaces."
@@ -103,7 +103,7 @@ const CreateLink = () => {
           <Button
             variant="outlined"
             title="Generate an alias"
-            className="m-0 mt-1 w-full text-sm"
+            className="m-0 mt-1 w-full border-purple-600 text-sm !text-gray-950 hover:border-purple-900"
             onClick={() => {
               const slug = nanoid();
               setForm({
@@ -117,27 +117,19 @@ const CreateLink = () => {
       </div>
       <Button
         type="submit"
-        title="Teensy it!"
-        className="mb-2 w-full self-center"
+        variant="tertiary"
+        title="Edit it!"
+        className="w-full self-center"
         disabled={
-          (slugCheck.isFetched && slugCheck.data?.used) ||
+          (slugCheck.isFetched &&
+            slugCheck.data!.used &&
+            form.slug !== currentTeensy.slug) ||
           !form.url ||
           !form.slug
         }
       />
-      {!session?.user && status !== "loading" && (
-        <p className="text-center text-sm">
-          <span
-            className="cursor-pointer font-semibold text-lemon-400 hover:text-lemon-200"
-            onClick={() => setShowAuthModal(true)}
-          >
-            Login
-          </span>{" "}
-          to save this teensy to edit/delete it later.
-        </p>
-      )}
     </form>
   );
 };
 
-export default CreateLink;
+export default EditLink;

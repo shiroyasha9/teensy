@@ -36,29 +36,26 @@ export default function WhatsAppPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            let sanitizedPhoneNumber = phoneNumber
+            const sanitizedPhoneNumber = phoneNumber
               .replaceAll("-", "")
               .replaceAll(" ", "")
               .replaceAll("+", "")
               .replace(/\D/g, "");
             console.log(sanitizedPhoneNumber);
-            Router.push(`/wa/${sanitizedPhoneNumber}`);
+            void Router.push(`/wa/${sanitizedPhoneNumber}`);
           }}
           className="flex flex-col gap-3"
         >
-          <div className="flex items-center gap-1">
-            <span className="mr-2 whitespace-nowrap font-medium">
-              Enter their number here:
-            </span>
-            <Input
-              required
-              type="number"
-              placeholder="+1 999 999 9999"
-              minLength={7}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-          </div>
+          <Input
+            label="    Enter their number here:"
+            inlineLabel
+            required
+            type="number"
+            placeholder="+1 999 999 9999"
+            minLength={7}
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
           <Button
             type="submit"
             title="WhatsApp them!"
