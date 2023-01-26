@@ -16,15 +16,14 @@ const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
   } = props;
 
   const classNames = classnames(
-    "m-5 cursor-pointer rounded-md py-2 px-3 text-lg font-semibold text-gray-950",
+    "m-5 cursor-pointer rounded-md py-2 px-4 text-lg font-semibold disabled:cursor-not-allowed disabled:opacity-60",
     {
+      "text-black": variant === "primary" || variant === "secondary",
       "bg-lemon-400 hover:bg-lemon-200": variant === "primary",
       "bg-white hover:bg-gray-200": variant === "secondary",
-      "bg-white hover:bg-gray-200 border border-gray-300":
-        variant === "outlined",
-      "cursor-not-allowed disabled:opacity-60": disabled,
-      "bg-purple-600 !text-white hover:!bg-purple-900 disabled:opacity-50":
-        variant === "tertiary",
+      "text-white": variant === "tertiary" || variant === "outlined",
+      "border border-gray-300 hover:border-gray-400": variant === "outlined",
+      "bg-purple-600 hover:bg-purple-900": variant === "tertiary",
       [overrideClassName || ""]: !!overrideClassName,
     },
   );

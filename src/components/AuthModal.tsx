@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { signIn } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -62,6 +63,7 @@ const AuthModal = () => {
   const [showConfirm, setConfirm] = useState(false);
   const [email, setEmail] = useState("");
   const [showAuthModal, setShowAuthModal] = useAtom(showAuthModalAtom);
+  const { theme } = useTheme();
 
   const signInWithEmail = async () => {
     const toastId = toast.loading("Loading...");
@@ -145,7 +147,7 @@ const AuthModal = () => {
             />
             <Button
               title="Login with Email"
-              variant="tertiary"
+              variant={theme === "dark" ? "primary" : "tertiary"}
               className="!m-0 w-full text-base font-normal"
               disabled={disabled || !isValidEmail(email)}
               onClick={() => void signInWithEmail()}

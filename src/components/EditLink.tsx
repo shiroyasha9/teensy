@@ -2,6 +2,7 @@ import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
+import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { formAtom, teensyUrlAtom } from "../stores";
 import { api } from "../utils/api";
@@ -16,6 +17,7 @@ type EditLinkProps = {
 const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
+  const { theme } = useTheme();
 
   const updateSlug = api.updateSlug.useMutation();
 
@@ -103,7 +105,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
           <Button
             variant="outlined"
             title="Generate an alias"
-            className="m-0 mt-1 w-full border-purple-600 text-sm !text-gray-950 hover:border-purple-900"
+            className="m-0 mt-1 w-full border-gray-500 text-sm text-black hover:border-gray-700"
             onClick={() => {
               const slug = nanoid();
               setForm({
@@ -117,7 +119,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
       </div>
       <Button
         type="submit"
-        variant="tertiary"
+        variant={theme === "dark" ? "primary" : "tertiary"}
         title="Edit it!"
         className="w-full self-center"
         disabled={
