@@ -18,8 +18,8 @@ const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
   }
 
   return (
-    <div className="flex w-full flex-col justify-center gap-4 p-8">
-      <h1 className="text-center text-2xl sm:text-xl">
+    <div className="mt-6 flex w-full flex-col justify-center gap-4 p-8">
+      <h1 className="text-center text-lg">
         Are you sure you want to delete this teensy?
       </h1>
       <div className="flex flex-row items-center justify-center gap-4">

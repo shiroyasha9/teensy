@@ -124,12 +124,12 @@ const AuthModal = () => {
         <div className="px-4 sm:px-12">
           <Dialog.Title
             as="h3"
-            className="mt-6 text-center text-lg font-bold sm:text-2xl"
+            className="mt-6 text-center text-lg font-bold dark:text-white sm:text-2xl"
           >
             Create your account
           </Dialog.Title>
 
-          <Dialog.Description className="mt-2 text-center text-base text-gray-500">
+          <Dialog.Description className="mt-2 text-center text-base text-gray-500 dark:text-gray-300">
             Please create an account to save your teenies to edit/delete them
             later.
           </Dialog.Description>
@@ -148,17 +148,19 @@ const AuthModal = () => {
             <Button
               title="Login with Email"
               variant={theme === "dark" ? "primary" : "tertiary"}
-              className="!m-0 w-full text-base font-normal"
+              className="!m-0 w-full text-base font-normal dark:font-semibold"
               disabled={disabled || !isValidEmail(email)}
               onClick={() => void signInWithEmail()}
             />
             <Confirm show={showConfirm} email={email ?? ""} />
-            <p className="my-2 text-center text-sm text-gray-400">or</p>
+            <p className="my-2 text-center text-sm text-gray-400 dark:text-gray-300">
+              or
+            </p>
             {/* Sign with Google */}
             <button
               disabled={disabled}
               onClick={signInWithGoogle}
-              className="mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-50 hover:text-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:bg-transparent disabled:hover:text-gray-500"
+              className="mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-50 hover:text-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:bg-transparent disabled:hover:text-gray-500 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600"
             >
               <Image src="/google.svg" alt="Google" width={32} height={32} />
               <span>Sign in with Google</span>
