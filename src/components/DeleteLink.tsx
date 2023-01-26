@@ -1,6 +1,5 @@
 import { api } from "$utils/api";
 import type { Teensy } from "@prisma/client";
-import { useTheme } from "next-themes";
 import Button from "./Button";
 
 type DeleteLinkProps = {
@@ -10,7 +9,6 @@ type DeleteLinkProps = {
 
 const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
   const deleteTeensy = api.deleteSlug.useMutation();
-  const { theme } = useTheme();
 
   async function deleteTeensyHandler() {
     await deleteTeensy.mutateAsync({ id: currentTeensy.id });
@@ -24,14 +22,15 @@ const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
       </h1>
       <div className="flex flex-row items-center justify-center gap-4">
         <Button
-          variant={theme === "dark" ? "primary" : "tertiary"}
+          variant="danger"
           onClick={() => void deleteTeensyHandler()}
           title="Delete"
+          className="w-full"
         />
 
         <Button
           variant="outlined"
-          className=" text-black dark:text-white"
+          className="w-full text-black dark:text-white"
           onClick={onClose}
           title="Cancel"
         />
