@@ -2,7 +2,7 @@ import { formAtom, teensyUrlAtom } from "$store";
 import { api } from "$utils/api";
 import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
-import debounce from "lodash/debounce";
+import { debounce } from "lodash";
 import { nanoid } from "nanoid";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
@@ -66,6 +66,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
         placeholder="e.g. https://github.com"
         required
         value={form.url}
+        variant="modal"
       />
 
       <div className="flex flex-col rounded-lg bg-gray-300 p-4 dark:bg-gray-600">
@@ -81,6 +82,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
           type="text"
           label={`${teensyUrl.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
+          variant="modal"
           onChange={(e) => {
             setForm({
               ...form,
