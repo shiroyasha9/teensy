@@ -30,7 +30,7 @@ const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
 
         <Button
           variant="outlined"
-          className="w-full text-black dark:text-white"
+          className="w-full !text-black dark:!text-white"
           onClick={onClose}
           title="Cancel"
         />
