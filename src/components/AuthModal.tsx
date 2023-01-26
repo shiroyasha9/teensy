@@ -1,3 +1,5 @@
+import { showAuthModalAtom } from "$store";
+import { isValidEmail } from "$utils/functions";
 import { Dialog, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { signIn } from "next-auth/react";
@@ -6,8 +8,6 @@ import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { HiMailOpen } from "react-icons/hi";
-import { showAuthModalAtom } from "../stores";
-import { isValidEmail } from "../utils/functions";
 import Button from "./Button";
 import Input from "./Input";
 import Modal from "./Modal";

@@ -1,5 +1,5 @@
+import type { FormData } from "$types";
 import { atom } from "jotai";
-import type { FormData } from "../types";
 
 export const formAtom = atom<FormData>({ slug: "", url: "" });
 

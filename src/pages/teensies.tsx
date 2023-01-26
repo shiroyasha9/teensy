@@ -1,3 +1,9 @@
+import DeleteLink from "$components/DeleteLink";
+import EditLink from "$components/EditLink";
+import Modal from "$components/Modal";
+import { showAuthModalAtom } from "$store";
+import { api } from "$utils/api";
+
 import type { Teensy } from "@prisma/client";
 import { useSetAtom } from "jotai";
 import Head from "next/head";
@@ -5,11 +11,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import DeleteLink from "../components/DeleteLink";
-import EditLink from "../components/EditLink";
-import Modal from "../components/Modal";
-import { showAuthModalAtom } from "../stores";
-import { api } from "../utils/api";
 
 export default function TeensiesPage() {
   const setShowAuthModal = useSetAtom(showAuthModalAtom);

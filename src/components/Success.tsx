@@ -1,7 +1,7 @@
+import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "$store";
 import copy from "copy-to-clipboard";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { toast } from "react-hot-toast";
-import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "../stores";
 import Button from "./Button";
 
 const Success = () => {

@@ -1,6 +1,6 @@
+import { api } from "$utils/api";
 import type { Teensy } from "@prisma/client";
 import { useTheme } from "next-themes";
-import { api } from "../utils/api";
 import Button from "./Button";
 
 type DeleteLinkProps = {

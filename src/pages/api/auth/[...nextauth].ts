@@ -1,5 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 // Prisma adapter for NextAuth, optional and can be removed
+import { prisma } from "$server/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { readFileSync } from "fs";
 import Handlebars from "handlebars";
@@ -7,7 +8,6 @@ import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 import nodemailer from "nodemailer";
 import path from "path";
-import { prisma } from "../../../server/db";
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_SERVER_HOST,

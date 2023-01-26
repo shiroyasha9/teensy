@@ -1,8 +1,8 @@
+import Button from "$components/Button";
+import Input from "$components/Input";
 import Head from "next/head";
 import Router from "next/router";
 import { useState } from "react";
-import Button from "../components/Button";
-import Input from "../components/Input";
 
 export default function WhatsAppPage() {
   const [phoneNumber, setPhoneNumber] = useState("");

@@ -1,11 +1,11 @@
+import { formAtom, teensyUrlAtom } from "$store";
+import { api } from "$utils/api";
 import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import debounce from "lodash/debounce";
 import { nanoid } from "nanoid";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
-import { formAtom, teensyUrlAtom } from "../stores";
-import { api } from "../utils/api";
 import Button from "./Button";
 import Input from "./Input";
 
