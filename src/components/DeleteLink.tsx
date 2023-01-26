@@ -1,5 +1,5 @@
+import { api } from "$utils/api";
 import type { Teensy } from "@prisma/client";
-import { api } from "../utils/api";
 import Button from "./Button";
 
 type DeleteLinkProps = {
@@ -16,20 +16,21 @@ const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
   }
 
   return (
-    <div className="flex w-full flex-col justify-center gap-4 p-8">
-      <h1 className="text-center text-2xl sm:text-xl">
+    <div className="mt-6 flex w-full flex-col justify-center gap-4 p-8">
+      <h1 className="text-center text-lg">
         Are you sure you want to delete this teensy?
       </h1>
       <div className="flex flex-row items-center justify-center gap-4">
         <Button
-          variant="tertiary"
+          variant="danger"
           onClick={() => void deleteTeensyHandler()}
           title="Delete"
+          className="w-full"
         />
 
         <Button
           variant="outlined"
-          className="border-purple-600 !text-gray-950 hover:border-purple-900"
+          className="w-full !text-black dark:!text-white"
           onClick={onClose}
           title="Cancel"
         />

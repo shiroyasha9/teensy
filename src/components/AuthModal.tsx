@@ -1,12 +1,13 @@
+import { showAuthModalAtom } from "$store";
+import { isValidEmail } from "$utils/functions";
 import { Dialog, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { signIn } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { HiMailOpen } from "react-icons/hi";
-import { showAuthModalAtom } from "../stores";
-import { isValidEmail } from "../utils/functions";
 import Button from "./Button";
 import Input from "./Input";
 import Modal from "./Modal";
@@ -23,7 +24,7 @@ const Confirm = ({ show = false, email = "" }) => (
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="fixed inset-0 bg-white" />
+        <div className="fixed inset-0 bg-white dark:bg-gray-700" />
       </Transition.Child>
 
       <Transition.Child
@@ -39,9 +40,11 @@ const Confirm = ({ show = false, email = "" }) => (
           <div className="transform overflow-hidden transition-all">
             <h3 className="text-center text-lg font-medium leading-6">
               <div className="flex flex-col items-center justify-center space-y-4">
-                <HiMailOpen className="h-12 w-12 shrink-0 text-purple-600" />
+                <HiMailOpen className="h-12 w-12 shrink-0 text-purple-600 dark:text-lemon-400" />
               </div>
-              <p className="mt-2 text-2xl font-semibold">Confirm your email</p>
+              <p className="mt-2 text-2xl font-semibold dark:text-white">
+                Confirm your email
+              </p>
             </h3>
 
             <p className="mt-4 text-center text-lg">
@@ -62,6 +65,7 @@ const AuthModal = () => {
   const [showConfirm, setConfirm] = useState(false);
   const [email, setEmail] = useState("");
   const [showAuthModal, setShowAuthModal] = useAtom(showAuthModalAtom);
+  const { theme } = useTheme();
 
   const signInWithEmail = async () => {
     const toastId = toast.loading("Loading...");
@@ -122,12 +126,12 @@ const AuthModal = () => {
         <div className="px-4 sm:px-12">
           <Dialog.Title
             as="h3"
-            className="mt-6 text-center text-lg font-bold sm:text-2xl"
+            className="mt-6 text-center text-lg font-bold dark:text-white sm:text-2xl"
           >
             Create your account
           </Dialog.Title>
 
-          <Dialog.Description className="mt-2 text-center text-base text-gray-500">
+          <Dialog.Description className="mt-2 text-center text-base text-gray-500 dark:text-gray-300">
             Please create an account to save your teenies to edit/delete them
             later.
           </Dialog.Description>
@@ -141,22 +145,25 @@ const AuthModal = () => {
               disabled={disabled}
               required
               onChange={(e) => setEmail(e.target.value)}
-              className="mb-3 focus:!border-purple-600 focus:!ring-purple-600"
+              className="mb-3"
+              variant="modal"
             />
             <Button
               title="Login with Email"
-              variant="tertiary"
-              className="!m-0 w-full text-base font-normal"
+              variant={theme === "dark" ? "primary" : "tertiary"}
+              className="!m-0 w-full text-base font-normal dark:font-semibold"
               disabled={disabled || !isValidEmail(email)}
               onClick={() => void signInWithEmail()}
             />
             <Confirm show={showConfirm} email={email ?? ""} />
-            <p className="my-2 text-center text-sm text-gray-400">or</p>
+            <p className="my-2 text-center text-sm text-gray-400 dark:text-gray-300">
+              or
+            </p>
             {/* Sign with Google */}
             <button
               disabled={disabled}
               onClick={signInWithGoogle}
-              className="mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-50 hover:text-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:bg-transparent disabled:hover:text-gray-500"
+              className="mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-50 hover:text-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:bg-transparent disabled:hover:text-gray-500 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600"
             >
               <Image src="/google.svg" alt="Google" width={32} height={32} />
               <span>Sign in with Google</span>

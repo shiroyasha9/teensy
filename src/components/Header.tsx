@@ -1,10 +1,10 @@
+import { showAuthModalAtom } from "$store";
 import { Popover, Transition } from "@headlessui/react";
 import { useSetAtom } from "jotai";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { HiBars3, HiXMark } from "react-icons/hi2";
-import { showAuthModalAtom } from "../stores";
 import Button from "./Button";
 import GitHubIcon from "./GitHubIcon";
 import ThemeToggle from "./ThemeToggle";

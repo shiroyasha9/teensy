@@ -1,15 +1,15 @@
-import { useAtom, useSetAtom } from "jotai";
-import debounce from "lodash/debounce";
-import { nanoid } from "nanoid";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import {
   formAtom,
   isSuccessfulAtom,
   showAuthModalAtom,
   teensyUrlAtom,
-} from "../stores";
-import { api } from "../utils/api";
+} from "$store";
+import { api } from "$utils/api";
+import { useAtom, useSetAtom } from "jotai";
+import debounce from "lodash/debounce";
+import { nanoid } from "nanoid";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import Button from "./Button";
 import Input from "./Input";
 

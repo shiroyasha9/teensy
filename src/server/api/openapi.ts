@@ -1,5 +1,5 @@
+import { getBaseUrl } from "$utils/api";
 import { generateOpenApiDocument } from "trpc-openapi";
-import { getBaseUrl } from "../../utils/api";
 
 import { appRouter } from "./root";
 

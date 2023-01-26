@@ -1,10 +1,11 @@
+import { formAtom, teensyUrlAtom } from "$store";
+import { api } from "$utils/api";
 import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
-import debounce from "lodash/debounce";
+import { debounce } from "lodash";
 import { nanoid } from "nanoid";
+import { useTheme } from "next-themes";
 import { useEffect } from "react";
-import { formAtom, teensyUrlAtom } from "../stores";
-import { api } from "../utils/api";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -16,6 +17,7 @@ type EditLinkProps = {
 const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
+  const { theme } = useTheme();
 
   const updateSlug = api.updateSlug.useMutation();
 
@@ -55,7 +57,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
         e.preventDefault();
         updateSlug.mutate({ ...form, id: currentTeensy.id });
       }}
-      className="flex w-full flex-col justify-center gap-4 p-3"
+      className="mt-6 flex w-full flex-col justify-center gap-4 p-4 dark:text-white"
     >
       <Input
         type="url"
@@ -64,10 +66,11 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
         placeholder="e.g. https://github.com"
         required
         value={form.url}
+        variant="modal"
       />
 
-      <div className="flex flex-col rounded-lg bg-gray-300 p-4">
-        <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium ">
+      <div className="flex flex-col rounded-lg bg-gray-300 p-4 dark:bg-gray-600">
+        <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
           ✍️ Customize
           {slugCheck.data?.used && form.slug !== currentTeensy.slug && (
             <span className="text-center font-medium text-red-450">
@@ -79,6 +82,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
           type="text"
           label={`${teensyUrl.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
+          variant="modal"
           onChange={(e) => {
             setForm({
               ...form,
@@ -103,7 +107,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
           <Button
             variant="outlined"
             title="Generate an alias"
-            className="m-0 mt-1 w-full border-purple-600 text-sm !text-gray-950 hover:border-purple-900"
+            className="m-0 mt-1 w-full border-gray-500 text-sm !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200"
             onClick={() => {
               const slug = nanoid();
               setForm({
@@ -117,7 +121,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
       </div>
       <Button
         type="submit"
-        variant="tertiary"
+        variant={theme === "dark" ? "primary" : "tertiary"}
         title="Edit it!"
         className="w-full self-center"
         disabled={
