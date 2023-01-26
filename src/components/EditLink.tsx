@@ -107,7 +107,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
           <Button
             variant="outlined"
             title="Generate an alias"
-            className="m-0 mt-1 w-full border-gray-500 text-sm text-black hover:border-gray-700 dark:border-gray-400 dark:text-white dark:hover:border-gray-200"
+            className="m-0 mt-1 w-full border-gray-500 text-sm !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200"
             onClick={() => {
               const slug = nanoid();
               setForm({
