@@ -1,17 +1,24 @@
 import classnames from "classnames";
-import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import {
+  forwardRef,
+  type DetailedHTMLProps,
+  type InputHTMLAttributes,
+} from "react";
 
-type Props = {
+type InputProps = {
   invalid?: boolean;
   label?: string;
   inlineLabel?: boolean;
   variant?: "primary" | "modal";
 };
 
-const Input = (
-  props: Props &
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-) => {
+type InputRef = HTMLInputElement;
+
+const Input = forwardRef<
+  InputRef,
+  InputProps &
+    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+>((props, ref) => {
   const {
     className: overrideClassName,
     invalid,
@@ -51,9 +58,11 @@ const Input = (
           {label}
         </label>
       )}
-      <input id={id} className={classNames} {...rest} />
+      <input id={id} className={classNames} ref={ref} {...rest} />
     </div>
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;

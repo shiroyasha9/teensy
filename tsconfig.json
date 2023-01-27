@@ -19,6 +19,7 @@
     "paths": {
       "$components/*": ["src/components/*"],
       "$env/*": ["src/env/*"],
+      "$hooks/*": ["src/hooks/*"],
       "$server/*": ["src/server/*"],
       "$styles/*": ["src/styles/*"],
       "$utils/*": ["src/utils/*"],
