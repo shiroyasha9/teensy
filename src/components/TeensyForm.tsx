@@ -1,4 +1,5 @@
 import { NOT_ALLOWED_SLUGS } from "$constants";
+import useAutoFocus from "$hooks/useAutoFocus";
 import { formAtom, teensyUrlAtom } from "$store";
 import { api } from "$utils/api";
 import { nanoidForSlug } from "$utils/functions";
@@ -23,6 +24,7 @@ const TeensyForm = (props: TeensyFormProps) => {
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const { theme } = useTheme();
+  const urlInput = useAutoFocus();
 
   const slugCheck = api.slugCheck.useQuery(
     { slug: form.slug },
@@ -89,6 +91,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         value={form.url}
         required
         id="url"
+        ref={urlInput}
         variant={mode === "create" ? "primary" : "modal"}
       />
 

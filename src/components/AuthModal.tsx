@@ -153,6 +153,7 @@ const AuthModal = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="mb-3"
                 variant="modal"
+                autoFocus
               />
               <Button
                 title="Login with Email"
