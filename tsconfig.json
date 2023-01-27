@@ -23,6 +23,7 @@
       "$styles/*": ["src/styles/*"],
       "$utils/*": ["src/utils/*"],
       "$store": ["src/store/index.ts"],
+      "$constants": ["src/constants/index.ts"],
       "$types": ["src/types/index.ts"]
     }
   },
