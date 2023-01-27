@@ -132,7 +132,7 @@ const AuthModal = () => {
           </Dialog.Title>
 
           <Dialog.Description className="mt-2 text-center text-base text-gray-500 dark:text-gray-300">
-            Please create an account to save your teenies to edit/delete them
+            Please create an account to save your teensies to edit/delete them
             later.
           </Dialog.Description>
 

@@ -36,7 +36,7 @@ export default function TeensiesPage() {
   if (userTeensies.isError || !userTeensies.data) {
     if (userTeensies.error.data?.httpStatus === 401) {
       setShowAuthModal(true);
-      return <p>You need to be logged in to see and modify your teenies.</p>;
+      return <p>You need to be logged in to see and modify your teensies.</p>;
     }
     return <p>Something went wrong. Please refresh the page.</p>;
   }

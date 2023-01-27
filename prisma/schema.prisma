@@ -64,7 +64,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  teenies       Teensy[]
+  teensies       Teensy[]
 }
 
 model VerificationToken {
