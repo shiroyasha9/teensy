@@ -138,23 +138,30 @@ const AuthModal = () => {
 
           <div className="mt-10">
             {/* Sign with email */}
-            <Input
-              name="email"
-              type="email"
-              placeholder="rick@roll.com"
-              disabled={disabled}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              className="mb-3"
-              variant="modal"
-            />
-            <Button
-              title="Login with Email"
-              variant={theme === "dark" ? "primary" : "tertiary"}
-              className="!m-0 w-full text-base font-normal dark:font-semibold"
-              disabled={disabled || !isValidEmail(email)}
-              onClick={() => void signInWithEmail()}
-            />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                void signInWithEmail();
+              }}
+            >
+              <Input
+                name="email"
+                type="email"
+                placeholder="rick@roll.com"
+                disabled={disabled}
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                className="mb-3"
+                variant="modal"
+              />
+              <Button
+                title="Login with Email"
+                variant={theme === "dark" ? "primary" : "tertiary"}
+                className="!m-0 w-full text-base font-normal dark:font-semibold"
+                disabled={disabled || !isValidEmail(email)}
+                type="submit"
+              />
+            </form>
             <Confirm show={showConfirm} email={email ?? ""} />
             <p className="my-2 text-center text-sm text-gray-400 dark:text-gray-300">
               or
