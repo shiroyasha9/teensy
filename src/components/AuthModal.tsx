@@ -1,4 +1,3 @@
-import useAutoFocus from "$hooks/useAutoFocus";
 import { showAuthModalAtom } from "$store";
 import { isValidEmail } from "$utils/functions";
 import { Dialog, Transition } from "@headlessui/react";
@@ -67,7 +66,6 @@ const AuthModal = () => {
   const [email, setEmail] = useState("");
   const [showAuthModal, setShowAuthModal] = useAtom(showAuthModalAtom);
   const { theme } = useTheme();
-  const emailInput = useAutoFocus();
 
   const signInWithEmail = async () => {
     const toastId = toast.loading("Loading...");
@@ -155,7 +153,6 @@ const AuthModal = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="mb-3"
                 variant="modal"
-                ref={emailInput}
               />
               <Button
                 title="Login with Email"
