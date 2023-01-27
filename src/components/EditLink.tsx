@@ -1,9 +1,9 @@
 import { formAtom, teensyUrlAtom } from "$store";
 import { api } from "$utils/api";
+import { nanoidForSlug } from "$utils/functions";
 import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import { debounce } from "lodash";
-import { nanoid } from "nanoid";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import Button from "./Button";
@@ -109,7 +109,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
             title="Generate an alias"
             className="m-0 mt-1 w-full border-gray-500 text-sm !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200"
             onClick={() => {
-              const slug = nanoid();
+              const slug = nanoidForSlug();
               setForm({
                 ...form,
                 slug,

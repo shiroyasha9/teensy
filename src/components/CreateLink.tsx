@@ -5,9 +5,9 @@ import {
   teensyUrlAtom,
 } from "$store";
 import { api } from "$utils/api";
+import { nanoidForSlug } from "$utils/functions";
 import { useAtom, useSetAtom } from "jotai";
 import debounce from "lodash/debounce";
-import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Button from "./Button";
@@ -105,7 +105,7 @@ const CreateLink = () => {
             title="Generate an alias"
             className="m-0 mt-1 w-full text-sm"
             onClick={() => {
-              const slug = nanoid();
+              const slug = nanoidForSlug();
               setForm({
                 ...form,
                 slug,
