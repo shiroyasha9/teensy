@@ -37,6 +37,7 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
       formSubmitHandler={formSubmitHandler}
       mode="edit"
       additionalIsSlugInvalid={form.slug !== currentTeensy.slug}
+      currentTeensy={currentTeensy}
     />
   );
 };

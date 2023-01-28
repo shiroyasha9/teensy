@@ -6,10 +6,12 @@ import { nanoidForSlug } from "$utils/functions";
 
 import classNames from "classnames";
 import { useAtom } from "jotai";
-import { debounce } from "lodash";
+import debounce from "lodash.debounce";
 import { useTheme } from "next-themes";
-import { useEffect } from "react";
+import { useEffect, type ChangeEvent } from "react";
 
+import type { Teensy } from "@prisma/client";
+import { useMemo } from "react";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -17,10 +19,16 @@ type TeensyFormProps = {
   formSubmitHandler: () => void;
   mode?: "create" | "edit";
   additionalIsSlugInvalid?: boolean;
+  currentTeensy?: Teensy;
 };
 
 const TeensyForm = (props: TeensyFormProps) => {
-  const { formSubmitHandler, mode = "create", additionalIsSlugInvalid } = props;
+  const {
+    formSubmitHandler,
+    mode = "create",
+    additionalIsSlugInvalid,
+    currentTeensy,
+  } = props;
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const { theme } = useTheme();
@@ -42,6 +50,18 @@ const TeensyForm = (props: TeensyFormProps) => {
         ? slugCheck.data?.used && additionalIsSlugInvalid
         : slugCheck.data?.used));
 
+  function handleSlugChange(e: ChangeEvent<HTMLInputElement>) {
+    setForm((prevData) => ({
+      ...prevData,
+      slug: e.target.value,
+    }));
+    void slugCheck.refetch();
+  }
+
+  const debouncedSlugChangeHandler = useMemo(() => {
+    return debounce(handleSlugChange, 400);
+  }, []);
+
   const formClassNames = classNames(
     "flex w-full flex-col justify-center gap-4",
     {
@@ -61,6 +81,12 @@ const TeensyForm = (props: TeensyFormProps) => {
   const generateAliasButtonClassNames = classNames("m-0 mt-1 w-full text-sm", {
     "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
       mode === "edit",
+  });
+
+  useEffect(() => {
+    return () => {
+      debouncedSlugChangeHandler.cancel();
+    };
   });
 
   useEffect(() => {
@@ -86,7 +112,9 @@ const TeensyForm = (props: TeensyFormProps) => {
       <Input
         type="url"
         label="🤏 Link to teensy"
-        onChange={(e) => setForm({ ...form, url: e.target.value })}
+        onChange={(e) =>
+          setForm((prevData) => ({ ...prevData, url: e.target.value }))
+        }
         placeholder="e.g. https://github.com"
         value={form.url}
         required
@@ -109,17 +137,11 @@ const TeensyForm = (props: TeensyFormProps) => {
           label={`${teensyUrl.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
           variant={mode === "create" ? "primary" : "modal"}
-          onChange={(e) => {
-            setForm({
-              ...form,
-              slug: e.target.value,
-            });
-            debounce(slugCheck.refetch, 300);
-          }}
+          onChange={debouncedSlugChangeHandler}
           minLength={1}
           placeholder="alias e.g. ig for instagram"
           invalid={isSlugInvalid}
-          value={form.slug}
+          defaultValue={currentTeensy?.slug || ""}
           pattern={"^[-a-zA-Z0-9]+$"}
           title="Only alphanumeric characters and hypens are allowed. No spaces."
           required
