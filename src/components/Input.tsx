@@ -10,6 +10,7 @@ type InputProps = {
   label?: string;
   inlineLabel?: boolean;
   variant?: "primary" | "modal";
+  noContainer?: boolean;
 };
 
 type InputRef = HTMLInputElement;
@@ -24,6 +25,7 @@ const Input = forwardRef<
     invalid,
     label,
     inlineLabel,
+    noContainer,
     id,
     variant = "primary",
     ...rest
@@ -48,6 +50,12 @@ const Input = forwardRef<
     "flex items-center": inlineLabel,
   });
 
+  const content = <input id={id} className={classNames} ref={ref} {...rest} />;
+
+  if (noContainer) {
+    return content;
+  }
+
   return (
     <div className={containerClassNames}>
       {label && (
@@ -58,7 +66,7 @@ const Input = forwardRef<
           {label}
         </label>
       )}
-      <input id={id} className={classNames} ref={ref} {...rest} />
+      {content}
     </div>
   );
 });
