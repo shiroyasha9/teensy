@@ -116,7 +116,7 @@ export default function TeensiesPage() {
         <div className="relative w-[90vw] overflow-x-auto sm:w-[60vw] sm:rounded-lg ">
           <div className="table-wrp block h-64 max-h-64 rounded-md">
             <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
-              <thead className="sticky top-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="w-[10vw] px-6 py-3">
                     Teensy Slug
