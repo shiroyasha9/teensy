@@ -9,7 +9,7 @@ import type { Teensy } from "@prisma/client";
 import { useSetAtom } from "jotai";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MdSearch } from "react-icons/md";
 
 export default function TeensiesPage() {
@@ -29,6 +29,20 @@ export default function TeensiesPage() {
     setCurrentTeensy(teensy);
     setShowDeleteModal(true);
   }
+
+  const filteredData = useMemo(() => {
+    if (userTeensies.data?.teensies) {
+      if (search !== "") {
+        return userTeensies.data.teensies.filter(
+          (teensy) =>
+            teensy.slug.toLowerCase().includes(search.toLowerCase()) ||
+            teensy.url.toLowerCase().includes(search.toLowerCase()),
+        );
+      } else {
+        return userTeensies.data.teensies;
+      }
+    }
+  }, [userTeensies.data, search]);
 
   if (userTeensies.isLoading) {
     return <p>Loading...</p>;
@@ -101,17 +115,10 @@ export default function TeensiesPage() {
                 </tr>
               </thead>
               <tbody className="max-h-64 overflow-y-auto">
-                {userTeensies.data.teensies
-                  .filter((teensy) => {
-                    if (!search) return true;
-                    return (
-                      teensy.slug.includes(search) ||
-                      teensy.url.includes(search)
-                    );
-                  })
-                  .map((teensy) => (
+                {filteredData &&
+                  filteredData.map((teensy) => (
                     <tr
-                      className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                      className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700  dark:bg-[#37415180] dark:hover:bg-gray-600"
                       key={teensy.id}
                     >
                       <th
