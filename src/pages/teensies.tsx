@@ -121,8 +121,11 @@ export default function TeensiesPage() {
                   <th scope="col" className="w-[10vw] px-6 py-3">
                     Teensy Slug
                   </th>
-                  <th scope="col" className="w-[70vw] px-6 py-3 sm:w-[40vw]">
+                  <th scope="col" className="w-[60vw] px-6 py-3 sm:w-[30vw]">
                     Full URL
+                  </th>
+                  <th scope="col" className="w-[10vw] px-6 py-3">
+                    Visits
                   </th>
                   <th
                     scope="col"
@@ -156,6 +159,7 @@ export default function TeensiesPage() {
                           {teensy.url}
                         </a>
                       </td>
+                      <td className="px-6 py-4">{teensy.visits.length}</td>
                       <td className="px-6 py-4">
                         <button
                           onClick={() => handleEditClick(teensy)}

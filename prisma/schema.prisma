@@ -23,6 +23,7 @@ model Teensy {
   updatedAt   DateTime @updatedAt
   owner     User?    @relation(fields: [ownerId], references: [id])
   ownerId   String?
+  visits    Visit[]
 
   @@index([slug])
 }
@@ -73,4 +74,11 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Visit {
+  id String    @id @default(cuid())
+  createdAt DateTime @default(now())
+  teensy     Teensy    @relation(fields: [teensyId], references: [id])
+  teensyId   Int 
 }
