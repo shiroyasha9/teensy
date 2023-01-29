@@ -7,9 +7,10 @@ import { api } from "$utils/api";
 
 import type { Teensy } from "@prisma/client";
 import { useSetAtom } from "jotai";
+import debounce from "lodash.debounce";
 import Head from "next/head";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
 
 export default function TeensiesPage() {
@@ -43,6 +44,20 @@ export default function TeensiesPage() {
       }
     }
   }, [userTeensies.data, search]);
+
+  function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value);
+  }
+
+  const debouncedSearchChangeHandler = useMemo(() => {
+    return debounce(handleSearchChange, 300);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedSearchChangeHandler.cancel();
+    };
+  });
 
   if (userTeensies.isLoading) {
     return <p>Loading...</p>;
@@ -93,23 +108,27 @@ export default function TeensiesPage() {
               className="my-0 block w-full rounded-lg border !p-2 py-0 px-3 !pl-10 text-sm"
               placeholder="Search for items"
               noContainer
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              defaultValue=""
+              onChange={debouncedSearchChangeHandler}
             />
           </div>
         </div>
         <div className="relative w-[90vw] overflow-x-auto sm:w-[60vw] sm:rounded-lg ">
           <div className="table-wrp block h-64 max-h-64 rounded-md">
-            <table className="dark:text-graborder-y-lime-400 w-full  rounded-md text-left text-sm text-gray-500">
+            <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
               <thead className="sticky top-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="w-[10vw] px-6 py-3">
                     Teensy Slug
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="w-[70vw] px-6 py-3 sm:w-[40vw]">
                     Full URL
                   </th>
-                  <th scope="col" className="px-6 py-3 text-center" colSpan={2}>
+                  <th
+                    scope="col"
+                    className="w-[10vw] px-6 py-3 text-center"
+                    colSpan={2}
+                  >
                     Actions
                   </th>
                 </tr>
@@ -118,7 +137,7 @@ export default function TeensiesPage() {
                 {filteredData &&
                   filteredData.map((teensy) => (
                     <tr
-                      className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700  dark:bg-[#37415180] dark:hover:bg-gray-600"
+                      className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-[#37415180] dark:hover:bg-gray-700/75"
                       key={teensy.id}
                     >
                       <th
