@@ -63,6 +63,13 @@ export const appRouter = createTRPCRouter({
             createdAt: z.date(),
             updatedAt: z.date(),
             ownerId: z.string().nullable(),
+            visits: z.array(
+              z.object({
+                id: z.string(),
+                createdAt: z.date(),
+                teensyId: z.number(),
+              }),
+            ),
           }),
         ),
       }),
@@ -71,6 +78,7 @@ export const appRouter = createTRPCRouter({
       const teensies = await prisma.teensy.findMany({
         where: { owner: { email: ctx.session.user.email } },
         orderBy: { createdAt: "desc" },
+        include: { visits: true },
       });
 
       return { teensies };

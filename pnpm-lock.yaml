@@ -11,7 +11,7 @@ specifiers:
   '@trpc/next': ^10.9.0
   '@trpc/react-query': ^10.9.0
   '@trpc/server': ^10.9.0
-  '@types/lodash': ^4.14.191
+  '@types/lodash.debounce': ^4.0.7
   '@types/next-pwa': ^5.6.1
   '@types/node': ^18.11.18
   '@types/nodemailer': ^6.4.7
@@ -29,7 +29,7 @@ specifiers:
   eslint-config-next: 13.1.4
   handlebars: ^4.7.7
   jotai: ^1.13.1
-  lodash: ^4.17.21
+  lodash.debounce: ^4.0.8
   nanoid: ^4.0.0
   next: 13.1.4
   next-auth: ^4.18.8
@@ -70,7 +70,7 @@ dependencies:
   csstype: 3.1.1
   handlebars: 4.7.7
   jotai: 1.13.1_2exiyaescjxorpwwmy4ejghgte
-  lodash: 4.17.21
+  lodash.debounce: 4.0.8
   nanoid: 4.0.0
   next: 13.1.4_pjwopsidmaokadturxaafygjp4
   next-auth: 4.18.8_sodlexqla7mawimfla7qcwzvaq
@@ -90,7 +90,7 @@ dependencies:
   zod: 3.20.2
 
 devDependencies:
-  '@types/lodash': 4.14.191
+  '@types/lodash.debounce': 4.0.7
   '@types/next-pwa': 5.6.1_pjwopsidmaokadturxaafygjp4
   '@types/node': 18.11.18
   '@types/nodemailer': 6.4.7
@@ -1778,6 +1778,12 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash.debounce/4.0.7:
+    resolution: {integrity: sha512-X1T4wMZ+gT000M2/91SYj0d/7JfeNZ9PeeOldSNoE/lunLeQXKvkmIumI29IaKMotU/ln/McOIvgzZcQ/3TrSA==}
+    dependencies:
+      '@types/lodash': 4.14.191
     dev: true
 
   /@types/lodash/4.14.191:

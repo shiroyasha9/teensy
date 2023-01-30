@@ -1,22 +1,31 @@
 import classnames from "classnames";
-import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import {
+  forwardRef,
+  type DetailedHTMLProps,
+  type InputHTMLAttributes,
+} from "react";
 
-type Props = {
+type InputProps = {
   invalid?: boolean;
   label?: string;
   inlineLabel?: boolean;
   variant?: "primary" | "modal";
+  noContainer?: boolean;
 };
 
-const Input = (
-  props: Props &
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-) => {
+type InputRef = HTMLInputElement;
+
+const Input = forwardRef<
+  InputRef,
+  InputProps &
+    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+>((props, ref) => {
   const {
     className: overrideClassName,
     invalid,
     label,
     inlineLabel,
+    noContainer,
     id,
     variant = "primary",
     ...rest
@@ -41,6 +50,12 @@ const Input = (
     "flex items-center": inlineLabel,
   });
 
+  const content = <input id={id} className={classNames} ref={ref} {...rest} />;
+
+  if (noContainer) {
+    return content;
+  }
+
   return (
     <div className={containerClassNames}>
       {label && (
@@ -51,9 +66,11 @@ const Input = (
           {label}
         </label>
       )}
-      <input id={id} className={classNames} {...rest} />
+      {content}
     </div>
   );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;

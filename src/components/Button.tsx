@@ -9,6 +9,7 @@ type ButtonProps = {
 const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
   const {
     variant = "primary",
+    type = "button",
     title,
     className: overrideClassName,
     disabled,
@@ -33,7 +34,7 @@ const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
   );
 
   return (
-    <button {...rest} className={classNames} disabled={disabled}>
+    <button {...rest} type={type} className={classNames} disabled={disabled}>
       {title}
     </button>
   );
