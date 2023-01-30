@@ -45,6 +45,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 
   const isSlugInvalid =
     NOT_ALLOWED_SLUGS.has(form.slug) ||
+    slugCheck.isRefetching ||
     (slugCheck.isFetched &&
       (mode === "edit"
         ? slugCheck.data?.used && additionalIsSlugInvalid
@@ -59,7 +60,7 @@ const TeensyForm = (props: TeensyFormProps) => {
   }
 
   const debouncedSlugChangeHandler = useMemo(() => {
-    return debounce(handleSlugChange, 400);
+    return debounce(handleSlugChange, 200);
   }, []);
 
   const formClassNames = classNames(
