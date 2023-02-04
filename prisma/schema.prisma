@@ -79,6 +79,6 @@ model VerificationToken {
 model Visit {
   id String    @id @default(cuid())
   createdAt DateTime @default(now())
-  teensy     Teensy    @relation(fields: [teensyId], references: [id])
+  teensy     Teensy    @relation(fields: [teensyId], references: [id], onDelete: Cascade)
   teensyId   Int 
 }
