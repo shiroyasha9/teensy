@@ -1,7 +1,7 @@
 import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "$store";
+import { showToastMessage } from "$utils/functions";
 import copy from "copy-to-clipboard";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { toast } from "react-hot-toast";
 import Button from "./Button";
 
 const Success = () => {
@@ -12,17 +12,6 @@ const Success = () => {
   const resetHandler = () => {
     setForm({ slug: "", url: "" });
     setIsSuccessful(false);
-  };
-
-  const showToastMessage = () => {
-    toast("Link Copied!", {
-      icon: "✅",
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
   };
 
   return (
@@ -43,7 +32,7 @@ const Success = () => {
           title="Copy Link"
           onClick={() => {
             copy(`${window.location.protocol}//${teensyUrl}/${slug}`);
-            showToastMessage();
+            showToastMessage("Link Copied!");
           }}
         />
 
