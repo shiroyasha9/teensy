@@ -1,5 +1,4 @@
 import { api } from "$utils/api";
-import { isDevEnvironment } from "$utils/functions";
 import Image from "next/image";
 
 export default function Footer() {
@@ -19,11 +18,9 @@ export default function Footer() {
           priority
         />
       </a>
-      {!isDevEnvironment && (
-        <p className="mt-2 font-mono text-xs">
-          {visitorsCount.data ?? 0} Unique Visitors
-        </p>
-      )}
+      <p className="mt-2 font-mono text-xs">
+        {visitorsCount.data ?? "Fetching"} Unique Visitors
+      </p>
     </div>
   );
 }
