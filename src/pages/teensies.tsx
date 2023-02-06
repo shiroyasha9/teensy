@@ -1,3 +1,4 @@
+import Button from "$components/Button";
 import DeleteLink from "$components/DeleteLink";
 import EditLink from "$components/EditLink";
 import Input from "$components/Input";
@@ -10,6 +11,8 @@ import type { Teensy } from "@prisma/client";
 import copy from "copy-to-clipboard";
 import { useAtomValue, useSetAtom } from "jotai";
 import debounce from "lodash.debounce";
+import { useQRCode } from "next-qrcode";
+import { useTheme } from "next-themes";
 import Head from "next/head";
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
@@ -19,9 +22,17 @@ export default function TeensiesPage() {
   const teensyUrl = useAtomValue(teensyUrlAtom);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
   const userTeensies = api.fetchUserSlugs.useQuery();
+  const { theme } = useTheme();
+  const { Canvas } = useQRCode();
+
+  function handleQRClick(teensy: Teensy) {
+    setCurrentTeensy(teensy);
+    setShowQRModal(true);
+  }
 
   function handleEditClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
@@ -31,6 +42,15 @@ export default function TeensiesPage() {
   function handleDeleteClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
     setShowDeleteModal(true);
+  }
+
+  function downloadQRCode() {
+    const canvas = document.querySelector("canvas") as HTMLCanvasElement;
+    const image = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.download = `qrcode-${currentTeensy?.slug ?? ""}.png`;
+    link.href = image;
+    link.click();
   }
 
   const filteredData = useMemo(() => {
@@ -97,7 +117,7 @@ export default function TeensiesPage() {
       </Head>
       <div className="flex flex-col items-center justify-center gap-3">
         <h1 className="text-center text-2xl sm:text-xl">My Teensies</h1>
-        <div className="my-4 w-[90vw] sm:w-[60vw]">
+        <div className="my-4 w-[90vw] sm:w-[85vw]">
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -115,7 +135,7 @@ export default function TeensiesPage() {
             />
           </div>
         </div>
-        <div className="relative w-[90vw] overflow-x-auto sm:w-[60vw] sm:rounded-lg ">
+        <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
           <div className="table-wrp block h-64 max-h-64 rounded-md">
             <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
               <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -123,7 +143,7 @@ export default function TeensiesPage() {
                   <th scope="col" className="w-[10vw] px-6 py-3">
                     Teensy Slug
                   </th>
-                  <th scope="col" className="w-[60vw] px-6 py-3 sm:w-[30vw]">
+                  <th scope="col" className="w-[30vw] px-6 py-3 sm:w-[30vw]">
                     Full URL
                   </th>
                   <th scope="col" className="w-[10vw] px-6 py-3">
@@ -132,7 +152,7 @@ export default function TeensiesPage() {
                   <th
                     scope="col"
                     className="w-[10vw] px-6 py-3 text-center"
-                    colSpan={2}
+                    colSpan={3}
                   >
                     Actions
                   </th>
@@ -170,6 +190,14 @@ export default function TeensiesPage() {
                       <td className="px-6 py-4">{teensy.visits.length}</td>
                       <td className="px-6 py-4">
                         <button
+                          onClick={() => handleQRClick(teensy)}
+                          className="font-medium text-black hover:underline dark:text-gray-200"
+                        >
+                          QR
+                        </button>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
                           onClick={() => handleEditClick(teensy)}
                           className="font-medium text-purple-600 hover:underline dark:text-lemon-400"
                         >
@@ -190,6 +218,37 @@ export default function TeensiesPage() {
             </table>
           </div>
         </div>
+        <Modal showModal={showQRModal} closeModal={() => setShowQRModal(false)}>
+          <div className="flex flex-col items-center justify-center px-4 pt-8">
+            <Canvas
+              text={`${window.location.protocol}//${teensyUrl}/${
+                currentTeensy?.slug || ""
+              }`}
+              logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
+              options={{
+                level: "M",
+                margin: 1,
+                scale: 5,
+                width: 200,
+                color: {
+                  dark: "#000",
+                  light: "#fff",
+                },
+              }}
+            />
+            <p className="mt-4">
+              QR Code for{" "}
+              <span className="text-purple-600 dark:text-lemon-400">
+                {`${teensyUrl}/${currentTeensy?.slug || ""}`}
+              </span>
+            </p>
+            <Button
+              title="Download PNG"
+              onClick={downloadQRCode}
+              variant={theme === "dark" ? "primary" : "tertiary"}
+            />
+          </div>
+        </Modal>
         <Modal
           showModal={showEditModal}
           closeModal={() => setShowEditModal(false)}
