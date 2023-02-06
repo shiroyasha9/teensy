@@ -8,7 +8,7 @@ import classNames from "classnames";
 import { useAtom } from "jotai";
 import debounce from "lodash.debounce";
 import { useTheme } from "next-themes";
-import { useEffect, type ChangeEvent } from "react";
+import { useEffect, useRef, type ChangeEvent } from "react";
 
 import type { Teensy } from "@prisma/client";
 import { useMemo } from "react";
@@ -31,6 +31,7 @@ const TeensyForm = (props: TeensyFormProps) => {
   } = props;
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
+  const aliasInputRef = useRef<HTMLInputElement>(null);
   const { theme } = useTheme();
   const urlInput = useAutoFocus();
 
@@ -146,6 +147,7 @@ const TeensyForm = (props: TeensyFormProps) => {
           pattern={"^[-a-zA-Z0-9]+$"}
           title="Only alphanumeric characters and hypens are allowed. No spaces."
           required
+          ref={aliasInputRef}
         />
         <div className="flex items-center justify-center gap-5">
           <div className="ml-2 flex flex-1 items-center justify-center">or</div>
@@ -159,6 +161,9 @@ const TeensyForm = (props: TeensyFormProps) => {
                 ...form,
                 slug,
               });
+              if (aliasInputRef.current) {
+                aliasInputRef.current.value = slug;
+              }
               void slugCheck.refetch();
             }}
           />

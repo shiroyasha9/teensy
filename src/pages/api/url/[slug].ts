@@ -33,6 +33,10 @@ const fetchSlug = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
+  await prisma.globalVisits.create({
+    data: {},
+  });
+
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Cache-Control", "s-maxage=1000000000, stale-while-revalidate");

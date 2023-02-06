@@ -13,6 +13,16 @@ import {
  * All routers added in /api/routers should be manually added here
  */
 export const appRouter = createTRPCRouter({
+  fetchGlobalVisitsCounts: publicProcedure
+    .output(z.number())
+    .query(async () => {
+      return await prisma.globalVisits.count();
+    }),
+  addGlobalVisit: protectedProcedure.mutation(async () => {
+    await prisma.globalVisits.create({
+      data: {},
+    });
+  }),
   slugCheck: publicProcedure
     .meta({
       openapi: {
