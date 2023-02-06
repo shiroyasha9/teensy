@@ -82,3 +82,8 @@ model Visit {
   teensy     Teensy    @relation(fields: [teensyId], references: [id], onDelete: Cascade)
   teensyId   Int 
 }
+
+model GlobalVisits {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+}
