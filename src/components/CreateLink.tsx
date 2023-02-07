@@ -15,8 +15,10 @@ const CreateLink = () => {
 
   function formSubmitHandler() {
     createSlug.mutate({
-      ...form,
+      slug: form.slug,
+      url: form.url,
       ownerId: status === "authenticated" ? session?.user?.id : undefined,
+      password: form.isPasswordProtected ? form.password : undefined,
     });
   }
 

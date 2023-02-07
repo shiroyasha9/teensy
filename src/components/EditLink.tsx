@@ -17,7 +17,9 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
 
   function formSubmitHandler() {
     updateSlug.mutate({
-      ...form,
+      slug: form.slug,
+      url: form.url,
+      password: form.isPasswordProtected ? form.password : undefined,
       id: currentTeensy.id,
     });
   }
