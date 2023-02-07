@@ -23,7 +23,12 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
   }
 
   useEffect(() => {
-    setForm({ url: currentTeensy.url, slug: currentTeensy.slug });
+    setForm({
+      url: currentTeensy.url,
+      slug: currentTeensy.slug,
+      isPasswordProtected: !!currentTeensy.password,
+      password: currentTeensy.password ?? undefined,
+    });
   }, [currentTeensy, setForm]);
 
   useEffect(() => {
