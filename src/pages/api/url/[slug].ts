@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { prisma } from "$server/db";
+import { isDevEnvironment } from "$utils/functions";
 
 const fetchSlug = async (req: NextApiRequest, res: NextApiResponse) => {
   const slug = req.query["slug"];
@@ -33,9 +34,11 @@ const fetchSlug = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  await prisma.globalVisits.create({
-    data: {},
-  });
+  if (!isDevEnvironment) {
+    await prisma.globalVisits.create({
+      data: {},
+    });
+  }
 
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
