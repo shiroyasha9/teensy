@@ -9,6 +9,7 @@ import debounce from "lodash.debounce";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, type ChangeEvent } from "react";
 
+import { nanoidForSlug } from "$utils/functions";
 import type { Teensy } from "@prisma/client";
 import { useMemo } from "react";
 import Button from "./Button";
@@ -153,6 +154,25 @@ const TeensyForm = (props: TeensyFormProps) => {
           required
           ref={aliasInputRef}
         />
+        <div className="flex items-center justify-center gap-5">
+          <div className="ml-2 flex flex-1 items-center justify-center">or</div>
+          <Button
+            variant="outlined"
+            title="Generate an alias"
+            className={generateAliasButtonClassNames}
+            onClick={() => {
+              const slug = nanoidForSlug();
+              setForm({
+                ...form,
+                slug,
+              });
+              if (aliasInputRef.current) {
+                aliasInputRef.current.value = slug;
+              }
+              void slugCheck.refetch();
+            }}
+          />
+        </div>
         <div className="mt-3 flex items-center gap-1">
           <input
             type="checkbox"
@@ -172,14 +192,33 @@ const TeensyForm = (props: TeensyFormProps) => {
             Password Protection
           </label>
         </div>
-        <Input disabled={!form.isPasswordProtected} placeholder="e.g. 12345" />
+        <Input
+          disabled={!form.isPasswordProtected}
+          placeholder="e.g. 12345"
+          type="text"
+          minLength={5}
+          value={form.password}
+          onChange={(e) =>
+            setForm((prevData) => ({
+              ...prevData,
+              password: e.target.value,
+            }))
+          }
+          required={form.isPasswordProtected}
+        />
       </div>
       <Button
         type="submit"
         title={mode === "create" ? "Teensy it!" : "Edit it!"}
         variant={theme === "dark" || mode === "create" ? "primary" : "tertiary"}
         className="mb-2 w-full self-center"
-        disabled={isSlugInvalid || !form.url || !form.slug}
+        disabled={
+          isSlugInvalid ||
+          !form.url ||
+          !form.slug ||
+          (form.isPasswordProtected &&
+            (!form.password || form.password.length < 5))
+        }
       />
     </form>
   );
