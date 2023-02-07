@@ -2,7 +2,6 @@ import { NOT_ALLOWED_SLUGS } from "$constants";
 import useAutoFocus from "$hooks/useAutoFocus";
 import { formAtom, teensyUrlAtom } from "$store";
 import { api } from "$utils/api";
-import { nanoidForSlug } from "$utils/functions";
 
 import classNames from "classnames";
 import { useAtom } from "jotai";
@@ -99,7 +98,12 @@ const TeensyForm = (props: TeensyFormProps) => {
       } else {
         setTeensyUrl(host);
       }
-      setForm({ slug: "", url: "" });
+      setForm({
+        slug: "",
+        url: "",
+        isPasswordProtected: false,
+        password: undefined,
+      });
     }
   }, []);
 
@@ -149,25 +153,26 @@ const TeensyForm = (props: TeensyFormProps) => {
           required
           ref={aliasInputRef}
         />
-        <div className="flex items-center justify-center gap-5">
-          <div className="ml-2 flex flex-1 items-center justify-center">or</div>
-          <Button
-            variant="outlined"
-            title="Generate an alias"
-            className={generateAliasButtonClassNames}
-            onClick={() => {
-              const slug = nanoidForSlug();
-              setForm({
-                ...form,
-                slug,
-              });
-              if (aliasInputRef.current) {
-                aliasInputRef.current.value = slug;
-              }
-              void slugCheck.refetch();
-            }}
+        <div className="mt-3 flex items-center gap-1">
+          <input
+            type="checkbox"
+            id="password-protection-checkbox"
+            checked={form.isPasswordProtected}
+            onChange={(e) =>
+              setForm((prevData) => ({
+                ...prevData,
+                isPasswordProtected: e.target.checked,
+              }))
+            }
           />
+          <label
+            htmlFor="password-protection-checkbox"
+            className="mr-2 whitespace-nowrap text-sm font-medium"
+          >
+            Password Protection
+          </label>
         </div>
+        <Input disabled={!form.isPasswordProtected} placeholder="e.g. 12345" />
       </div>
       <Button
         type="submit"
