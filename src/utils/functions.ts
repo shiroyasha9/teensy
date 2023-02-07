@@ -18,6 +18,16 @@ export function showToastMessage(message: string) {
     },
   });
 }
+export function showErrorMessage(message: string) {
+  toast(message, {
+    icon: "❌",
+    style: {
+      borderRadius: "10px",
+      background: "#333",
+      color: "#fff",
+    },
+  });
+}
 
 export const isDevEnvironment =
   process && process.env.NODE_ENV === "development";
