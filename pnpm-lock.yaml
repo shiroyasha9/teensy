@@ -22,6 +22,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.48.2
   '@typescript-eslint/parser': ^5.48.2
   autoprefixer: ^10.4.13
+  chart.js: ^4.2.0
   classnames: ^2.3.2
   copy-to-clipboard: ^3.3.3
   csstype: ^3.1.1
@@ -43,6 +44,7 @@ specifiers:
   prettier-plugin-tailwindcss: ^0.2.1
   prisma: ^4.9.0
   react: 18.2.0
+  react-chartjs-2: ^5.2.0
   react-dom: 18.2.0
   react-dom-confetti: ^0.2.0
   react-hot-toast: ^2.4.0
@@ -66,6 +68,7 @@ dependencies:
   '@trpc/next': 10.9.0_3xpffe6ccgcl6mqodjbsc3l66a
   '@trpc/react-query': 10.9.0_otezeanlcfehayqasmdzoxseqm
   '@trpc/server': 10.9.0
+  chart.js: 4.2.0
   classnames: 2.3.2
   copy-to-clipboard: 3.3.3
   csstype: 3.1.1
@@ -81,6 +84,7 @@ dependencies:
   nextjs-cors: 2.1.2_next@13.1.4
   nodemailer: 6.9.0
   react: 18.2.0
+  react-chartjs-2: 5.2.0_uxqdnqzacoapcp4mwytn5yclyu
   react-dom: 18.2.0_react@18.2.0
   react-dom-confetti: 0.2.0_react@18.2.0
   react-hot-toast: 2.4.0_owo25xnefcwdq3zjgtohz6dbju
@@ -1270,6 +1274,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+
+  /@kurkle/color/0.3.2:
+    resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
+    dev: false
 
   /@next-auth/prisma-adapter/1.0.5_bd4lx2c2rys43d3d7o2mw3plau:
     resolution: {integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==}
@@ -2496,6 +2504,13 @@ packages:
 
   /character-reference-invalid/1.1.4:
     resolution: {integrity: sha512-mKKUkUbhPpQlCOfIuZkvSEgktjPFIsZKRRbC6KWVEMvlzblj3i3asQv5ODsrwt0N3pHAEvjP8KTQPHkp0+6jOg==}
+    dev: false
+
+  /chart.js/4.2.0:
+    resolution: {integrity: sha512-wbtcV+QKeH0F7gQZaCJEIpsNriFheacouJQTVIjITi3eQA8bTlIBoknz0+dgV79aeKLNMAX+nDslIVE/nJ3rzA==}
+    engines: {pnpm: ^7.0.0}
+    dependencies:
+      '@kurkle/color': 0.3.2
     dev: false
 
   /chokidar/3.5.3:
@@ -5039,6 +5054,16 @@ packages:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+    dev: false
+
+  /react-chartjs-2/5.2.0_uxqdnqzacoapcp4mwytn5yclyu:
+    resolution: {integrity: sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==}
+    peerDependencies:
+      chart.js: ^4.1.1
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      chart.js: 4.2.0
+      react: 18.2.0
     dev: false
 
   /react-copy-to-clipboard/5.1.0_react@18.2.0:
