@@ -1,3 +1,4 @@
+import AnalyticsPieChart from "$components/AnalyticsPieChart";
 import Button from "$components/Button";
 import DeleteLink from "$components/DeleteLink";
 import EditLink from "$components/EditLink";
@@ -25,6 +26,7 @@ export default function TeensiesPage() {
   const [showQRModal, setShowQRModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
+  const [tabView, setTabView] = useState("teensies");
   const userTeensies = api.fetchUserSlugs.useQuery();
   const { theme } = useTheme();
   const { Canvas } = useQRCode();
@@ -115,109 +117,177 @@ export default function TeensiesPage() {
         />
         <meta name="description" content="Edit/Delete your saved teensies." />
       </Head>
+
       <div className="flex flex-col items-center justify-center gap-3">
-        <h1 className="text-center text-2xl sm:text-xl">My Teensies</h1>
-        <div className="my-4 w-[90vw] sm:w-[85vw]">
-          <label htmlFor="table-search" className="sr-only">
-            Search
+        <div className="sm:hidden">
+          <label htmlFor="tabs" className="sr-only">
+            Select your tab
           </label>
-          <div className="relative mx-[2px] mt-1">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <MdSearch className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          <select
+            id="tabs"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            defaultValue="teensies"
+            onChange={(e) => {
+              console.log(e.target.value);
+              setTabView(e.target.value);
+            }}
+          >
+            <option value="teensies">Teensies</option>
+            <option value="analytics">Analytics</option>
+          </select>
+        </div>
+        <ul className="hidden divide-x divide-gray-200 rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400 sm:flex">
+          <li className="w-full">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setTabView("teensies");
+              }}
+              className={
+                "inline-block w-full rounded-l-lg p-4 focus:outline-none " +
+                (tabView == "teensies"
+                  ? " active bg-gray-300 text-black dark:bg-gray-600 dark:text-white"
+                  : "bg-white  text-gray-800 dark:bg-gray-800 dark:text-white")
+              }
+              aria-current="page"
+            >
+              Teensies
+            </a>
+          </li>
+
+          <li className="w-full">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setTabView("analytics");
+              }}
+              className={
+                "inline-block w-full rounded-r-lg p-4 focus:outline-none " +
+                (tabView == "analytics"
+                  ? " active bg-gray-300 text-black dark:bg-gray-600 dark:text-white"
+                  : "bg-white  text-gray-800 dark:bg-gray-800 dark:text-white")
+              }
+            >
+              Analytics
+            </a>
+          </li>
+        </ul>
+
+        {tabView === "teensies" && (
+          <>
+            <h1 className="text-center text-2xl sm:text-xl">My Teensies</h1>
+            <div className="my-4 w-[90vw] sm:w-[85vw]">
+              <label htmlFor="table-search" className="sr-only">
+                Search
+              </label>
+              <div className="relative mx-[2px] mt-1">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <MdSearch className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <Input
+                  type="text"
+                  className="my-0 block w-full rounded-lg border !p-2 py-0 px-3 !pl-10 text-sm"
+                  placeholder="Search for items"
+                  noContainer
+                  defaultValue=""
+                  onChange={debouncedSearchChangeHandler}
+                />
+              </div>
             </div>
-            <Input
-              type="text"
-              className="my-0 block w-full rounded-lg border !p-2 py-0 px-3 !pl-10 text-sm"
-              placeholder="Search for items"
-              noContainer
-              defaultValue=""
-              onChange={debouncedSearchChangeHandler}
-            />
-          </div>
-        </div>
-        <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
-          <div className="table-wrp block h-64 max-h-64 rounded-md">
-            <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
-              <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="w-[10vw] px-6 py-3">
-                    Teensy Slug
-                  </th>
-                  <th scope="col" className="w-[30vw] px-6 py-3 sm:w-[30vw]">
-                    Full URL
-                  </th>
-                  <th scope="col" className="w-[10vw] px-6 py-3">
-                    Visits
-                  </th>
-                  <th
-                    scope="col"
-                    className="w-[10vw] px-6 py-3 text-center"
-                    colSpan={3}
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="max-h-64 overflow-y-auto">
-                {filteredData &&
-                  filteredData.map((teensy) => (
-                    <tr
-                      className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-[#37415180] dark:hover:bg-gray-700/75"
-                      key={teensy.id}
-                    >
-                      <td
-                        scope="row"
-                        className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:underline dark:text-white "
-                        onClick={() => {
-                          copy(
-                            `${window.location.protocol}//${teensyUrl}/${teensy.slug}`,
-                          );
-                          showToastMessage("Link Copied!");
-                        }}
+            <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
+              <div className="table-wrp block h-64 max-h-64 rounded-md">
+                <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
+                  <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="w-[10vw] px-6 py-3">
+                        Teensy Slug
+                      </th>
+                      <th
+                        scope="col"
+                        className="w-[30vw] px-6 py-3 sm:w-[30vw]"
                       >
-                        /{teensy.slug}
-                      </td>
-                      <td className="px-6 py-4">
-                        <a
-                          href={teensy.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="hover:underline"
-                        >
-                          {teensy.url}
-                        </a>
-                      </td>
-                      <td className="px-6 py-4">{teensy.visits.length}</td>
-                      <td className="px-6 py-4">
-                        <button
-                          onClick={() => handleQRClick(teensy)}
-                          className="font-medium text-black hover:underline dark:text-gray-200"
-                        >
-                          QR
-                        </button>
-                      </td>
-                      <td className="px-6 py-4">
-                        <button
-                          onClick={() => handleEditClick(teensy)}
-                          className="font-medium text-purple-600 hover:underline dark:text-lemon-400"
-                        >
-                          Edit
-                        </button>
-                      </td>
-                      <td className="px-6 py-4">
-                        <button
-                          onClick={() => handleDeleteClick(teensy)}
-                          className="font-medium text-red-500 hover:underline dark:text-red-450"
-                        >
-                          Delete
-                        </button>
-                      </td>
+                        Full URL
+                      </th>
+                      <th scope="col" className="w-[10vw] px-6 py-3">
+                        Visits
+                      </th>
+                      <th
+                        scope="col"
+                        className="w-[10vw] px-6 py-3 text-center"
+                      >
+                        Actions
+                      </th>
                     </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                  </thead>
+                  <tbody className="max-h-64 overflow-y-auto">
+                    {filteredData &&
+                      filteredData.map((teensy) => (
+                        <tr
+                          className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-[#37415180] dark:hover:bg-gray-700/75"
+                          key={teensy.id}
+                        >
+                          <td
+                            scope="row"
+                            className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:underline dark:text-white "
+                            onClick={() => {
+                              copy(
+                                `${window.location.protocol}//${teensyUrl}/${teensy.slug}`,
+                              );
+                              showToastMessage("Link Copied!");
+                            }}
+                          >
+                            /{teensy.slug}
+                          </td>
+                          <td className="px-6 py-4">
+                            <a
+                              href={teensy.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="hover:underline"
+                            >
+                              {teensy.url}
+                            </a>
+                          </td>
+                          <td className="px-6 py-4">{teensy.visits.length}</td>
+
+                          <td className="flex justify-center gap-8 px-6 py-4">
+                            <button
+                              onClick={() => handleQRClick(teensy)}
+                              className="font-medium text-black hover:underline dark:text-gray-200"
+                            >
+                              QR
+                            </button>
+                            <button
+                              onClick={() => handleEditClick(teensy)}
+                              className="font-medium text-purple-600 hover:underline dark:text-lemon-400"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteClick(teensy)}
+                              className="font-medium text-red-500 hover:underline dark:text-red-450"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+        {tabView === "analytics" && (
+          <>
+            <h1 className="text-center text-2xl sm:text-xl">Analytics</h1>
+            <div className="my-4 max-h-[20rem] w-[90vw] sm:w-[85vw]">
+              <AnalyticsPieChart />
+            </div>
+          </>
+        )}
         <Modal showModal={showQRModal} closeModal={() => setShowQRModal(false)}>
           <div className="flex flex-col items-center justify-center px-4 pt-8">
             <Canvas
@@ -236,9 +306,20 @@ export default function TeensiesPage() {
                 },
               }}
             />
-            <p className="mt-4">
-              QR Code for{" "}
-              <span className="text-purple-600 dark:text-lemon-400">
+            <p className="mt-4 flex gap-1">
+              <span>QR Code for</span>
+
+              <span
+                className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
+                onClick={() => {
+                  copy(
+                    `${window.location.protocol}//${teensyUrl}/${
+                      currentTeensy?.slug || ""
+                    }`,
+                  );
+                  showToastMessage("Link Copied!");
+                }}
+              >
                 {`${teensyUrl}/${currentTeensy?.slug || ""}`}
               </span>
             </p>

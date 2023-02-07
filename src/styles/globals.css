@@ -14,3 +14,24 @@
     -moz-appearance: textfield !important;
   }
 }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a5a7ac #374151;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #a5a7ac;
+  border-radius: 999px;
+  border: 2px solid #374151;
+}
