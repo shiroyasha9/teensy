@@ -1,3 +1,4 @@
+import { getExpiryDate } from "$utils/functions";
 import { z } from "zod";
 import { prisma } from "../db";
 import {
@@ -138,6 +139,7 @@ export const appRouter = createTRPCRouter({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         password: z.string().or(z.undefined()),
+        expiresIn: z.number().or(z.undefined()),
         ownerId: z.string().optional(),
       }),
     )
@@ -154,6 +156,9 @@ export const appRouter = createTRPCRouter({
             url: input.url,
             ownerId: input.ownerId,
             password: input.password,
+            expiresAt: input.expiresIn
+              ? getExpiryDate(input.expiresIn)
+              : undefined,
           },
         });
         return { success: true };
