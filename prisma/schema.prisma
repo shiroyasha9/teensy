@@ -33,12 +33,12 @@ model Teensy {
 model ExpiredTeensy {
   id        Int      @id @default(autoincrement())
   url       String   @db.VarChar(2000)
-  slug      String   @unique
+  slug      String   
   createdAt DateTime @default(now())
+  visitCount Int    @default(0)
   password  String?
   owner     User?    @relation(fields: [ownerId], references: [id])
   ownerId   String?
-  visits    Visit[]
 
   @@index([slug])
 }
@@ -97,8 +97,6 @@ model Visit {
   createdAt DateTime @default(now())
   teensy     Teensy    @relation(fields: [teensyId], references: [id], onDelete: Cascade)
   teensyId   Int 
-  expiredTeensy     ExpiredTeensy?    @relation(fields: [expiredTeensyId], references: [id], onDelete: Cascade)
-  expiredTeensyId   Int? 
 }
 
 model GlobalVisits {
