@@ -10,11 +10,11 @@ const ProtectedTeensyPage = () => {
   const [password, setPassword] = useState("");
 
   const currentTeensy = api.fetchUserTeensy.useQuery(
-    parseInt(router.query.id as string, 10),
+    router.query.slug as string,
   );
 
   if (!currentTeensy.data || currentTeensy.isLoading || currentTeensy.isError) {
-    return "Loading...";
+    return <p>Loading...</p>;
   }
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {

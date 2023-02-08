@@ -37,7 +37,9 @@ export async function middleware(req: NextRequest) {
   }
   const data = (await slugFetch.json()) as Teensy;
   if (data.password) {
-    return NextResponse.redirect(`${req.nextUrl.origin}/protected/${data.id}`);
+    return NextResponse.redirect(
+      `${req.nextUrl.origin}/protected/${data.slug}`,
+    );
   }
 
   return NextResponse.redirect(data.url);
