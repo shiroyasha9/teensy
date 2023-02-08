@@ -129,6 +129,7 @@ export const appRouter = createTRPCRouter({
             slug: z.string(),
             createdAt: z.date(),
             updatedAt: z.date(),
+            expiresAt: z.date().nullable(),
             ownerId: z.string().nullable(),
             password: z.string().nullable(),
             visits: z.array(
