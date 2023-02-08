@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply h-screen bg-purple-900 bg-gradient-to-b from-purple-700 to-purple-1000 text-white transition-colors duration-500 ease-in dark:bg-black dark:bg-none  dark:text-gray-200;
+    @apply h-screen bg-purple-900 bg-gradient-to-b from-purple-700 to-purple-1000 text-white accent-lemon-400 transition-colors duration-500 ease-in dark:bg-black  dark:bg-none dark:text-gray-200;
   }
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button,

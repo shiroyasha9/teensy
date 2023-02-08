@@ -15,7 +15,14 @@ const Success = () => {
   const [showDownloadQRButton, setShowDownloadQRButton] = useState(false);
 
   const resetHandler = () => {
-    setForm({ slug: "", url: "" });
+    setForm({
+      slug: "",
+      url: "",
+      isPasswordProtected: false,
+      password: undefined,
+      isAutoDelete: false,
+      expiresAt: undefined,
+    });
     setIsSuccessful(false);
   };
 

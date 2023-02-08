@@ -1,3 +1,4 @@
+import { getExpiryDate } from "$utils/functions";
 import { z } from "zod";
 import { prisma } from "../db";
 import {
@@ -44,13 +45,69 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const count = await prisma.teensy.count({
+      const teensy = await prisma.teensy.findFirst({
         where: {
           slug: input.slug,
         },
+        include: {
+          visits: true,
+        },
       });
+      if (
+        teensy &&
+        teensy.expiresAt &&
+        new Date(teensy.expiresAt) < new Date()
+      ) {
+        await prisma.expiredTeensy.create({
+          data: {
+            slug: teensy.slug,
+            url: teensy.url,
+            visitCount: teensy.visits.length,
+            password: teensy.password,
+            ownerId: teensy.ownerId,
+          },
+        });
+        await prisma.teensy.delete({
+          where: {
+            id: teensy.id,
+          },
+        });
+        return {
+          used: false,
+        };
+      }
 
-      return { used: count > 0 };
+      return { used: !!teensy };
+    }),
+  fetchUserTeensy: protectedProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/fetch-user-teensy",
+        protect: true,
+        summary: "This endpoint can be used to fetch a teensy",
+        headers: [{ name: "secret-key", required: true }],
+      },
+    })
+    .input(z.string())
+    .output(
+      z.object({
+        id: z.number(),
+        url: z.string(),
+        slug: z.string(),
+        createdAt: z.date(),
+        updatedAt: z.date(),
+        ownerId: z.string().nullable(),
+        password: z.string().nullable(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const teensy = await prisma.teensy.findFirstOrThrow({
+        where: {
+          slug: input,
+        },
+      });
+      return teensy;
     }),
   fetchUserSlugs: protectedProcedure
     .meta({
@@ -72,7 +129,9 @@ export const appRouter = createTRPCRouter({
             slug: z.string(),
             createdAt: z.date(),
             updatedAt: z.date(),
+            expiresAt: z.date().nullable(),
             ownerId: z.string().nullable(),
+            password: z.string().nullable(),
             visits: z.array(
               z.object({
                 id: z.string(),
@@ -106,6 +165,8 @@ export const appRouter = createTRPCRouter({
       z.object({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
+        password: z.string().or(z.undefined()),
+        expiresIn: z.number().or(z.undefined()),
         ownerId: z.string().optional(),
       }),
     )
@@ -121,6 +182,10 @@ export const appRouter = createTRPCRouter({
             slug: input.slug,
             url: input.url,
             ownerId: input.ownerId,
+            password: input.password,
+            expiresAt: input.expiresIn
+              ? getExpiryDate(input.expiresIn)
+              : undefined,
           },
         });
         return { success: true };
@@ -144,6 +209,7 @@ export const appRouter = createTRPCRouter({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         id: z.number(),
+        password: z.string().or(z.undefined()),
       }),
     )
     .output(
@@ -161,6 +227,7 @@ export const appRouter = createTRPCRouter({
           data: {
             slug: input.slug,
             url: input.url,
+            password: input.password,
           },
         });
         return { success: true };
