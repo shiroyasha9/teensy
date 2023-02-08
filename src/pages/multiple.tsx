@@ -81,7 +81,7 @@ const Multiple = () => {
                       value={teensy.url}
                       onChange={(e) => {
                         const newTeensies = [...multipleTeensiesData];
-                        newTeensies[index].url = e.target.value;
+                        newTeensies[index]!.url = e.target.value;
                         flushSync(() => {
                           setMultipleFormAtom(newTeensies);
                         });
@@ -101,8 +101,8 @@ const Multiple = () => {
                       value={teensy.slug}
                       onChange={(e) => {
                         const newTeensies = [...multipleTeensiesData];
-                        newTeensies[index].slug = e.target.value;
-                        newTeensies[index].used = false;
+                        newTeensies[index]!.slug = e.target.value;
+                        newTeensies[index]!.used = false;
                         flushSync(() => {
                           setMultipleFormAtom(newTeensies);
                         });

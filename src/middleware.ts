@@ -1,6 +1,23 @@
+import { type Teensy } from "@prisma/client";
 import { NextResponse, type NextRequest } from "next/server";
 
+const IGNORE_MIDDLEWARE_PATHS = [
+  "/protected/",
+  "/bmc.svg",
+  "/icon-",
+  "/.well-known/",
+  "/manifest.json",
+];
+
 export async function middleware(req: NextRequest) {
+  const isIgnoredPath = IGNORE_MIDDLEWARE_PATHS.some((path) =>
+    req.nextUrl.pathname.startsWith(path),
+  );
+
+  if (isIgnoredPath) {
+    return;
+  }
+
   if (
     req.nextUrl.pathname.startsWith("/wa/") &&
     !req.nextUrl.pathname.endsWith("/wa/")
@@ -14,13 +31,16 @@ export async function middleware(req: NextRequest) {
   const slug = req.nextUrl.pathname.split("/").pop();
   const slugFetch = await fetch(`${req.nextUrl.origin}/api/url/${slug || ""}`);
   if (slugFetch.status === 404) {
-    return;
+    const url = req.nextUrl;
+    url.pathname = `/404`;
+    return NextResponse.rewrite(url);
   }
-  const data = (await slugFetch.json()) as { url: string };
+  const data = (await slugFetch.json()) as Teensy;
+  if (data.password) {
+    return NextResponse.redirect(`${req.nextUrl.origin}/protected/${data.id}`);
+  }
 
-  if (data?.url) {
-    return NextResponse.redirect(data.url);
-  }
+  return NextResponse.redirect(data.url);
 }
 
 export const config = {
