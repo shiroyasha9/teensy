@@ -22,7 +22,19 @@ model Teensy {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   expiresAt DateTime?
-  isExpired Boolean @default(false)
+  password  String?
+  owner     User?    @relation(fields: [ownerId], references: [id])
+  ownerId   String?
+  visits    Visit[]
+
+  @@index([slug])
+}
+
+model ExpiredTeensy {
+  id        Int      @id @default(autoincrement())
+  url       String   @db.VarChar(2000)
+  slug      String   @unique
+  createdAt DateTime @default(now())
   password  String?
   owner     User?    @relation(fields: [ownerId], references: [id])
   ownerId   String?
@@ -69,6 +81,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   teensies       Teensy[]
+  expiredTeensies ExpiredTeensy[]
 }
 
 model VerificationToken {
@@ -84,6 +97,8 @@ model Visit {
   createdAt DateTime @default(now())
   teensy     Teensy    @relation(fields: [teensyId], references: [id], onDelete: Cascade)
   teensyId   Int 
+  expiredTeensy     ExpiredTeensy?    @relation(fields: [expiredTeensyId], references: [id], onDelete: Cascade)
+  expiredTeensyId   Int? 
 }
 
 model GlobalVisits {
