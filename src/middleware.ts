@@ -28,13 +28,12 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(WHATSAPP_URL);
     }
   }
+
   const slug = req.nextUrl.pathname.split("/").pop();
   const slugFetch = await fetch(`${req.nextUrl.origin}/api/url/${slug || ""}`);
 
   if (slugFetch.status === 404) {
-    const url = req.nextUrl;
-    url.pathname = `/404`;
-    return NextResponse.rewrite(url);
+    return;
   }
 
   if (slugFetch.status === 498) {
@@ -57,7 +56,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|teensies|expired).*)",
-  ],
+  matcher: ["/:slug*", "/wa/:number*"],
 };
