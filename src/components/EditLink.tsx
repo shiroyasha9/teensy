@@ -30,6 +30,8 @@ const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
       slug: currentTeensy.slug,
       isPasswordProtected: !!currentTeensy.password,
       password: currentTeensy.password ?? undefined,
+      isAutoDelete: !!currentTeensy.expiresAt,
+      expiresAt: currentTeensy.expiresAt ?? undefined,
     });
   }, [currentTeensy, setForm]);
 

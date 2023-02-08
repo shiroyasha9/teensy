@@ -20,6 +20,8 @@ const Success = () => {
       url: "",
       isPasswordProtected: false,
       password: undefined,
+      isAutoDelete: false,
+      expiresAt: undefined,
     });
     setIsSuccessful(false);
   };

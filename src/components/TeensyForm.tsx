@@ -9,10 +9,16 @@ import debounce from "lodash.debounce";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, type ChangeEvent } from "react";
 
-import { nanoidForSlug } from "$utils/functions";
+import { AutoDeleteDropdownData } from "$types";
+import {
+  getFormattedTime,
+  getRemaingTime,
+  nanoidForSlug,
+} from "$utils/functions";
 import type { Teensy } from "@prisma/client";
 import { useMemo } from "react";
 import Button from "./Button";
+import Dropdown from "./Dropdown";
 import Input from "./Input";
 
 type TeensyFormProps = {
@@ -35,12 +41,36 @@ const TeensyForm = (props: TeensyFormProps) => {
   const { theme } = useTheme();
   const urlInput = useAutoFocus();
 
+  const AUTO_DELETE_OPTIONS: AutoDeleteDropdownData[] = [
+    {
+      label: "1 min",
+      minutesToExpire: 1,
+    },
+    {
+      label: "1 hour",
+      minutesToExpire: 60,
+    },
+    {
+      label: "4 hours",
+      minutesToExpire: 60 * 4,
+    },
+    {
+      label: "8 hours",
+      minutesToExpire: 60 * 8,
+    },
+    {
+      label: "1 day",
+      minutesToExpire: 60 * 24,
+    },
+  ];
+
   const slugCheck = api.slugCheck.useQuery(
     { slug: form.slug },
     {
       refetchOnReconnect: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
+      enabled: false,
     },
   );
 
@@ -104,6 +134,8 @@ const TeensyForm = (props: TeensyFormProps) => {
         url: "",
         isPasswordProtected: false,
         password: undefined,
+        isAutoDelete: false,
+        expiresIn: undefined,
       });
     }
   }, []);
@@ -206,6 +238,55 @@ const TeensyForm = (props: TeensyFormProps) => {
           }
           required={form.isPasswordProtected}
         />
+        {mode === "create" ? (
+          <>
+            <div className="mt-3 flex items-center gap-1">
+              <input
+                type="checkbox"
+                id="auto-delete-checkbox"
+                checked={form.isAutoDelete}
+                onChange={(e) =>
+                  setForm((prevData) => ({
+                    ...prevData,
+                    isAutoDelete: e.target.checked,
+                  }))
+                }
+              />
+              <label
+                htmlFor="auto-delete-checkbox"
+                className="mr-2 whitespace-nowrap text-sm font-medium"
+              >
+                Auto delete in
+              </label>
+            </div>
+            <Dropdown
+              data={AUTO_DELETE_OPTIONS}
+              disabled={!form.isAutoDelete}
+              label={
+                form.expiresIn ? getFormattedTime(form.expiresIn) : "e.g 1 day"
+              }
+              onChange={(mins: number) =>
+                setForm((prevData) => ({
+                  ...prevData,
+                  expiresIn: mins,
+                }))
+              }
+            />
+          </>
+        ) : (
+          currentTeensy &&
+          currentTeensy.expiresAt && (
+            <label
+              htmlFor="auto-delete-checkbox"
+              className="whitespace-nowrap text-sm font-medium"
+            >
+              Auto deletes in{" "}
+              {getFormattedTime(
+                getRemaingTime(currentTeensy?.expiresAt || new Date()),
+              )}
+            </label>
+          )
+        )}
       </div>
       <Button
         type="submit"
@@ -217,7 +298,8 @@ const TeensyForm = (props: TeensyFormProps) => {
           !form.url ||
           !form.slug ||
           (form.isPasswordProtected &&
-            (!form.password || form.password.length < 5))
+            (!form.password || form.password.length < 5)) ||
+          (form.isAutoDelete && !form.expiresIn)
         }
       />
     </form>

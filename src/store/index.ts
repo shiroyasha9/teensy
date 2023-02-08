@@ -5,6 +5,7 @@ export const formAtom = atom<FormData>({
   slug: "",
   url: "",
   isPasswordProtected: false,
+  isAutoDelete: false,
 });
 
 export const teensyUrlAtom = atom<string>("teensy.tech");
