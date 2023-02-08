@@ -18,12 +18,46 @@ const fetchSlug = async (req: NextApiRequest, res: NextApiResponse) => {
     where: {
       slug,
     },
+    include: {
+      visits: true,
+    },
   });
 
   if (!data) {
+    const expiredTeensy = await prisma.expiredTeensy.findFirst({
+      where: {
+        slug,
+      },
+    });
+    if (expiredTeensy) {
+      res.statusCode = 498;
+      res.send(JSON.stringify({ message: "expired" }));
+      return;
+    }
     res.statusCode = 404;
 
     res.send(JSON.stringify({ message: "slug not found" }));
+
+    return;
+  }
+
+  if (data.expiresAt && new Date(data.expiresAt) < new Date()) {
+    await prisma.expiredTeensy.create({
+      data: {
+        slug: data.slug,
+        url: data.url,
+        visitCount: data.visits.length,
+        password: data.password,
+        ownerId: data.ownerId,
+      },
+    });
+    await prisma.teensy.delete({
+      where: {
+        id: data.id,
+      },
+    });
+    res.statusCode = 498;
+    res.send(JSON.stringify({ message: "slug has expired" }));
 
     return;
   }

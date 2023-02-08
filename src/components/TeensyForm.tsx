@@ -70,7 +70,6 @@ const TeensyForm = (props: TeensyFormProps) => {
       refetchOnReconnect: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-      enabled: false,
     },
   );
 
