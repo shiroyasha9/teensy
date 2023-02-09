@@ -1,171 +1,188 @@
-import { showErrorMessage, showToastMessage } from "$utils/functions";
+import {
+  nanoidForSlug,
+  showErrorMessage,
+  showToastMessage,
+} from "$utils/functions";
 import React, { ChangeEvent, useState } from "react";
 import { api } from "$utils/api";
 import { flushSync } from "react-dom";
 import { useAtom } from "jotai";
 import { multipleFormAtom } from "$store";
+import Router from "next/router";
 const Multiple = () => {
   const [showErrors, setShowErrors] = useState(false);
-  //   const [multipleTeensiesData, setMultipleFormAtom] = useState([
+  //   const [multipleTeensiesData, setMultipleTeensiesData] = useState([
   //     { slug: "", url: "", used: false },
   //   ]);
-  const [multipleTeensiesData, setMultipleFormAtom] = useAtom(multipleFormAtom);
+  const [multipleTeensiesData, setMultipleTeensiesData] =
+    useAtom(multipleFormAtom);
   const addTeensy = () => {
-    setMultipleFormAtom([
+    setMultipleTeensiesData([
       ...multipleTeensiesData,
       { slug: "", url: "", used: false, isPasswordProtected: false },
     ]);
   };
-  const { mutateAsync: checkSlugs, data } = api.slugCheckMultiple.useMutation();
+  const { mutateAsync: checkSlugs } = api.slugCheckMultiple.useMutation();
+  const { mutateAsync: createMultipleTeensies } =
+    api.createMultipleTeensies.useMutation();
 
-  const handleSubmitCreateTeensies = async () => {
-    await checkSlugs(multipleTeensiesData);
+  const handleSubmitCreateTeensies = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const data = await checkSlugs(multipleTeensiesData);
     console.log({ multipleTeensiesData, data });
-    setMultipleFormAtom(
-      multipleTeensiesData.map((teensy, index) => {
-        if (data?.usedSlugs?.includes(teensy.slug)) {
-          return { ...teensy, used: true };
-        } else return { ...teensy, used: false };
-      }),
-    );
+    flushSync(() => {
+      setMultipleTeensiesData(
+        multipleTeensiesData.map((teensy, index) => {
+          if (data?.usedSlugs?.includes(teensy.slug)) {
+            return { ...teensy, used: true };
+          } else return { ...teensy, used: false };
+        }),
+      );
+    });
     if (data && data.usedSlugs?.length > 0) {
       setShowErrors(true);
 
       showErrorMessage("Some of the aliases are already taken");
       return;
+    } else {
+      setShowErrors(false);
+      const data = await createMultipleTeensies(multipleTeensiesData);
+      console.log({ data: data.success });
+      if (data.success) {
+        setMultipleTeensiesData([
+          { slug: "", url: "", used: false, isPasswordProtected: false },
+        ]);
+        showToastMessage("Teensies created successfully");
+        Router.push("/teensies");
+      }
     }
-
-    if (
-      multipleTeensiesData.some(
-        (teensy) => teensy.url === "" || teensy.slug === "",
-      )
-    ) {
-      setShowErrors(true);
-      showErrorMessage("Please fill all the fields");
-      return;
-    } else showToastMessage("Teensies created successfully");
 
     console.log({ multipleTeensiesData });
   };
   return (
-    <>
-      <div>Multiple</div>
-      <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
-        <div className="table-wrp block h-64 max-h-64 rounded-md">
-          <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className=" px-6 py-3 sm:w-[30vw]">
-                  Full URL
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Teensy Slug
-                </th>
+    <div className="flex flex-col items-center justify-center gap-4">
+      <div>Create multiple teensies at once</div>
+      <form onSubmit={handleSubmitCreateTeensies}>
+        <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
+          <div className="table-wrp block h-64 max-h-64 rounded-md">
+            <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
+              <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className=" px-6 py-3 sm:w-[30vw]">
+                    Full URL
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Teensy Slug
+                  </th>
 
-                <th scope="col" className="px-6 py-3 text-center">
-                  {/* Actions */}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="max-h-64 overflow-y-auto">
-              {multipleTeensiesData.map((teensy, index) => (
-                <tr
-                  key={index}
-                  className="border-b border-gray-200 dark:border-gray-600"
-                >
-                  <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      className="w-full rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-gray-700 focus:border-gray-400 focus:bg-white focus:outline-none"
-                      placeholder="https://example.com"
-                      value={teensy.url}
-                      onChange={(e) => {
-                        const newTeensies = [...multipleTeensiesData];
-                        newTeensies[index]!.url = e.target.value;
-                        flushSync(() => {
-                          setMultipleFormAtom(newTeensies);
-                        });
-                      }}
-                    />
-                    {showErrors && teensy.url === "" && (
-                      <span className="text-xs italic text-red-500">
-                        This is a required field
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4">
-                    <input
-                      type="text"
-                      className="w-full rounded-md border border-gray-300 bg-gray-100 px-2 py-1 text-sm text-gray-700 focus:border-gray-400 focus:bg-white focus:outline-none"
-                      placeholder="example"
-                      value={teensy.slug}
-                      onChange={(e) => {
-                        const newTeensies = [...multipleTeensiesData];
-                        newTeensies[index]!.slug = e.target.value;
-                        newTeensies[index]!.used = false;
-                        flushSync(() => {
-                          setMultipleFormAtom(newTeensies);
-                        });
-                      }}
-                    />
-                    {showErrors && teensy.slug === "" && (
-                      <p className="text-xs italic text-red-500">
-                        This is a required field
-                      </p>
-                    )}
-                    {showErrors && teensy.used && (
-                      <p className="text-xs italic text-red-500">
-                        This alias is already taken
-                      </p>
-                    )}
-                  </td>
-
-                  <td className="px-6 py-4 text-center">
-                    <div className="flex items-center justify-center space-x-4 text-sm">
-                      <button
-                        className=""
-                        onClick={() => {
-                          showToastMessage("Copied to clipboard");
+                  <th scope="col" className="px-6 py-3 text-center">
+                    {/* Actions */}
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="max-h-64 overflow-y-auto">
+                {multipleTeensiesData.map((teensy, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-gray-200 dark:border-gray-600"
+                  >
+                    <td className="px-6 py-4">
+                      <input
+                        type="url"
+                        required
+                        className="my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm "
+                        placeholder="https://example.com"
+                        value={teensy.url}
+                        onChange={(e) => {
+                          const newTeensies = [...multipleTeensiesData];
+                          newTeensies[index]!.url = e.target.value;
+                          flushSync(() => {
+                            setMultipleTeensiesData(newTeensies);
+                          });
                         }}
-                      >
-                        Generate Random Alias
-                      </button>
-                      {multipleTeensiesData.length !== 1 && (
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      {showErrors && teensy.used && (
+                        <p className="text-xs italic text-red-500">
+                          This alias is already taken
+                        </p>
+                      )}
+                      <input
+                        type="text"
+                        required
+                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${
+                          showErrors && teensy.used
+                            ? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
+                            : ""
+                        }`}
+                        placeholder="example"
+                        value={teensy.slug}
+                        onChange={(e) => {
+                          const newTeensies = [...multipleTeensiesData];
+                          newTeensies[index]!.slug = e.target.value;
+                          newTeensies[index]!.used = false;
+                          flushSync(() => {
+                            setMultipleTeensiesData(newTeensies);
+                          });
+                        }}
+                      />
+                    </td>
+
+                    <td className="px-6 py-4 text-center">
+                      <div className="flex items-center justify-center space-x-4 text-sm">
                         <button
+                          type="button"
                           className=""
                           onClick={() => {
-                            if (multipleTeensiesData.length === 1) return;
+                            const slug = nanoidForSlug();
                             const newTeensies = [...multipleTeensiesData];
-                            newTeensies.splice(index, 1);
-                            setMultipleFormAtom(newTeensies);
+                            newTeensies[index]!.slug = slug;
+                            newTeensies[index]!.used = false;
+                            setMultipleTeensiesData(newTeensies);
                           }}
                         >
-                          x
+                          Generate Random Alias
                         </button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                        {multipleTeensiesData.length !== 1 && (
+                          <button
+                            type="button"
+                            className=""
+                            onClick={() => {
+                              if (multipleTeensiesData.length === 1) return;
+                              const newTeensies = [...multipleTeensiesData];
+                              newTeensies.splice(index, 1);
+                              setMultipleTeensiesData(newTeensies);
+                            }}
+                          >
+                            x
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-wrap gap-4 px-6 py-4 text-center">
-        <button
-          className="rounded-md bg-gray-100 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-200"
-          onClick={addTeensy}
-        >
-          Add one more
-        </button>
-        <button
-          className="rounded-md bg-gray-100 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-200"
-          onClick={handleSubmitCreateTeensies}
-        >
-          Submit
-        </button>
-      </div>
-    </>
+        <div className="flex flex-wrap justify-center gap-4 px-6 py-4 text-center">
+          <button
+            className="rounded-md bg-gray-100 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-200"
+            onClick={addTeensy}
+            type="button"
+          >
+            Add one more
+          </button>
+          <button
+            className="rounded-md bg-gray-100 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-200"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

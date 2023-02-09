@@ -7,16 +7,14 @@ const IGNORE_MIDDLEWARE_PATHS = [
   "/icon-",
   "/.well-known/",
   "/manifest.json",
+  "/multiple",
+  "/wa",
 ];
 
 export async function middleware(req: NextRequest) {
   const isIgnoredPath = IGNORE_MIDDLEWARE_PATHS.some((path) =>
     req.nextUrl.pathname.startsWith(path),
   );
-
-  if (isIgnoredPath) {
-    return;
-  }
 
   if (
     req.nextUrl.pathname.startsWith("/wa/") &&
@@ -27,6 +25,9 @@ export async function middleware(req: NextRequest) {
       const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
       return NextResponse.redirect(WHATSAPP_URL);
     }
+  }
+  if (isIgnoredPath) {
+    return;
   }
   const slug = req.nextUrl.pathname.split("/").pop();
   const slugFetch = await fetch(`${req.nextUrl.origin}/api/url/${slug || ""}`);

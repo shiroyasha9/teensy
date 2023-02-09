@@ -14,6 +14,7 @@ import type { Teensy } from "@prisma/client";
 import { useMemo } from "react";
 import Button from "./Button";
 import Input from "./Input";
+import Link from "next/link";
 
 type TeensyFormProps = {
   formSubmitHandler: () => void;
@@ -220,6 +221,9 @@ const TeensyForm = (props: TeensyFormProps) => {
             (!form.password || form.password.length < 5))
         }
       />
+      <Link href="/multiple" className="text-center text-lemon-400">
+        or Create multiple Teensies at once🚀
+      </Link>
     </form>
   );
 };
