@@ -42,7 +42,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     content = (
       <main className="h-screen">
         <Header />
-        <section className="flex h-full min-h-fit flex-col items-center justify-center px-5 md:h-[70vh]">
+        <section className="flex h-full min-h-fit flex-col items-center justify-center px-5 md:h-[75vh]">
           <Component {...pageProps} />
         </section>
         <Footer />

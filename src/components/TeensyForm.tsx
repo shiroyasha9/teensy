@@ -302,7 +302,7 @@ const TeensyForm = (props: TeensyFormProps) => {
           (form.isAutoDelete && !form.expiresIn)
         }
       />
-      <Link href="/multiple" className="text-center text-lemon-400">
+      <Link href="/multiple" className="text-center text-lemon-400 text-sm">
         or Create multiple Teensies at once🚀
       </Link>
     </form>
