@@ -9,18 +9,18 @@ import debounce from "lodash.debounce";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, type ChangeEvent } from "react";
 
-import { AutoDeleteDropdownData } from "$types";
+import type { AutoDeleteDropdownData } from "$types";
 import {
   getFormattedTime,
   getRemaingTime,
   nanoidForSlug,
 } from "$utils/functions";
 import type { Teensy } from "@prisma/client";
+import Link from "next/link";
 import { useMemo } from "react";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
-import Link from "next/link";
 
 type TeensyFormProps = {
   formSubmitHandler: () => void;
@@ -227,7 +227,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         <Input
           disabled={!form.isPasswordProtected}
           placeholder="e.g. 12345"
-          type="text"
+          type="password"
           minLength={5}
           value={form.password}
           onChange={(e) =>
@@ -302,7 +302,7 @@ const TeensyForm = (props: TeensyFormProps) => {
           (form.isAutoDelete && !form.expiresIn)
         }
       />
-      <Link href="/multiple" className="text-center text-lemon-400 text-sm">
+      <Link href="/multiple" className="text-center text-sm text-lemon-400">
         or Create multiple Teensies at once🚀
       </Link>
     </form>
