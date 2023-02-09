@@ -1,19 +1,16 @@
+import { multipleFormAtom } from "$store";
+import { api } from "$utils/api";
 import {
   nanoidForSlug,
   showErrorMessage,
   showToastMessage,
 } from "$utils/functions";
-import React, { ChangeEvent, useState } from "react";
-import { api } from "$utils/api";
-import { flushSync } from "react-dom";
 import { useAtom } from "jotai";
-import { multipleFormAtom } from "$store";
 import Router from "next/router";
+import React, { useState } from "react";
+import { flushSync } from "react-dom";
 const Multiple = () => {
   const [showErrors, setShowErrors] = useState(false);
-  //   const [multipleTeensiesData, setMultipleTeensiesData] = useState([
-  //     { slug: "", url: "", used: false },
-  //   ]);
   const [multipleTeensiesData, setMultipleTeensiesData] =
     useAtom(multipleFormAtom);
   const addTeensy = () => {
@@ -32,7 +29,7 @@ const Multiple = () => {
     console.log({ multipleTeensiesData, data });
     flushSync(() => {
       setMultipleTeensiesData(
-        multipleTeensiesData.map((teensy, index) => {
+        multipleTeensiesData.map((teensy) => {
           if (data?.usedSlugs?.includes(teensy.slug)) {
             return { ...teensy, used: true };
           } else return { ...teensy, used: false };
@@ -53,7 +50,7 @@ const Multiple = () => {
           { slug: "", url: "", used: false, isPasswordProtected: false },
         ]);
         showToastMessage("Teensies created successfully");
-        Router.push("/teensies");
+        void Router.push("/");
       }
     }
 
@@ -62,7 +59,11 @@ const Multiple = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <div>Create multiple teensies at once</div>
-      <form onSubmit={handleSubmitCreateTeensies}>
+      <form
+        onSubmit={(e: React.SyntheticEvent) =>
+          void handleSubmitCreateTeensies(e)
+        }
+      >
         <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
           <div className="table-wrp block h-64 max-h-64 rounded-md">
             <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
