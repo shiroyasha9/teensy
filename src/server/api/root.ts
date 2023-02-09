@@ -79,6 +79,51 @@ export const appRouter = createTRPCRouter({
 
       return { used: !!teensy };
     }),
+  slugCheckMultiple: publicProcedure
+    .input(
+      z.array(
+        z.object({
+          slug: z.string(),
+          url: z.string(),
+        }),
+      ),
+    )
+    .mutation(async ({ input }) => {
+      const slugs = input.map((i) => i.slug);
+      const count = await prisma.teensy.findMany({
+        where: {
+          slug: { in: slugs },
+        },
+      });
+      const usedSlugs = count.map((c) => c.slug);
+      console.log({ usedSlugs });
+      return { usedSlugs };
+    }),
+  createMultipleTeensies: publicProcedure
+    .input(
+      z.array(
+        z.object({
+          slug: z.string(),
+          url: z.string().regex(/^(?!https:\/\/teensy).*/),
+        }),
+      ),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { prisma, session } = ctx;
+        console.log({ ownerId: session?.user ? session.user.id : undefined });
+        await prisma.teensy.createMany({
+          data: input.map((i) => ({
+            slug: i.slug,
+            url: i.url,
+            ownerId: session?.user ? session.user.id : undefined,
+          })),
+        });
+        return { success: true };
+      } catch (e) {
+        return { success: false };
+      }
+    }),
   fetchUserTeensy: protectedProcedure
     .meta({
       openapi: {

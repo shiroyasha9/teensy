@@ -20,6 +20,7 @@ import { useMemo } from "react";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
+import Link from "next/link";
 
 type TeensyFormProps = {
   formSubmitHandler: () => void;
@@ -301,6 +302,9 @@ const TeensyForm = (props: TeensyFormProps) => {
           (form.isAutoDelete && !form.expiresIn)
         }
       />
+      <Link href="/multiple" className="text-center text-lemon-400">
+        or Create multiple Teensies at once🚀
+      </Link>
     </form>
   );
 };
