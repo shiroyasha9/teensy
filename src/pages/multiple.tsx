@@ -3,12 +3,13 @@ import { api } from "$utils/api";
 import {
   nanoidForSlug,
   showErrorMessage,
-  showToastMessage,
+  showToastMessage
 } from "$utils/functions";
 import { useAtom } from "jotai";
 import Router from "next/router";
 import React, { useState } from "react";
 import { flushSync } from "react-dom";
+import { MdBlock } from "react-icons/md";
 const Multiple = () => {
   const [showErrors, setShowErrors] = useState(false);
   const [multipleTeensiesData, setMultipleTeensiesData] =
@@ -134,7 +135,7 @@ const Multiple = () => {
                       <div className="flex items-center justify-center space-x-4 text-sm">
                         <button
                           type="button"
-                          className=""
+                          className="bg-gray-450 rounded bg-white p-2 text-black  dark:bg-gray-700 dark:text-gray-200"
                           onClick={() => {
                             const slug = nanoidForSlug();
                             const newTeensies = [...multipleTeensiesData];
@@ -148,7 +149,7 @@ const Multiple = () => {
                         {multipleTeensiesData.length !== 1 && (
                           <button
                             type="button"
-                            className=""
+                            className="rounded bg-red-450 p-2 text-white dark:text-gray-200 "
                             onClick={() => {
                               if (multipleTeensiesData.length === 1) return;
                               const newTeensies = [...multipleTeensiesData];
@@ -156,7 +157,7 @@ const Multiple = () => {
                               setMultipleTeensiesData(newTeensies);
                             }}
                           >
-                            x
+                            <MdBlock className="h-5 w-5" />
                           </button>
                         )}
                       </div>
