@@ -44,10 +44,6 @@ const TeensyForm = (props: TeensyFormProps) => {
 
   const AUTO_DELETE_OPTIONS: AutoDeleteDropdownData[] = [
     {
-      label: "1 min",
-      minutesToExpire: 1,
-    },
-    {
       label: "1 hour",
       minutesToExpire: 60,
     },
