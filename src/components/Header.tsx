@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { HiBars3, HiXMark } from "react-icons/hi2";
 import Button from "./Button";
-import GitHubIcon from "./GitHubIcon";
+import SocialIcons from "./SocialIcons";
 import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
@@ -41,7 +41,7 @@ export default function Header() {
           </div>
           <div className="-my-2 -mr-2 flex items-center md:hidden">
             <ThemeToggle />
-            <GitHubIcon />
+            <SocialIcons />
             <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-lemon-400 hover:text-lemon-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
               <span className="sr-only">Open menu</span>
               <HiBars3 className="h-6 w-6" aria-hidden="true" />
@@ -60,7 +60,7 @@ export default function Header() {
           </Popover.Group>
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
             <ThemeToggle />
-            <GitHubIcon />
+            <SocialIcons />
             <Button
               title={user ? "Logout" : "Login"}
               className="m-0 ml-8 py-1 px-3 text-base"
