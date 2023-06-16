@@ -2,28 +2,29 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
-    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "postgresql"
+  // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+  // Further reading:
+  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Teensy {
-  id        Int      @id @default(autoincrement())
-  url       String   @db.VarChar(2000)
-  slug      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  url       String    @db.VarChar(2000)
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   expiresAt DateTime?
   password  String?
-  owner     User?    @relation(fields: [ownerId], references: [id])
+  owner     User?     @relation(fields: [ownerId], references: [id])
   ownerId   String?
   visits    Visit[]
 
@@ -31,14 +32,14 @@ model Teensy {
 }
 
 model ExpiredTeensy {
-  id        Int      @id @default(autoincrement())
-  url       String   @db.VarChar(2000)
-  slug      String   
-  createdAt DateTime @default(now())
-  visitCount Int    @default(0)
-  password  String?
-  owner     User?    @relation(fields: [ownerId], references: [id])
-  ownerId   String?
+  id         Int      @id @default(autoincrement())
+  url        String   @db.VarChar(2000)
+  slug       String
+  createdAt  DateTime @default(now())
+  visitCount Int      @default(0)
+  password   String?
+  owner      User?    @relation(fields: [ownerId], references: [id])
+  ownerId    String?
 
   @@index([slug])
 }
@@ -73,14 +74,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  teensies       Teensy[]
+  id              String          @id @default(cuid())
+  name            String?
+  email           String?         @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  teensies        Teensy[]
   expiredTeensies ExpiredTeensy[]
 }
 
@@ -93,13 +94,13 @@ model VerificationToken {
 }
 
 model Visit {
-  id String    @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  teensy     Teensy    @relation(fields: [teensyId], references: [id], onDelete: Cascade)
-  teensyId   Int 
+  teensy    Teensy   @relation(fields: [teensyId], references: [id], onDelete: Cascade)
+  teensyId  Int
 }
 
 model GlobalVisits {
-  id String @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
 }
