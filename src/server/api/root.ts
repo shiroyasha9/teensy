@@ -134,7 +134,7 @@ export const appRouter = createTRPCRouter({
         headers: [{ name: "secret-key", required: true }],
       },
     })
-    .input(z.string())
+    .input(z.object({ slug: z.string() }))
     .output(
       z.object({
         id: z.number(),
@@ -149,7 +149,7 @@ export const appRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const teensy = await prisma.teensy.findFirstOrThrow({
         where: {
-          slug: input,
+          slug: input.slug,
         },
       });
       return teensy;
@@ -165,6 +165,7 @@ export const appRouter = createTRPCRouter({
         headers: [{ name: "secret-key", required: true }],
       },
     })
+    .input(z.void())
     .output(
       z.object({
         teensies: z.array(

@@ -9,9 +9,9 @@ const ProtectedTeensyPage = () => {
   const router = useRouter();
   const [password, setPassword] = useState("");
 
-  const currentTeensy = api.fetchUserTeensy.useQuery(
-    router.query.slug as string,
-  );
+  const currentTeensy = api.fetchUserTeensy.useQuery({
+    slug: router.query.slug as string,
+  });
 
   if (!currentTeensy.data || currentTeensy.isLoading || currentTeensy.isError) {
     return <p>Loading...</p>;
