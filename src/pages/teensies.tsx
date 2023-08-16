@@ -188,7 +188,7 @@ export default function TeensiesPage() {
                 </div>
                 <Input
                   type="text"
-                  className="my-0 block w-full rounded-lg border !p-2 py-0 px-3 !pl-10 text-sm"
+                  className="my-0 block w-full rounded-lg border !p-2 px-3 py-0 !pl-10 text-sm"
                   placeholder="Search for items"
                   noContainer
                   defaultValue=""
@@ -296,7 +296,7 @@ export default function TeensiesPage() {
               }`}
               logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
               options={{
-                level: "M",
+                errorCorrectionLevel: "M",
                 margin: 1,
                 scale: 5,
                 width: 200,
