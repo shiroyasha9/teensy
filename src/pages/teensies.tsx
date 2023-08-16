@@ -245,7 +245,7 @@ export default function TeensiesPage() {
                               href={teensy.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="hover:underline"
+                              className="line-clamp-1 hover:underline"
                             >
                               {teensy.url}
                             </a>
