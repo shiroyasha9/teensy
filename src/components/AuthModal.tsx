@@ -79,7 +79,7 @@ const AuthModal = () => {
       });
       // Something went wrong
       if (res?.status !== 200) {
-        throw new Error(res?.error);
+        throw new Error(res?.error ?? "Unable to sign in");
       }
       setConfirm(true);
       toast.dismiss(toastId);
