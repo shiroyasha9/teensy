@@ -3,13 +3,13 @@ import useAutoFocus from "$hooks/useAutoFocus";
 import { formAtom, teensyUrlAtom } from "$store";
 import { api } from "$utils/api";
 
-import classNames from "classnames";
 import { useAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useEffect, type ChangeEvent } from "react";
 
 import type { AutoDeleteDropdownData } from "$types";
 import {
+  cn,
   getFormattedTime,
   getRemaingTime,
   nanoidForSlug,
@@ -84,23 +84,17 @@ const TeensyForm = (props: TeensyFormProps) => {
     void slugCheck.refetch();
   }
 
-  const formClassNames = classNames(
-    "flex w-full flex-col justify-center gap-4",
-    {
-      "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
-      "mt-6 p-4 dark:text-white": mode === "edit",
-    },
-  );
+  const formClassNames = cn("flex w-full flex-col justify-center gap-4", {
+    "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
+    "mt-6 p-4 dark:text-white": mode === "edit",
+  });
 
-  const customizeContainerClassNames = classNames(
-    "flex flex-col rounded-lg p-4",
-    {
-      "bg-[#37415180]": mode === "create",
-      "bg-gray-300 dark:bg-gray-600": mode === "edit",
-    },
-  );
+  const customizeContainerClassNames = cn("flex flex-col rounded-lg p-4", {
+    "bg-[#37415180]": mode === "create",
+    "bg-gray-300 dark:bg-gray-600": mode === "edit",
+  });
 
-  const generateAliasButtonClassNames = classNames("m-0 mt-1 w-full text-sm", {
+  const generateAliasButtonClassNames = cn("m-0 mt-1 w-full text-sm", {
     "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
       mode === "edit",
   });

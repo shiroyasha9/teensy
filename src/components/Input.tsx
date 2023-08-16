@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { cn } from "$utils/functions";
 import {
   forwardRef,
   type DetailedHTMLProps,
@@ -31,7 +31,7 @@ const Input = forwardRef<
     ...rest
   } = props;
 
-  const classNames = classnames(
+  const classNames = cn(
     "my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 sm:px-2 sm:text-sm dark:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-60",
     {
       "text-black dark:text-gray-200":
@@ -46,7 +46,7 @@ const Input = forwardRef<
     },
   );
 
-  const containerClassNames = classnames("w-full", {
+  const containerClassNames = cn("w-full", {
     "flex items-center": inlineLabel,
   });
 
