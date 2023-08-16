@@ -71,6 +71,7 @@ const TeensyForm = (props: TeensyFormProps) => {
   );
 
   const isSlugInvalid =
+    form.slug.includes(" ") ||
     NOT_ALLOWED_SLUGS.has(form.slug) ||
     slugCheck.isRefetching ||
     (slugCheck.isFetched &&
@@ -163,7 +164,9 @@ const TeensyForm = (props: TeensyFormProps) => {
           ✍️ Customize
           {isSlugInvalid && (
             <span className="text-center font-medium text-red-450">
-              Already in use.
+              {form.slug.includes(" ")
+                ? "Alias cannot contain spaces."
+                : "Already in use."}
             </span>
           )}
         </span>
