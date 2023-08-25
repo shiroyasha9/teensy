@@ -3,21 +3,19 @@ import useAutoFocus from "$hooks/useAutoFocus";
 import { formAtom, teensyUrlAtom } from "$store";
 import { api } from "$utils/api";
 
-import classNames from "classnames";
 import { useAtom } from "jotai";
-import debounce from "lodash.debounce";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, type ChangeEvent } from "react";
+import { useEffect, type ChangeEvent } from "react";
 
 import type { AutoDeleteDropdownData } from "$types";
 import {
+  cn,
   getFormattedTime,
   getRemaingTime,
   nanoidForSlug,
 } from "$utils/functions";
 import type { Teensy } from "@prisma/client";
 import Link from "next/link";
-import { useMemo } from "react";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
@@ -38,7 +36,6 @@ const TeensyForm = (props: TeensyFormProps) => {
   } = props;
   const [form, setForm] = useAtom(formAtom);
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
-  const aliasInputRef = useRef<HTMLInputElement>(null);
   const { theme } = useTheme();
   const urlInput = useAutoFocus();
 
@@ -71,6 +68,7 @@ const TeensyForm = (props: TeensyFormProps) => {
   );
 
   const isSlugInvalid =
+    form.slug.includes(" ") ||
     NOT_ALLOWED_SLUGS.has(form.slug) ||
     slugCheck.isRefetching ||
     (slugCheck.isFetched &&
@@ -86,35 +84,19 @@ const TeensyForm = (props: TeensyFormProps) => {
     void slugCheck.refetch();
   }
 
-  const debouncedSlugChangeHandler = useMemo(() => {
-    return debounce(handleSlugChange, 200);
-  }, []);
-
-  const formClassNames = classNames(
-    "flex w-full flex-col justify-center gap-4",
-    {
-      "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
-      "mt-6 p-4 dark:text-white": mode === "edit",
-    },
-  );
-
-  const customizeContainerClassNames = classNames(
-    "flex flex-col rounded-lg p-4",
-    {
-      "bg-[#37415180]": mode === "create",
-      "bg-gray-300 dark:bg-gray-600": mode === "edit",
-    },
-  );
-
-  const generateAliasButtonClassNames = classNames("m-0 mt-1 w-full text-sm", {
-    "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
-      mode === "edit",
+  const formClassNames = cn("flex w-full flex-col justify-center gap-4", {
+    "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
+    "mt-6 p-4 dark:text-white": mode === "edit",
   });
 
-  useEffect(() => {
-    return () => {
-      debouncedSlugChangeHandler.cancel();
-    };
+  const customizeContainerClassNames = cn("flex flex-col rounded-lg p-4", {
+    "bg-[#37415180]": mode === "create",
+    "bg-gray-300 dark:bg-gray-600": mode === "edit",
+  });
+
+  const generateAliasButtonClassNames = cn("m-0 mt-1 w-full text-sm", {
+    "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
+      mode === "edit",
   });
 
   useEffect(() => {
@@ -163,7 +145,9 @@ const TeensyForm = (props: TeensyFormProps) => {
           ✍️ Customize
           {isSlugInvalid && (
             <span className="text-center font-medium text-red-450">
-              Already in use.
+              {form.slug.includes(" ")
+                ? "Alias cannot contain spaces."
+                : "Already in use."}
             </span>
           )}
         </span>
@@ -172,7 +156,8 @@ const TeensyForm = (props: TeensyFormProps) => {
           label={`${teensyUrl.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
           variant={mode === "create" ? "primary" : "modal"}
-          onChange={debouncedSlugChangeHandler}
+          value={form.slug}
+          onChange={handleSlugChange}
           minLength={1}
           placeholder="alias e.g. ig for instagram"
           invalid={isSlugInvalid}
@@ -180,7 +165,6 @@ const TeensyForm = (props: TeensyFormProps) => {
           pattern={"^[-a-zA-Z0-9]+$"}
           title="Only alphanumeric characters and hypens are allowed. No spaces."
           required
-          ref={aliasInputRef}
         />
         <div className="flex items-center justify-center gap-5">
           <div className="ml-2 flex flex-1 items-center justify-center">or</div>
@@ -194,9 +178,6 @@ const TeensyForm = (props: TeensyFormProps) => {
                 ...form,
                 slug,
               });
-              if (aliasInputRef.current) {
-                aliasInputRef.current.value = slug;
-              }
               void slugCheck.refetch();
             }}
           />

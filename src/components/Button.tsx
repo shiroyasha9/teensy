@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { cn } from "$utils/functions";
 
 type ButtonProps = {
   title: string;
@@ -16,7 +16,7 @@ const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
     ...rest
   } = props;
 
-  const classNames = classnames(
+  const classNames = cn(
     "m-5 cursor-pointer rounded-md py-2 px-4 text-lg font-semibold disabled:cursor-not-allowed disabled:opacity-60",
     {
       "text-black":

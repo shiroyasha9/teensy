@@ -5,7 +5,7 @@ import "$styles/globals.css";
 import { api } from "$utils/api";
 import { isDevEnvironment } from "$utils/functions";
 
-import { Rubik } from "@next/font/google";
+import { Rubik } from "next/font/google";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";

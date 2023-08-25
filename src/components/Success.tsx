@@ -57,7 +57,7 @@ const Success = () => {
           text={`${teensyUrl}/${slug}`}
           logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
           options={{
-            level: "M",
+            errorCorrectionLevel: "M",
             margin: 1,
             scale: 5,
             width: 150,
@@ -82,7 +82,7 @@ const Success = () => {
       <div className="flex items-center justify-center">
         <Button
           title="Copy Teensy"
-          className="mt-5 py-1.5 px-3 text-base"
+          className="mt-5 px-3 py-1.5 text-base"
           onClick={() => {
             copy(`${window.location.protocol}//${teensyUrl}/${slug}`);
             showToastMessage("Link Copied!");
@@ -92,7 +92,7 @@ const Success = () => {
           title="Back to Home"
           variant="secondary"
           onClick={resetHandler}
-          className="mt-5 py-1.5 px-3 text-base"
+          className="mt-5 px-3 py-1.5 text-base"
         />
       </div>
     </div>
