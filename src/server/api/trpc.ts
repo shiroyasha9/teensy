@@ -1,4 +1,3 @@
-import { type OpenApiMeta } from "trpc-openapi";
 import { prisma } from "../db";
 
 /**
@@ -11,21 +10,18 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import type { Context } from "./context";
 
-const t = initTRPC
-  .meta<OpenApiMeta>()
-  .context<Context>()
-  .create({
-    transformer: superjson,
-    errorFormatter: ({ error, shape }) => {
-      if (
-        error.code === "INTERNAL_SERVER_ERROR" &&
-        process.env.NODE_ENV === "production"
-      ) {
-        return { ...shape, message: "Internal server error" };
-      }
-      return shape;
-    },
-  });
+const t = initTRPC.context<Context>().create({
+  transformer: superjson,
+  errorFormatter: ({ error, shape }) => {
+    if (
+      error.code === "INTERNAL_SERVER_ERROR" &&
+      process.env.NODE_ENV === "production"
+    ) {
+      return { ...shape, message: "Internal server error" };
+    }
+    return shape;
+  },
+});
 
 /**
  * 2. ROUTER & PROCEDURE (THE IMPORTANT BIT)

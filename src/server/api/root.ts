@@ -25,15 +25,6 @@ export const appRouter = createTRPCRouter({
     });
   }),
   slugCheck: publicProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        path: "/slug-check",
-        summary:
-          "This endpoint can be used to check if a given teensy i.e. short url is already in use",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         slug: z.string(),
@@ -125,15 +116,6 @@ export const appRouter = createTRPCRouter({
       }
     }),
   fetchUserTeensy: protectedProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        path: "/fetch-user-teensy",
-        protect: true,
-        summary: "This endpoint can be used to fetch a teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(z.object({ slug: z.string() }))
     .output(
       z.object({
@@ -155,16 +137,6 @@ export const appRouter = createTRPCRouter({
       return teensy;
     }),
   fetchUserSlugs: protectedProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        path: "/fetch-user-slugs",
-        protect: true,
-        summary:
-          "This endpoint can be used to fetch all the teensies of a given user.",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(z.void())
     .output(
       z.object({
@@ -199,14 +171,6 @@ export const appRouter = createTRPCRouter({
       return { teensies };
     }),
   createSlug: publicProcedure
-    .meta({
-      openapi: {
-        method: "POST",
-        path: "/create-slug",
-        summary: "This endpoint can be used to create a new teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         slug: z.string(),
@@ -241,15 +205,6 @@ export const appRouter = createTRPCRouter({
       }
     }),
   updateSlug: protectedProcedure
-    .meta({
-      openapi: {
-        method: "PATCH",
-        path: "/update-slug",
-        protect: true,
-        summary: "This endpoint can be used to update a teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         slug: z.string(),
@@ -283,15 +238,6 @@ export const appRouter = createTRPCRouter({
       }
     }),
   deleteSlug: protectedProcedure
-    .meta({
-      openapi: {
-        method: "DELETE",
-        path: "/delete-slug",
-        protect: true,
-        summary: "This endpoint can be used to delete a teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         id: z.number(),
