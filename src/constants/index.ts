@@ -12,3 +12,18 @@ export const NOT_ALLOWED_SLUGS = new Set([
   "wa",
   "teensies",
 ]);
+
+export const NAV_ITEMS = [
+  {
+    name: "🤏 Teensy a link",
+    href: "/",
+  },
+  {
+    name: "💬 Contactless WhatsApp",
+    href: "/wa",
+  },
+  {
+    name: "🔗 My Teensies",
+    href: "/teensies",
+  },
+];
