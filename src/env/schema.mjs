@@ -7,7 +7,6 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
-  SHADOW_DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   NEXTAUTH_SECRET: z.string().min(1),
   NEXTAUTH_URL: z.preprocess(
@@ -17,11 +16,6 @@ export const serverSchema = z.object({
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string() : z.string().url(),
   ),
-  EMAIL_SERVER_HOST: z.string(),
-  EMAIL_SERVER_PORT: z.string(),
-  EMAIL_SERVER_USER: z.string().email(),
-  EMAIL_SERVER_PASSWORD: z.string(),
-  EMAIL_FROM: z.string().email(),
   GOOGLE_ID: z.string(),
   GOOGLE_SECRET: z.string(),
   SECRET_KEY: z.string(),
@@ -34,15 +28,9 @@ export const serverSchema = z.object({
  */
 export const serverEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
-  SHADOW_DATABASE_URL: process.env.SHADOW_DATABASE_URL,
   NODE_ENV: process.env.NODE_ENV,
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-  EMAIL_SERVER_HOST: process.env.EMAIL_SERVER_HOST,
-  EMAIL_SERVER_PORT: process.env.EMAIL_SERVER_PORT,
-  EMAIL_SERVER_USER: process.env.EMAIL_SERVER_USER,
-  EMAIL_SERVER_PASSWORD: process.env.EMAIL_SERVER_PASSWORD,
-  EMAIL_FROM: process.env.EMAIL_FROM,
   GOOGLE_ID: process.env.GOOGLE_ID,
   GOOGLE_SECRET: process.env.GOOGLE_SECRET,
   SECRET_KEY: process.env.SECRET_KEY,

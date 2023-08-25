@@ -1,0 +1,49 @@
+import { getServerSession, type NextAuthOptions } from "next-auth";
+import { prisma } from "$server/db";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+
+export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/",
+    signOut: "/",
+    error: "/",
+    verifyRequest: "/",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  // Include user.id on session
+  callbacks: {
+    session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+  },
+  // Configure one or more authentication providers
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID || "",
+      clientSecret: process.env.GOOGLE_SECRET || "",
+    }),
+    /**
+     * ...add more providers here
+     *
+     * For example, the GitHub provider requires you to add the
+     * `refresh_token_expires_in` field to the Account model. Refer to the
+     * NextAuth.js docs for the provider you want to use. Example:
+     * @see https://next-auth.js.org/providers/github
+     */
+  ],
+};
+
+export const getAuthSession = () => getServerSession(authOptions);
