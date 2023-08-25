@@ -1,6 +1,6 @@
 import AuthModal from "@/components/AuthModal";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header from "@/components/PageHeader";
 import "@/styles/globals.css";
 import { api } from "@/utils/api";
 import { isDevEnvironment } from "@/utils/functions";
