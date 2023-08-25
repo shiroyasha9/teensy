@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,33 +17,16 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "$components/*": [
-        "src/components/*"
-      ],
-      "$env/*": [
-        "src/env/*"
-      ],
-      "$hooks/*": [
-        "src/hooks/*"
-      ],
-      "$server/*": [
-        "src/server/*"
-      ],
-      "$styles/*": [
-        "src/styles/*"
-      ],
-      "$utils/*": [
-        "src/utils/*"
-      ],
-      "$store": [
-        "src/store/index.ts"
-      ],
-      "$constants": [
-        "src/constants/index.ts"
-      ],
-      "$types": [
-        "src/types/index.ts"
-      ]
+      "$components/*": ["src/components/*"],
+      "$env/*": ["src/env/*"],
+      "$hooks/*": ["src/hooks/*"],
+      "$lib/*": ["src/lib/*"],
+      "$server/*": ["src/server/*"],
+      "$styles/*": ["src/styles/*"],
+      "$utils/*": ["src/utils/*"],
+      "$store": ["src/store/index.ts"],
+      "$constants": ["src/constants/index.ts"],
+      "$types": ["src/types/index.ts"]
     },
     "plugins": [
       {
@@ -63,7 +42,5 @@
     "**/*.mjs",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
