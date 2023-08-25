@@ -2,12 +2,20 @@
 
 import TRPCProvider from "@/app/_trpc/TRPCProvider";
 import { SessionProvider } from "next-auth/react";
-import React from "react";
+import { ThemeProvider } from "next-themes";
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+type ProviderProps = {
+  children: React.ReactNode;
+};
+
+const Providers = ({ children }: ProviderProps) => {
   return (
     <TRPCProvider>
-      <SessionProvider>{children}</SessionProvider>
+      <SessionProvider>
+        <ThemeProvider enableSystem={true} attribute="class">
+          {children}
+        </ThemeProvider>
+      </SessionProvider>
     </TRPCProvider>
   );
 };
