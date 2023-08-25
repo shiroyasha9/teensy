@@ -1,4 +1,4 @@
-import { getAuthSession } from "$lib/auth";
+import { getAuthSession } from "@/lib/auth";
 import type { inferAsyncReturnType } from "@trpc/server";
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { prisma } from "../db";

@@ -1,5 +1,5 @@
-import { prisma } from "$server/db";
-import { isDevEnvironment } from "$utils/functions";
+import { prisma } from "@/server/db";
+import { isDevEnvironment } from "@/utils/functions";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);

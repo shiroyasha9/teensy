@@ -1,4 +1,4 @@
-import Button from "$components/Button";
+import Button from "@/components/Button";
 import Link from "next/link";
 let origin = "";
 if (typeof window !== "undefined") origin = window.location.origin;

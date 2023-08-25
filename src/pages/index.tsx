@@ -1,12 +1,12 @@
-import CreateLinkForm from "$components/CreateLink";
-import { isSuccessfulAtom } from "$store";
+import CreateLinkForm from "@/components/CreateLink";
+import { isSuccessfulAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Confetti from "react-dom-confetti";
 
-const Success = dynamic(() => import("$components/Success"), {
+const Success = dynamic(() => import("@/components/Success"), {
   ssr: true,
   loading: () => <p>Loading... ⏳</p>,
 });

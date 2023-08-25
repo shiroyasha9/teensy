@@ -1,10 +1,10 @@
-import { multipleFormAtom } from "$store";
-import { api } from "$utils/api";
+import { multipleFormAtom } from "@/store";
+import { api } from "@/utils/api";
 import {
   nanoidForSlug,
   showErrorMessage,
-  showToastMessage
-} from "$utils/functions";
+  showToastMessage,
+} from "@/utils/functions";
 import { useAtom } from "jotai";
 import Router from "next/router";
 import React, { useState } from "react";
@@ -92,7 +92,7 @@ const Multiple = () => {
                       <input
                         type="url"
                         required
-                        className="my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm "
+                        className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm "
                         placeholder="https://example.com"
                         value={teensy.url}
                         onChange={(e) => {
@@ -113,11 +113,10 @@ const Multiple = () => {
                       <input
                         type="text"
                         required
-                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${
-                          showErrors && teensy.used
+                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${showErrors && teensy.used
                             ? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
                             : ""
-                        }`}
+                          }`}
                         placeholder="example"
                         value={teensy.slug}
                         onChange={(e) => {
@@ -170,14 +169,14 @@ const Multiple = () => {
         </div>
         <div className="flex flex-wrap justify-center gap-4 px-6 py-4 text-center">
           <button
-            className="rounded-md bg-gray-100 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-200"
+            className="rounded-md bg-gray-100 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-200"
             onClick={addTeensy}
             type="button"
           >
             Add one more
           </button>
           <button
-            className="rounded-md bg-gray-100 py-2 px-4 font-semibold text-gray-700 hover:bg-gray-200"
+            className="rounded-md bg-gray-100 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-200"
             type="submit"
           >
             Submit

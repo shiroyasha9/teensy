@@ -1,4 +1,4 @@
-import { showAuthModalAtom } from "$store";
+import { showAuthModalAtom } from "@/store";
 import { Dialog } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { signIn } from "next-auth/react";

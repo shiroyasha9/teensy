@@ -1,4 +1,4 @@
-import { api } from "$utils/api";
+import { api } from "@/utils/api";
 import type { Teensy } from "@prisma/client";
 import Button from "./Button";
 

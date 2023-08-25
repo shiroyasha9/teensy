@@ -1,4 +1,4 @@
-import type { AutoDeleteDropdownData } from "$types";
+import type { AutoDeleteDropdownData } from "@/types";
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
@@ -25,9 +25,8 @@ const Dropdown = (props: DropdownProps) => {
         <FiChevronDown className="ml-2 h-4 w-4" />
       </button>
       <div
-        className={`z-10 mt-1 w-full divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700  ${
-          isOpen ? "absolute" : "hidden"
-        }`}
+        className={`z-10 mt-1 w-full divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700  ${isOpen ? "absolute" : "hidden"
+          }`}
       >
         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
           {data.map((item) => (

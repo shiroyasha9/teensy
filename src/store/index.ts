@@ -1,4 +1,4 @@
-import type { FormData, MultipleTeensiesFormData } from "$types";
+import type { FormData, MultipleTeensiesFormData } from "@/types";
 import { atom } from "jotai";
 
 export const formAtom = atom<FormData>({

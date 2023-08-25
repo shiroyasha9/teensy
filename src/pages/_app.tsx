@@ -1,9 +1,9 @@
-import AuthModal from "$components/AuthModal";
-import Footer from "$components/Footer";
-import Header from "$components/Header";
-import "$styles/globals.css";
-import { api } from "$utils/api";
-import { isDevEnvironment } from "$utils/functions";
+import AuthModal from "@/components/AuthModal";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import "@/styles/globals.css";
+import { api } from "@/utils/api";
+import { isDevEnvironment } from "@/utils/functions";
 
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";

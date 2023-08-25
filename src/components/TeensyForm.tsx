@@ -1,19 +1,19 @@
-import { NOT_ALLOWED_SLUGS } from "$constants";
-import useAutoFocus from "$hooks/useAutoFocus";
-import { formAtom, teensyUrlAtom } from "$store";
-import { api } from "$utils/api";
+import { NOT_ALLOWED_SLUGS } from "@/constants";
+import useAutoFocus from "@/hooks/useAutoFocus";
+import { formAtom, teensyUrlAtom } from "@/store";
+import { api } from "@/utils/api";
 
 import { useAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useEffect, type ChangeEvent } from "react";
 
-import type { AutoDeleteDropdownData } from "$types";
+import type { AutoDeleteDropdownData } from "@/types";
 import {
   cn,
   getFormattedTime,
   getRemaingTime,
   nanoidForSlug,
-} from "$utils/functions";
+} from "@/utils/functions";
 import type { Teensy } from "@prisma/client";
 import Link from "next/link";
 import Button from "./Button";

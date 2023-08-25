@@ -1,5 +1,5 @@
-import { formAtom, isSuccessfulAtom, showAuthModalAtom } from "$store";
-import { api } from "$utils/api";
+import { formAtom, isSuccessfulAtom, showAuthModalAtom } from "@/store";
+import { api } from "@/utils/api";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";

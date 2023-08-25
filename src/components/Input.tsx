@@ -1,4 +1,4 @@
-import { cn } from "$utils/functions";
+import { cn } from "@/utils/functions";
 import {
   forwardRef,
   type DetailedHTMLProps,
@@ -18,7 +18,7 @@ type InputRef = HTMLInputElement;
 const Input = forwardRef<
   InputRef,
   InputProps &
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 >((props, ref) => {
   const {
     className: overrideClassName,

@@ -1,4 +1,4 @@
-import { SLUG_CHARACTERS } from "$constants";
+import { SLUG_CHARACTERS } from "@/constants";
 import { customAlphabet } from "nanoid";
 import { toast } from "react-hot-toast";
 import clsx, { type ClassValue } from "clsx";

@@ -17,16 +17,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "$components/*": ["src/components/*"],
-      "$env/*": ["src/env/*"],
-      "$hooks/*": ["src/hooks/*"],
-      "$lib/*": ["src/lib/*"],
-      "$server/*": ["src/server/*"],
-      "$styles/*": ["src/styles/*"],
-      "$utils/*": ["src/utils/*"],
-      "$store": ["src/store/index.ts"],
-      "$constants": ["src/constants/index.ts"],
-      "$types": ["src/types/index.ts"]
+      "@/*": ["./src/*"]
     },
     "plugins": [
       {

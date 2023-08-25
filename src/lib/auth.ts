@@ -1,5 +1,5 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
-import { prisma } from "$server/db";
+import { prisma } from "@/server/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 

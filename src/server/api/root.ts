@@ -1,4 +1,4 @@
-import { getExpiryDate } from "$utils/functions";
+import { getExpiryDate } from "@/utils/functions";
 import { z } from "zod";
 import { prisma } from "../db";
 import {

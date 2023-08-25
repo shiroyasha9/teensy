@@ -1,5 +1,5 @@
-import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "$store";
-import { showToastMessage } from "$utils/functions";
+import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "@/store";
+import { showToastMessage } from "@/utils/functions";
 import copy from "copy-to-clipboard";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useQRCode } from "next-qrcode";
@@ -68,9 +68,8 @@ const Success = () => {
           }}
         />
         <div
-          className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${
-            showDownloadQRButton ? "absolute" : "hidden"
-          }`}
+          className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${showDownloadQRButton ? "absolute" : "hidden"
+            }`}
         >
           <AiOutlineCloudDownload
             onClick={downloadQRCode}

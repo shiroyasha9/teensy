@@ -1,4 +1,4 @@
-import { api } from "$utils/api";
+import { api } from "@/utils/api";
 import Image from "next/image";
 
 export default function Footer() {

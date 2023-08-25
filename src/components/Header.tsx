@@ -1,4 +1,4 @@
-import { showAuthModalAtom } from "$store";
+import { showAuthModalAtom } from "@/store";
 import { Popover, Transition } from "@headlessui/react";
 import { useSetAtom } from "jotai";
 import { signOut, useSession } from "next-auth/react";
@@ -63,7 +63,7 @@ export default function Header() {
             <SocialIcons />
             <Button
               title={user ? "Logout" : "Login"}
-              className="m-0 ml-8 py-1 px-3 text-base"
+              className="m-0 ml-8 px-3 py-1 text-base"
               onClick={() => (user ? void signOut() : setShowAuthModal(true))}
             />
           </div>
@@ -84,7 +84,7 @@ export default function Header() {
           className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
         >
           <div className="divide-y-2 divide-gray-400 rounded-lg bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="px-5 pt-5 pb-6">
+            <div className="px-5 pb-6 pt-5">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-2xl text-lemon-400">teensy</span>
@@ -112,7 +112,7 @@ export default function Header() {
                 </nav>
               </div>
             </div>
-            <div className="space-y-6 py-6 px-5">
+            <div className="space-y-6 px-5 py-6">
               <div>
                 <Button
                   title={user ? "Logout" : "Login"}

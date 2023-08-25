@@ -1,5 +1,5 @@
-import { formAtom } from "$store";
-import { api } from "$utils/api";
+import { formAtom } from "@/store";
+import { api } from "@/utils/api";
 import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import { useEffect } from "react";

@@ -1,4 +1,4 @@
-import { api } from "$utils/api";
+import { api } from "@/utils/api";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
