@@ -1,3 +1,4 @@
+"use client";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import "swagger-ui-react/swagger-ui.css";
