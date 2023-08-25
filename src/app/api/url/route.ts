@@ -1,4 +1,4 @@
-import { prisma } from "@/server/db";
+import { db } from "@/server/db";
 import { isDevEnvironment } from "@/utils/functions";
 
 export async function GET(req: Request) {
@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     return new Response("Please pass a slug", { status: 404 });
   }
 
-  const data = await prisma.teensy.findFirst({
+  const data = await db.teensy.findFirst({
     where: {
       slug,
     },
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   });
 
   if (!data) {
-    const expiredTeensy = await prisma.expiredTeensy.findFirst({
+    const expiredTeensy = await db.expiredTeensy.findFirst({
       where: {
         slug,
       },
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
   }
 
   if (data.expiresAt && new Date(data.expiresAt) < new Date()) {
-    await prisma.expiredTeensy.create({
+    await db.expiredTeensy.create({
       data: {
         slug: data.slug,
         url: data.url,
@@ -40,7 +40,7 @@ export async function GET(req: Request) {
         ownerId: data.ownerId,
       },
     });
-    await prisma.teensy.delete({
+    await db.teensy.delete({
       where: {
         id: data.id,
       },
@@ -48,12 +48,12 @@ export async function GET(req: Request) {
     return new Response("Slug has expired", { status: 498 });
   }
   if (!isDevEnvironment) {
-    await prisma.visit.create({
+    await db.visit.create({
       data: {
         teensyId: data.id,
       },
     });
-    await prisma.globalVisits.create({
+    await db.globalVisits.create({
       data: {},
     });
   }

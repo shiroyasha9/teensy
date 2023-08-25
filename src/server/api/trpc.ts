@@ -1,4 +1,4 @@
-import { prisma } from "../db";
+import { db } from "../db";
 
 /**
  * 1. INITIALIZATION
@@ -70,7 +70,7 @@ export const enforceUserIsAuthorized = async (
   teensyId: number,
 ) => {
   try {
-    const teensy = await prisma.teensy.findUnique({
+    const teensy = await db.teensy.findUnique({
       where: { id: teensyId },
     });
     if (!teensy || teensy.ownerId !== userId) {

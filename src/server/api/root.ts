@@ -1,6 +1,6 @@
 import { getExpiryDate } from "@/utils/functions";
 import { z } from "zod";
-import { prisma } from "../db";
+import { db } from "../db";
 import {
   createTRPCRouter,
   enforceUserIsAuthorized,
@@ -17,10 +17,10 @@ export const appRouter = createTRPCRouter({
   fetchGlobalVisitsCounts: publicProcedure
     .output(z.number())
     .query(async () => {
-      return await prisma.globalVisits.count();
+      return await db.globalVisits.count();
     }),
   addGlobalVisit: protectedProcedure.mutation(async () => {
-    await prisma.globalVisits.create({
+    await db.globalVisits.create({
       data: {},
     });
   }),
@@ -36,7 +36,7 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const teensy = await prisma.teensy.findFirst({
+      const teensy = await db.teensy.findFirst({
         where: {
           slug: input.slug,
         },
@@ -49,7 +49,7 @@ export const appRouter = createTRPCRouter({
         teensy.expiresAt &&
         new Date(teensy.expiresAt) < new Date()
       ) {
-        await prisma.expiredTeensy.create({
+        await db.expiredTeensy.create({
           data: {
             slug: teensy.slug,
             url: teensy.url,
@@ -58,7 +58,7 @@ export const appRouter = createTRPCRouter({
             ownerId: teensy.ownerId,
           },
         });
-        await prisma.teensy.delete({
+        await db.teensy.delete({
           where: {
             id: teensy.id,
           },
@@ -81,7 +81,7 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const slugs = input.map((i) => i.slug);
-      const count = await prisma.teensy.findMany({
+      const count = await db.teensy.findMany({
         where: {
           slug: { in: slugs },
         },
@@ -101,9 +101,8 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const { prisma, session } = ctx;
-        console.log({ ownerId: session?.user ? session.user.id : undefined });
-        await prisma.teensy.createMany({
+        const { db, session } = ctx;
+        await db.teensy.createMany({
           data: input.map((i) => ({
             slug: i.slug,
             url: i.url,
@@ -129,7 +128,7 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const teensy = await prisma.teensy.findFirstOrThrow({
+      const teensy = await db.teensy.findFirstOrThrow({
         where: {
           slug: input.slug,
         },
@@ -162,7 +161,7 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx }) => {
-      const teensies = await prisma.teensy.findMany({
+      const teensies = await db.teensy.findMany({
         where: { owner: { email: ctx.session.user.email } },
         orderBy: { createdAt: "desc" },
         include: { visits: true },
@@ -187,7 +186,7 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await prisma.teensy.create({
+        await db.teensy.create({
           data: {
             slug: input.slug,
             url: input.url,
@@ -221,7 +220,7 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
-        await prisma.teensy.update({
+        await db.teensy.update({
           where: {
             id: input.id,
           },
@@ -251,7 +250,7 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
-        await prisma.teensy.delete({
+        await db.teensy.delete({
           where: {
             id: input.id,
           },
