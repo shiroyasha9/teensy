@@ -101,7 +101,7 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const { db, session } = ctx;
+        const { session } = ctx;
         await db.teensy.createMany({
           data: input.map((i) => ({
             slug: i.slug,
