@@ -25,13 +25,13 @@ type RootLayoutProps = {
 export default function RootLayout({ children, authModal }: RootLayoutProps) {
   return (
     <html lang="en" className={cn("antialiased", rubik.className)}>
-      <body className="h-screen">
+      <body className="flex h-screen flex-col p-6">
         <Providers>
           <AddVisitCount>
             <Header />
             {authModal}
             <Toaster />
-            <section className="flex h-[75vh] min-h-fit flex-col items-center justify-center px-5">
+            <section className="flex flex-1 flex-col items-center justify-center">
               {children}
             </section>
             <Footer />

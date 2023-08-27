@@ -1,12 +1,12 @@
-import Button from "@/components/Button";
-import Input from "@/components/Input";
+import WhatsAppForm from "@/components/WhatsAppForm";
 import Head from "next/head";
-import Router from "next/router";
-import { useState } from "react";
+
+export const metadata = {
+  title: "WhatsApp without saving number!",
+  description: "No more saving unwanted contacts!",
+};
 
 export default function WhatsAppPage() {
-  const [phoneNumber, setPhoneNumber] = useState("");
-
   return (
     <>
       <Head>
@@ -33,36 +33,7 @@ export default function WhatsAppPage() {
         <h1 className="text-center text-2xl sm:text-xl">
           Want to WhatsApp someone without saving their number?
         </h1>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const sanitizedPhoneNumber = phoneNumber
-              .replaceAll("-", "")
-              .replaceAll(" ", "")
-              .replaceAll("+", "")
-              .replace(/\D/g, "");
-            console.log(sanitizedPhoneNumber);
-            void Router.push(`/wa/${sanitizedPhoneNumber}`);
-          }}
-          className="flex flex-col gap-3"
-        >
-          <Input
-            label="    Enter their number here:"
-            inlineLabel
-            required
-            type="number"
-            placeholder="+1 999 999 9999"
-            minLength={7}
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-          <Button
-            type="submit"
-            title="WhatsApp them!"
-            className="mx-0"
-            disabled={phoneNumber.length < 8}
-          />
-        </form>
+        <WhatsAppForm />
         <p className="text-center">
           <span>you will be redirected to a page, click on</span>{" "}
           <span className="text-lemon-400">Continue to chat</span>
