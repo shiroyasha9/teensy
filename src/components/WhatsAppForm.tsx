@@ -1,43 +1,62 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Button from "./Button";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import z from "zod";
 import Input from "./Input";
+import { Button } from "./ui/button";
+
+const formSchema = z.object({
+  phoneNumber: z
+    .string()
+    .min(7, "Enter a valid number")
+    .max(15, "Enter a valid number")
+    .regex(/^\+?[0-9]+$/, "Enter a valid number"),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 const WhatsAppForm = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
   const router = useRouter();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    mode: "onChange",
+  });
+
+  const submitHandler: SubmitHandler<FormValues> = ({ phoneNumber }) => {
+    const sanitizedPhoneNumber = phoneNumber
+      .replaceAll("-", "")
+      .replaceAll(" ", "")
+      .replaceAll("+", "")
+      .replace(/\D/g, "");
+    void router.push(`/wa/${sanitizedPhoneNumber}`);
+  };
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const sanitizedPhoneNumber = phoneNumber
-          .replaceAll("-", "")
-          .replaceAll(" ", "")
-          .replaceAll("+", "")
-          .replace(/\D/g, "");
-        console.log(sanitizedPhoneNumber);
-        void router.push(`/wa/${sanitizedPhoneNumber}`);
-      }}
-      className="flex flex-col gap-3"
+      onSubmit={void handleSubmit(submitHandler)}
+      className="flex flex-col gap-6"
     >
       <Input
-        label="    Enter their number here:"
+        label="Enter their number:"
         inlineLabel
-        required
         type="number"
-        placeholder="+1 999 999 9999"
-        minLength={7}
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        placeholder="+19999999999"
+        invalid={!!errors.phoneNumber}
+        {...register("phoneNumber", { required: true })}
       />
       <Button
-        type="submit"
-        title="WhatsApp them!"
-        className="mx-0"
-        disabled={phoneNumber.length < 8}
-      />
+        className="mx-0 text-lg"
+        isLoading={isSubmitting}
+        disabled={!isValid}
+      >
+        WhatsApp them!
+      </Button>
     </form>
   );
 };

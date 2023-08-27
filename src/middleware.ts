@@ -16,15 +16,10 @@ export async function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith(path),
   );
 
-  if (
-    req.nextUrl.pathname.startsWith("/wa/") &&
-    !req.nextUrl.pathname.endsWith("/wa/")
-  ) {
-    const phoneNumber = req.nextUrl.pathname.split("/").pop();
-    if (phoneNumber) {
-      const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
-      return NextResponse.redirect(WHATSAPP_URL);
-    }
+  const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
+  if (phoneNumber) {
+    const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+    return NextResponse.redirect(WHATSAPP_URL);
   }
 
   if (isIgnoredPath) {
