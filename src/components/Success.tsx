@@ -1,3 +1,4 @@
+"use client";
 import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "@/store";
 import { showToastMessage } from "@/utils/functions";
 import copy from "copy-to-clipboard";

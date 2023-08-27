@@ -1,3 +1,4 @@
+"use client";
 import { formAtom, isSuccessfulAtom, showAuthModalAtom } from "@/store";
 import { api } from "@/utils/api";
 import { useAtomValue, useSetAtom } from "jotai";
