@@ -12,9 +12,9 @@ export default async function HeaderNew() {
   const user = session?.user;
 
   return (
-    <div className="fixed inset-x-0 top-0 z-20 h-fit px-6 py-6">
+    <div className="fixed inset-x-0 top-0 h-fit px-6 py-6">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2">
-        <Link href="/">
+        <Link href="/" className="z-10">
           <p className="text-4xl text-lemon-400">teensy</p>
         </Link>
         <div className="-my-2 -mr-2 flex items-center md:hidden">
