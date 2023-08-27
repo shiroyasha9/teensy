@@ -10,6 +10,7 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
+    document.body.classList.add("transition-colors", "duration-500", "ease-in");
   }, []);
 
   const renderThemeChanger = () => {
