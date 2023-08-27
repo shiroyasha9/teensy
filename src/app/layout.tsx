@@ -17,12 +17,13 @@ const rubik = Rubik({
   subsets: ["latin"],
 });
 
-type RootLayoutProps = {
+export default function RootLayout({
+  children,
+  authModal,
+}: {
   children: React.ReactNode;
   authModal: React.ReactNode;
-};
-
-export default function RootLayout({ children, authModal }: RootLayoutProps) {
+}) {
   return (
     <html lang="en" className={cn("antialiased", rubik.className)}>
       <body className="flex h-screen flex-col p-6">
