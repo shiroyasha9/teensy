@@ -1,5 +1,4 @@
 "use client";
-import AnalyticsPieChart from "@/components/AnalyticsPieChart";
 import Button from "@/components/Button";
 import DeleteLink from "@/components/DeleteLink";
 import EditLink from "@/components/EditLink";
@@ -278,14 +277,6 @@ export default function TeensiesPage() {
                   </tbody>
                 </table>
               </div>
-            </div>
-          </>
-        )}
-        {tabView === "analytics" && (
-          <>
-            <h1 className="text-center text-2xl sm:text-xl">Analytics</h1>
-            <div className="my-4 max-h-[20rem] w-[90vw] sm:w-[85vw]">
-              <AnalyticsPieChart />
             </div>
           </>
         )}

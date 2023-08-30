@@ -1,17 +1,18 @@
-import { api } from "@/utils/api";
+"use client";
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const AnalyticsPieChart = () => {
-  const userTeensies = api.fetchUserSlugs.useQuery();
+type AnalyticsPieChartProps = {
+  top5Slugs: string[];
+  top5Visits: number[];
+};
 
-  const top5 = userTeensies.data?.teensies.sort((a, b) => {
-    return b.visits.length - a.visits.length;
-  });
-  const top5Slugs = top5?.slice(0, 5).map((teensy) => "/" + teensy.slug);
-  const top5Visits = top5?.slice(0, 5).map((teensy) => teensy.visits.length);
+export default function AnalyticsPieChart({
+  top5Slugs,
+  top5Visits,
+}: AnalyticsPieChartProps) {
   return (
     <div>
       <Pie
@@ -53,6 +54,4 @@ const AnalyticsPieChart = () => {
       />
     </div>
   );
-};
-
-export default AnalyticsPieChart;
+}
