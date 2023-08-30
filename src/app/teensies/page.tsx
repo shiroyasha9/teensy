@@ -1,3 +1,4 @@
+"use client";
 import AnalyticsPieChart from "@/components/AnalyticsPieChart";
 import Button from "@/components/Button";
 import DeleteLink from "@/components/DeleteLink";
@@ -291,8 +292,9 @@ export default function TeensiesPage() {
         <Modal showModal={showQRModal} closeModal={() => setShowQRModal(false)}>
           <div className="flex flex-col items-center justify-center px-4 pt-8">
             <Canvas
-              text={`${window.location.protocol}//${teensyUrl}/${currentTeensy?.slug || ""
-                }`}
+              text={`${window.location.protocol}//${teensyUrl}/${
+                currentTeensy?.slug || ""
+              }`}
               logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
               options={{
                 errorCorrectionLevel: "M",
@@ -312,7 +314,8 @@ export default function TeensiesPage() {
                 className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
                 onClick={() => {
                   copy(
-                    `${window.location.protocol}//${teensyUrl}/${currentTeensy?.slug || ""
+                    `${window.location.protocol}//${teensyUrl}/${
+                      currentTeensy?.slug || ""
                     }`,
                   );
                   showToastMessage("Link Copied!");
