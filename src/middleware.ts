@@ -2,13 +2,15 @@ import type { Teensy, Visit } from "@prisma/client";
 import { NextResponse, type NextRequest } from "next/server";
 
 const IGNORE_MIDDLEWARE_PATHS = [
-  "/protected/",
+  "/protected",
   "/bmc.svg",
   "/icon-",
   "/.well-known/",
   "/manifest.json",
   "/multiple",
   "/wa",
+  "/_",
+  "/api",
 ];
 
 export async function middleware(req: NextRequest) {
@@ -46,7 +48,7 @@ export async function middleware(req: NextRequest) {
 
   if (data.password) {
     return NextResponse.redirect(
-      `${req.nextUrl.origin}/protected/${data.slug}`,
+      `${req.nextUrl.origin}/protected?slug=${data.slug}`,
     );
   }
 
