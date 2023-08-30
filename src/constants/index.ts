@@ -11,6 +11,8 @@ export const NOT_ALLOWED_SLUGS = new Set([
   "google",
   "wa",
   "teensies",
+  "protected",
+  "login",
 ]);
 
 export const NAV_ITEMS = [
@@ -24,6 +26,6 @@ export const NAV_ITEMS = [
   },
   {
     name: "🔗 My Teensies",
-    href: "/teensies",
+    href: "/teensies/mine",
   },
 ];
