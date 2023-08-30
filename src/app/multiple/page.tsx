@@ -1,3 +1,5 @@
+"use client";
+
 import { multipleFormAtom } from "@/store";
 import { api } from "@/utils/api";
 import {
@@ -6,11 +8,13 @@ import {
   showToastMessage,
 } from "@/utils/functions";
 import { useAtom } from "jotai";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { flushSync } from "react-dom";
 import { MdBlock } from "react-icons/md";
+
 const Multiple = () => {
+  const router = useRouter();
   const [showErrors, setShowErrors] = useState(false);
   const [multipleTeensiesData, setMultipleTeensiesData] =
     useAtom(multipleFormAtom);
@@ -51,7 +55,7 @@ const Multiple = () => {
           { slug: "", url: "", used: false, isPasswordProtected: false },
         ]);
         showToastMessage("Teensies created successfully");
-        void Router.push("/");
+        void router.push("/");
       }
     }
 
@@ -113,10 +117,11 @@ const Multiple = () => {
                       <input
                         type="text"
                         required
-                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${showErrors && teensy.used
+                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${
+                          showErrors && teensy.used
                             ? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
                             : ""
-                          }`}
+                        }`}
                         placeholder="example"
                         value={teensy.slug}
                         onChange={(e) => {
