@@ -129,8 +129,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         <div className="flex items-center justify-center gap-5">
           <div className="ml-2 flex flex-1 items-center justify-center">or</div>
           <Button
-            variant="outlined"
-            title="Generate an alias"
+            variant="outline"
             className={cn("m-0 mt-1 w-full text-sm", {
               "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
                 mode === "edit",
@@ -143,7 +142,9 @@ const TeensyForm = (props: TeensyFormProps) => {
               });
               void slugCheck.refetch();
             }}
-          />
+          >
+            Generate an alias
+          </Button>
         </div>
         <div className="mt-3 flex items-center gap-1">
           <input
