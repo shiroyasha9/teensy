@@ -1,4 +1,4 @@
-import { NOT_ALLOWED_SLUGS } from "@/constants";
+import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
 import useAutoFocus from "@/hooks/useAutoFocus";
 import { formAtom, teensyUrlAtom } from "@/store";
 
@@ -7,7 +7,6 @@ import { useTheme } from "next-themes";
 import { useEffect, type ChangeEvent } from "react";
 
 import { trpc } from "@/app/_trpc/client";
-import type { AutoDeleteDropdownData } from "@/types";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import type { Teensy } from "@prisma/client";
 import Link from "next/link";
@@ -33,25 +32,6 @@ const TeensyForm = (props: TeensyFormProps) => {
   const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const { theme } = useTheme();
   const urlInput = useAutoFocus();
-
-  const AUTO_DELETE_OPTIONS: AutoDeleteDropdownData[] = [
-    {
-      label: "1 hour",
-      minutesToExpire: 60,
-    },
-    {
-      label: "4 hours",
-      minutesToExpire: 60 * 4,
-    },
-    {
-      label: "8 hours",
-      minutesToExpire: 60 * 8,
-    },
-    {
-      label: "1 day",
-      minutesToExpire: 60 * 24,
-    },
-  ];
 
   const slugCheck = trpc.slugCheck.useQuery(
     { slug: form.slug },
