@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import "@/styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Confetti from "@/components/layout/Confetti";
 
 export const metadata = {
   title: "Teensy your URLs",
@@ -32,11 +33,12 @@ export default function RootLayout({
             <Header />
             {authModal}
             <Toaster />
-            <section className="flex flex-1 flex-col items-center justify-center">
+            <section className="flex flex-1 flex-col items-center justify-center pt-12">
               {children}
             </section>
             <Footer />
           </AddVisitCount>
+          <Confetti />
         </Providers>
       </body>
     </html>

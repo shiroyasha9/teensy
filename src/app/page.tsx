@@ -25,11 +25,7 @@ export const metadata = {
 };
 
 const Page = () => {
-  return (
-    <>
-      <Home />
-    </>
-  );
+  return <Home />;
 };
 
 export default Page;
