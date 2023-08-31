@@ -1,7 +1,7 @@
 "use client";
 
+import { trpc } from "@/app/_trpc/client";
 import { formAtom } from "@/store";
-import { api } from "@/utils/api";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import TeensyForm from "./TeensyForm";
@@ -14,7 +14,7 @@ const CreateLink = ({ ownerId }: CreateLinkProps) => {
   const form = useAtomValue(formAtom);
   const router = useRouter();
 
-  const createSlug = api.createSlug.useMutation({
+  const createSlug = trpc.createSlug.useMutation({
     onSuccess: () => {
       router.push(`/success?slug=${form.slug}`);
     },

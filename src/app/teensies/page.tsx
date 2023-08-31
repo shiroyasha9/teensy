@@ -5,7 +5,6 @@ import EditLink from "@/components/EditLink";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import { showAuthModalAtom, teensyUrlAtom } from "@/store";
-import { api } from "@/utils/api";
 import { showToastMessage } from "@/utils/functions";
 
 import type { Teensy } from "@prisma/client";
@@ -17,6 +16,7 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
+import { trpc } from "../_trpc/client";
 
 export default function TeensiesPage() {
   const setShowAuthModal = useSetAtom(showAuthModalAtom);
@@ -27,7 +27,7 @@ export default function TeensiesPage() {
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
   const [tabView, setTabView] = useState("teensies");
-  const userTeensies = api.fetchUserSlugs.useQuery();
+  const userTeensies = trpc.fetchUserSlugs.useQuery();
   const { theme } = useTheme();
   const { Canvas } = useQRCode();
 

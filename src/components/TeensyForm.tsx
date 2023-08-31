@@ -1,12 +1,12 @@
 import { NOT_ALLOWED_SLUGS } from "@/constants";
 import useAutoFocus from "@/hooks/useAutoFocus";
 import { formAtom, teensyUrlAtom } from "@/store";
-import { api } from "@/utils/api";
 
 import { useAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useEffect, type ChangeEvent } from "react";
 
+import { trpc } from "@/app/_trpc/client";
 import type { AutoDeleteDropdownData } from "@/types";
 import {
   cn,
@@ -58,7 +58,7 @@ const TeensyForm = (props: TeensyFormProps) => {
     },
   ];
 
-  const slugCheck = api.slugCheck.useQuery(
+  const slugCheck = trpc.slugCheck.useQuery(
     { slug: form.slug },
     {
       refetchOnReconnect: false,

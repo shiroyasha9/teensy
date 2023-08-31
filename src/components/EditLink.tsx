@@ -1,5 +1,5 @@
+import { trpc } from "@/app/_trpc/client";
 import { formAtom } from "@/store";
-import { api } from "@/utils/api";
 import type { Teensy } from "@prisma/client";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ type EditLinkProps = {
 const EditLink = ({ currentTeensy, onClose }: EditLinkProps) => {
   const [form, setForm] = useAtom(formAtom);
 
-  const updateSlug = api.updateSlug.useMutation();
+  const updateSlug = trpc.updateSlug.useMutation();
 
   function formSubmitHandler() {
     updateSlug.mutate({

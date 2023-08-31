@@ -1,4 +1,4 @@
-import { api } from "@/utils/api";
+import { trpc } from "@/app/_trpc/client";
 import type { Teensy } from "@prisma/client";
 import Button from "./Button";
 
@@ -8,7 +8,7 @@ type DeleteLinkProps = {
 };
 
 const DeleteLink = ({ currentTeensy, onClose }: DeleteLinkProps) => {
-  const deleteTeensy = api.deleteSlug.useMutation();
+  const deleteTeensy = trpc.deleteSlug.useMutation();
 
   async function deleteTeensyHandler() {
     await deleteTeensy.mutateAsync({ id: currentTeensy.id });
