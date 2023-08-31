@@ -11,7 +11,7 @@ import { env } from "@/env.mjs";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import type { Teensy } from "@prisma/client";
 import Link from "next/link";
-import Button from "./Button";
+import { Button } from "./ui/button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 
@@ -57,7 +57,6 @@ const TeensyForm = (props: TeensyFormProps) => {
       ...prevData,
       slug: e.target.value,
     }));
-    void slugCheck.refetch();
   }
 
   useEffect(() => {
@@ -231,8 +230,7 @@ const TeensyForm = (props: TeensyFormProps) => {
       </div>
       <Button
         type="submit"
-        title={mode === "create" ? "Teensy it!" : "Edit it!"}
-        variant={theme === "dark" || mode === "create" ? "primary" : "tertiary"}
+        variant={theme === "dark" || mode === "create" ? "default" : "tertiary"}
         className="mb-2 w-full self-center"
         disabled={
           isSlugInvalid ||
@@ -242,7 +240,9 @@ const TeensyForm = (props: TeensyFormProps) => {
             (!form.password || form.password.length < 5)) ||
           (form.isAutoDelete && !form.expiresIn)
         }
-      />
+      >
+        {mode === "create" ? "Teensy it!" : "Edit it!"}
+      </Button>
       <Link href="/multiple" className="text-center text-sm text-lemon-400">
         or Create multiple Teensies at once🚀
       </Link>
