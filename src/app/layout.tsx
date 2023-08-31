@@ -1,12 +1,12 @@
-import AddVisitCount from "@/components/AddVisitCount";
-import Providers from "@/components/Providers";
+import AddVisitCount from "@/components/layout/AddVisitCount";
+import Providers from "@/components/layout/Providers";
 import { cn } from "@/utils/functions";
 import { Rubik } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
 import "@/styles/globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import Confetti from "@/components/layout/Confetti";
 
 export const metadata = {
