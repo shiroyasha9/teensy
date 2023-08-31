@@ -1,7 +1,6 @@
 "use client";
 
-import { isSuccessfulAtom } from "@/store";
-import { useAtomValue } from "jotai";
+import { usePathname } from "next/navigation";
 import ReactDomConfetti from "react-dom-confetti";
 
 const config = {
@@ -19,12 +18,12 @@ const config = {
 };
 
 const Confetti = () => {
-  const isSuccessful = useAtomValue(isSuccessfulAtom);
+  const pathname = usePathname();
 
   return (
     <div className="absolute left-0 top-0 -z-10 h-screen w-screen overflow-hidden">
       <div className="h-screen w-screen translate-x-1/2 translate-y-1/3">
-        <ReactDomConfetti active={isSuccessful} config={config} />
+        <ReactDomConfetti active={pathname === "/success"} config={config} />
       </div>
     </div>
   );

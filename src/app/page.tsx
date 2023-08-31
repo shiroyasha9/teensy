@@ -1,4 +1,6 @@
-import Home from "@/components/Home";
+import CreateLinkForm from "@/components/CreateLink";
+import { getAuthSession } from "@/server/auth";
+import Link from "next/link";
 
 export const metadata = {
   title: "Teensy your URLs",
@@ -24,8 +26,25 @@ export const metadata = {
   manifest: "/manifest.json",
 };
 
-const Page = () => {
-  return <Home />;
+const Page = async () => {
+  const session = await getAuthSession();
+
+  return (
+    <>
+      <CreateLinkForm ownerId={session?.user.id} />
+      {!session?.user && (
+        <p className="text-center text-sm">
+          <Link
+            href="/login"
+            className="font-semibold text-lemon-400 hover:text-lemon-200"
+          >
+            Login
+          </Link>{" "}
+          to save this teensy to edit/delete it later.
+        </p>
+      )}
+    </>
+  );
 };
 
 export default Page;
