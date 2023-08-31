@@ -36,6 +36,7 @@ const TeensyForm = (props: TeensyFormProps) => {
   const slugCheck = trpc.slugCheck.useQuery(
     { slug: form.slug },
     {
+      enabled: !!form.slug,
       refetchOnReconnect: false,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
