@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
-import Input from "./Input";
-import { Button } from "./ui/button";
+import Input from "../Input";
+import { Button } from "../ui/button";
 
 const formSchema = z.object({
   phoneNumber: z

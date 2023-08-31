@@ -1,4 +1,4 @@
-import WhatsAppForm from "@/components/WhatsAppForm";
+import WhatsAppForm from "@/components/wa/WhatsAppForm";
 
 export const metadata = {
   title: "Contactless Whatsapp",
