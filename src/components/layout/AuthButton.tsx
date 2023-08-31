@@ -3,7 +3,7 @@
 import { cn } from "@/utils";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "../ui/button";
 
 type AuthButtonProps = {
   isSignedIn: boolean;
