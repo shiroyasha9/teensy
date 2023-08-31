@@ -1,5 +1,5 @@
 import { db } from "@/server/db";
-import { isDevEnvironment } from "@/utils/functions";
+import { isDevEnvironment } from "@/utils";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);

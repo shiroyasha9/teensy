@@ -2,7 +2,7 @@
 
 import { env } from "@/env.mjs";
 import { formAtom } from "@/store";
-import { showToastMessage } from "@/utils/functions";
+import { showToastMessage } from "@/utils";
 import copy from "copy-to-clipboard";
 import { useAtom } from "jotai";
 import { useQRCode } from "next-qrcode";

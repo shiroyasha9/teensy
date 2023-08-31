@@ -1,7 +1,7 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
-import { isDevEnvironment } from "@/utils/functions";
+import { isDevEnvironment } from "@/utils";
 import { useEffect } from "react";
 
 type AddVisitCountProps = {

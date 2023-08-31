@@ -1,4 +1,4 @@
-import { getExpiryDate } from "@/utils/functions";
+import { getExpiryDate } from "@/utils";
 import { z } from "zod";
 import { db } from "../db";
 import {

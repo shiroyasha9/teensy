@@ -5,7 +5,7 @@ import EditLink from "@/components/EditLink";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import { showAuthModalAtom, teensyUrlAtom } from "@/store";
-import { showToastMessage } from "@/utils/functions";
+import { showToastMessage } from "@/utils";
 
 import type { Teensy } from "@prisma/client";
 import copy from "copy-to-clipboard";

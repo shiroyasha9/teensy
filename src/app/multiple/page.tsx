@@ -1,11 +1,7 @@
 "use client";
 
 import { multipleFormAtom } from "@/store";
-import {
-  nanoidForSlug,
-  showErrorMessage,
-  showToastMessage,
-} from "@/utils/functions";
+import { nanoidForSlug, showErrorMessage, showToastMessage } from "@/utils";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

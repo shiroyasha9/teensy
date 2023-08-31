@@ -8,12 +8,7 @@ import { useEffect, type ChangeEvent } from "react";
 
 import { trpc } from "@/app/_trpc/client";
 import type { AutoDeleteDropdownData } from "@/types";
-import {
-  cn,
-  getFormattedTime,
-  getRemaingTime,
-  nanoidForSlug,
-} from "@/utils/functions";
+import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import type { Teensy } from "@prisma/client";
 import Link from "next/link";
 import Button from "./Button";

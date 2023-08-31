@@ -1,6 +1,6 @@
 import AddVisitCount from "@/components/layout/AddVisitCount";
 import Providers from "@/components/layout/Providers";
-import { cn } from "@/utils/functions";
+import { cn } from "@/utils";
 import { Rubik } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
