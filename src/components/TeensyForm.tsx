@@ -60,21 +60,6 @@ const TeensyForm = (props: TeensyFormProps) => {
     void slugCheck.refetch();
   }
 
-  const formClassNames = cn("flex w-full flex-col justify-center gap-4", {
-    "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
-    "mt-6 p-4 dark:text-white": mode === "edit",
-  });
-
-  const customizeContainerClassNames = cn("flex flex-col rounded-lg p-4", {
-    "bg-[#37415180]": mode === "create",
-    "bg-gray-300 dark:bg-gray-600": mode === "edit",
-  });
-
-  const generateAliasButtonClassNames = cn("m-0 mt-1 w-full text-sm", {
-    "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
-      mode === "edit",
-  });
-
   useEffect(() => {
     setForm({
       slug: "",
@@ -92,7 +77,10 @@ const TeensyForm = (props: TeensyFormProps) => {
         e.preventDefault();
         formSubmitHandler();
       }}
-      className={formClassNames}
+      className={cn("flex w-full flex-col justify-center gap-4", {
+        "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
+        "mt-6 p-4 dark:text-white": mode === "edit",
+      })}
     >
       <Input
         type="url"
@@ -108,7 +96,12 @@ const TeensyForm = (props: TeensyFormProps) => {
         variant={mode === "create" ? "primary" : "modal"}
       />
 
-      <div className={customizeContainerClassNames}>
+      <div
+        className={cn("flex flex-col rounded-lg p-4", {
+          "bg-[#37415180]": mode === "create",
+          "bg-gray-300 dark:bg-gray-600": mode === "edit",
+        })}
+      >
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
           ✍️ Customize
           {isSlugInvalid && (
@@ -139,7 +132,10 @@ const TeensyForm = (props: TeensyFormProps) => {
           <Button
             variant="outlined"
             title="Generate an alias"
-            className={generateAliasButtonClassNames}
+            className={cn("m-0 mt-1 w-full text-sm", {
+              "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
+                mode === "edit",
+            })}
             onClick={() => {
               const slug = nanoidForSlug();
               setForm({
