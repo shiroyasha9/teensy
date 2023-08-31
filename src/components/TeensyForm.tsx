@@ -1,12 +1,13 @@
 import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
 import useAutoFocus from "@/hooks/useAutoFocus";
-import { formAtom, teensyUrlAtom } from "@/store";
+import { formAtom } from "@/store";
 
 import { useAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useEffect, type ChangeEvent } from "react";
 
 import { trpc } from "@/app/_trpc/client";
+import { env } from "@/env.mjs";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import type { Teensy } from "@prisma/client";
 import Link from "next/link";
@@ -29,7 +30,6 @@ const TeensyForm = (props: TeensyFormProps) => {
     currentTeensy,
   } = props;
   const [form, setForm] = useAtom(formAtom);
-  const [teensyUrl, setTeensyUrl] = useAtom(teensyUrlAtom);
   const { theme } = useTheme();
   const urlInput = useAutoFocus();
 
@@ -75,22 +75,14 @@ const TeensyForm = (props: TeensyFormProps) => {
   });
 
   useEffect(() => {
-    if (window && window?.location?.hostname) {
-      const host = window.location.hostname;
-      if (host === "localhost") {
-        setTeensyUrl(`localhost:${window.location.port}`);
-      } else {
-        setTeensyUrl(host);
-      }
-      setForm({
-        slug: "",
-        url: "",
-        isPasswordProtected: false,
-        password: undefined,
-        isAutoDelete: false,
-        expiresIn: undefined,
-      });
-    }
+    setForm({
+      slug: "",
+      url: "",
+      isPasswordProtected: false,
+      password: undefined,
+      isAutoDelete: false,
+      expiresIn: undefined,
+    });
   }, []);
 
   return (
@@ -128,7 +120,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         </span>
         <Input
           type="text"
-          label={`${teensyUrl.replaceAll(/https?:\/\//gi, "")}/`}
+          label={`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
           variant={mode === "create" ? "primary" : "modal"}
           value={form.slug}

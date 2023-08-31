@@ -4,12 +4,13 @@ import DeleteLink from "@/components/DeleteLink";
 import EditLink from "@/components/EditLink";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
-import { showAuthModalAtom, teensyUrlAtom } from "@/store";
+import { showAuthModalAtom } from "@/store";
 import { showToastMessage } from "@/utils";
 
+import { env } from "@/env.mjs";
 import type { Teensy } from "@prisma/client";
 import copy from "copy-to-clipboard";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import debounce from "lodash.debounce";
 import { useQRCode } from "next-qrcode";
 import { useTheme } from "next-themes";
@@ -20,7 +21,6 @@ import { trpc } from "../_trpc/client";
 
 export default function TeensiesPage() {
   const setShowAuthModal = useSetAtom(showAuthModalAtom);
-  const teensyUrl = useAtomValue(teensyUrlAtom);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
@@ -233,7 +233,7 @@ export default function TeensiesPage() {
                             className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:underline dark:text-white "
                             onClick={() => {
                               copy(
-                                `${window.location.protocol}//${teensyUrl}/${teensy.slug}`,
+                                `${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`,
                               );
                               showToastMessage("Link Copied!");
                             }}
@@ -283,9 +283,7 @@ export default function TeensiesPage() {
         <Modal showModal={showQRModal} closeModal={() => setShowQRModal(false)}>
           <div className="flex flex-col items-center justify-center px-4 pt-8">
             <Canvas
-              text={`${window.location.protocol}//${teensyUrl}/${
-                currentTeensy?.slug || ""
-              }`}
+              text={`${env.NEXT_PUBLIC_SITE_URL}/${currentTeensy?.slug || ""}`}
               logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
               options={{
                 errorCorrectionLevel: "M",
@@ -305,14 +303,14 @@ export default function TeensiesPage() {
                 className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
                 onClick={() => {
                   copy(
-                    `${window.location.protocol}//${teensyUrl}/${
-                      currentTeensy?.slug || ""
-                    }`,
+                    `${env.NEXT_PUBLIC_SITE_URL}/${currentTeensy?.slug || ""}`,
                   );
                   showToastMessage("Link Copied!");
                 }}
               >
-                {`${teensyUrl}/${currentTeensy?.slug || ""}`}
+                {`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/${
+                  currentTeensy?.slug || ""
+                }`}
               </span>
             </p>
             <Button

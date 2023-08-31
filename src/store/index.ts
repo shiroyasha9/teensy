@@ -15,6 +15,4 @@ export const multipleFormAtom = atom<MultipleTeensiesFormData[]>([
   },
 ]);
 
-export const teensyUrlAtom = atom<string>("teensy.tech");
-
 export const showAuthModalAtom = atom<boolean>(false);
