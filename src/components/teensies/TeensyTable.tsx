@@ -15,6 +15,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { showToastMessage } from "@/utils";
 
 import { trpc } from "@/app/_trpc/client";
@@ -35,7 +43,6 @@ type TeensyTableProps = {
 const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
   const router = useRouter();
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showQRModal, setShowQRModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
@@ -46,11 +53,6 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
       router.refresh();
     },
   });
-
-  function handleQRClick(teensy: Teensy) {
-    setCurrentTeensy(teensy);
-    setShowQRModal(true);
-  }
 
   function handleEditClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
@@ -168,12 +170,67 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                     <td className="px-6 py-4">{teensy.visits.length}</td>
 
                     <td className="flex justify-center gap-8 px-6 py-4">
-                      <button
-                        onClick={() => handleQRClick(teensy)}
-                        className="font-medium text-black hover:underline dark:text-gray-200"
-                      >
-                        QR
-                      </button>
+                      <Dialog>
+                        <DialogTrigger>
+                          <button className="font-medium text-black hover:underline dark:text-gray-200">
+                            QR
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="text-black dark:text-white">
+                          <DialogHeader>
+                            <DialogTitle>QR Code</DialogTitle>
+                            <DialogDescription>
+                              <div className="flex flex-col items-center justify-center px-4 pt-8">
+                                <Canvas
+                                  text={`${env.NEXT_PUBLIC_SITE_URL}/${
+                                    teensy.slug || ""
+                                  }`}
+                                  logo={{
+                                    src: "/icon-192x192.png",
+                                    options: { width: 45 },
+                                  }}
+                                  options={{
+                                    errorCorrectionLevel: "M",
+                                    margin: 1,
+                                    scale: 5,
+                                    width: 200,
+                                    color: {
+                                      dark: "#000",
+                                      light: "#fff",
+                                    },
+                                  }}
+                                />
+                                <p className="mt-4 flex gap-1">
+                                  <span>QR Code for</span>
+                                  <span
+                                    className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
+                                    onClick={() => {
+                                      copy(
+                                        `${env.NEXT_PUBLIC_SITE_URL}/${
+                                          teensy.slug || ""
+                                        }`,
+                                      );
+                                      showToastMessage("Link Copied!");
+                                    }}
+                                  >
+                                    {`${env.NEXT_PUBLIC_SITE_URL.replaceAll(
+                                      /https?:\/\//gi,
+                                      "",
+                                    )}/${teensy.slug || ""}`}
+                                  </span>
+                                </p>
+                                <Button
+                                  title="Download PNG"
+                                  onClick={downloadQRCode}
+                                  variant={
+                                    theme === "dark" ? "primary" : "tertiary"
+                                  }
+                                />
+                              </div>
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
                       <button
                         onClick={() => handleEditClick(teensy)}
                         className="font-medium text-purple-600 hover:underline dark:text-lemon-400"
@@ -215,46 +272,6 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
           </table>
         </div>
       </div>
-      <Modal showModal={showQRModal} closeModal={() => setShowQRModal(false)}>
-        <div className="flex flex-col items-center justify-center px-4 pt-8">
-          <Canvas
-            text={`${env.NEXT_PUBLIC_SITE_URL}/${currentTeensy?.slug || ""}`}
-            logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
-            options={{
-              errorCorrectionLevel: "M",
-              margin: 1,
-              scale: 5,
-              width: 200,
-              color: {
-                dark: "#000",
-                light: "#fff",
-              },
-            }}
-          />
-          <p className="mt-4 flex gap-1">
-            <span>QR Code for</span>
-
-            <span
-              className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
-              onClick={() => {
-                copy(
-                  `${env.NEXT_PUBLIC_SITE_URL}/${currentTeensy?.slug || ""}`,
-                );
-                showToastMessage("Link Copied!");
-              }}
-            >
-              {`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/${
-                currentTeensy?.slug || ""
-              }`}
-            </span>
-          </p>
-          <Button
-            title="Download PNG"
-            onClick={downloadQRCode}
-            variant={theme === "dark" ? "primary" : "tertiary"}
-          />
-        </div>
-      </Modal>
       <Modal
         showModal={showEditModal}
         closeModal={() => setShowEditModal(false)}
