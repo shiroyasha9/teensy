@@ -13,7 +13,7 @@ type MobileNavProps = {
 
 const MobileNav = ({ isSignedIn }: MobileNavProps) => {
   return (
-    <Popover>
+    <Popover className="z-20">
       <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-lemon-400 hover:text-lemon-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
         <span className="sr-only">Open menu</span>
         <HiBars3 className="h-6 w-6" aria-hidden="true" />
