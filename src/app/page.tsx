@@ -1,4 +1,4 @@
-import CreateLinkForm from "@/components/CreateLink";
+import TeensyForm from "@/components/TeensyForm";
 import { getAuthSession } from "@/server/auth";
 import Link from "next/link";
 
@@ -31,7 +31,7 @@ const Page = async () => {
 
   return (
     <>
-      <CreateLinkForm ownerId={session?.user.id} />
+      <TeensyForm ownerId={session?.user.id} />
       {!session?.user && (
         <p className="text-center text-sm">
           <Link
