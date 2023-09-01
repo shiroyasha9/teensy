@@ -26,7 +26,7 @@ const Page = ({ searchParams: { slug } }: SuccessPageProps) => {
           <h1>{`${env.NEXT_PUBLIC_SITE_URL}/${slug}`}</h1>
         </a>
       </div>
-      <Success />
+      <Success slug={slug} />
     </div>
   );
 };

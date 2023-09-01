@@ -1,31 +1,24 @@
 "use client";
 
 import { env } from "@/env.mjs";
-import { formAtom } from "@/store";
 import { showToastMessage } from "@/utils";
 import copy from "copy-to-clipboard";
-import { useAtom } from "jotai";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import Button from "./Button";
 
-const Success = () => {
-  const [{ slug }, setForm] = useAtom(formAtom);
+type SuccessProps = {
+  slug: string;
+};
+
+const Success = ({ slug }: SuccessProps) => {
   const { Canvas } = useQRCode();
   const [showDownloadQRButton, setShowDownloadQRButton] = useState(false);
   const router = useRouter();
 
   const resetHandler = () => {
-    setForm({
-      slug: "",
-      url: "",
-      isPasswordProtected: false,
-      password: undefined,
-      isAutoDelete: false,
-      expiresAt: undefined,
-    });
     router.push("/");
   };
 

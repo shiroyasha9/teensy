@@ -1,22 +1,54 @@
-import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
-import useAutoFocus from "@/hooks/useAutoFocus";
-import { formAtom } from "@/store";
-
-import { useAtom } from "jotai";
-import { useTheme } from "next-themes";
-import { useEffect, type ChangeEvent } from "react";
+"use client";
 
 import { trpc } from "@/app/_trpc/client";
+import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
 import { env } from "@/env.mjs";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { Teensy } from "@prisma/client";
+import { useTheme } from "next-themes";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import z from "zod";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
+import { Button } from "./ui/button";
+
+const formSchema = z
+  .object({
+    slug: z
+      .string()
+      .min(1, "Enter a valid alias.")
+      .max(20, "Enter a valid alias.")
+      .regex(/^[a-zA-Z0-9-]+$/, "Use only alphanumeric values or -"),
+    url: z.string().url("Enter a valid URL").min(1, "Enter a valid URL"),
+    isPasswordProtected: z.boolean(),
+    password: z.string().optional(),
+    isAutoDelete: z.boolean(),
+    expiresAt: z.date().optional(),
+    expiresIn: z.number().optional(),
+  })
+  .refine((data) => {
+    if (
+      data.isPasswordProtected &&
+      (!data.password || data.password.length < 5)
+    ) {
+      return false;
+    }
+    return true;
+  }, "Enter a valid password")
+  .refine((data) => {
+    if (data.isAutoDelete && !data.expiresIn) {
+      return false;
+    }
+    return true;
+  }, "Select a valid expiry duration");
+
+type FormValues = z.infer<typeof formSchema>;
 
 type TeensyFormProps = {
-  formSubmitHandler: () => void;
+  ownerId: string | undefined;
   mode?: "create" | "edit";
   additionalIsSlugInvalid?: boolean;
   currentTeensy?: Teensy;
@@ -24,57 +56,88 @@ type TeensyFormProps = {
 
 const TeensyForm = (props: TeensyFormProps) => {
   const {
-    formSubmitHandler,
+    ownerId,
     mode = "create",
     additionalIsSlugInvalid,
     currentTeensy,
   } = props;
-  const [form, setForm] = useAtom(formAtom);
   const { theme } = useTheme();
-  const urlInput = useAutoFocus();
+  const router = useRouter();
 
-  const slugCheck = trpc.slugCheck.useQuery(
-    { slug: form.slug },
-    {
-      enabled: !!form.slug,
-      refetchOnReconnect: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    },
-  );
-
-  const isSlugInvalid =
-    form.slug.includes(" ") ||
-    NOT_ALLOWED_SLUGS.has(form.slug) ||
-    slugCheck.isRefetching ||
-    (slugCheck.isFetched &&
-      (mode === "edit"
-        ? slugCheck.data?.used && additionalIsSlugInvalid
-        : slugCheck.data?.used));
-
-  function handleSlugChange(e: ChangeEvent<HTMLInputElement>) {
-    setForm((prevData) => ({
-      ...prevData,
-      slug: e.target.value,
-    }));
-  }
-
-  useEffect(() => {
-    setForm({
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    register,
+    trigger,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    mode: "onChange",
+    defaultValues: {
       slug: "",
       url: "",
       isPasswordProtected: false,
       password: undefined,
       isAutoDelete: false,
       expiresIn: undefined,
-    });
-  }, []);
+      expiresAt: undefined,
+    },
+  });
+
+  const slug = watch("slug");
+  const isPasswordProtected = watch("isPasswordProtected");
+  const isAutoDelete = watch("isAutoDelete");
+  const expiresIn = watch("expiresIn");
+
+  const slugCheck = trpc.slugCheck.useQuery(
+    { slug },
+    {
+      enabled: !!slug,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  const createSlug = trpc.createSlug.useMutation({
+    onSuccess: () => {
+      router.push(`/success?slug=${slug}`);
+    },
+  });
+
+  const submitHandler: SubmitHandler<FormValues> = ({
+    slug,
+    url,
+    password,
+    isPasswordProtected,
+    isAutoDelete,
+    expiresIn,
+  }) => {
+    if (mode === "create") {
+      createSlug.mutate({
+        slug,
+        url,
+        ownerId,
+        password: isPasswordProtected ? password : undefined,
+        expiresIn: isAutoDelete ? expiresIn : undefined,
+      });
+    }
+  };
+
+  const isSlugInvalid =
+    !!errors.slug ||
+    NOT_ALLOWED_SLUGS.has(slug) ||
+    (slugCheck.isFetched &&
+      (mode === "edit"
+        ? slugCheck.data?.used && additionalIsSlugInvalid
+        : slugCheck.data?.used));
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        formSubmitHandler();
+        void handleSubmit(submitHandler)(e);
       }}
       className={cn("flex w-full flex-col justify-center gap-4", {
         "p-3 sm:w-2/3 md:w-1/2 lg:w-1/3": mode === "create",
@@ -82,17 +145,14 @@ const TeensyForm = (props: TeensyFormProps) => {
       })}
     >
       <Input
-        type="url"
         label="🤏 Link to teensy"
-        onChange={(e) =>
-          setForm((prevData) => ({ ...prevData, url: e.target.value }))
-        }
         placeholder="e.g. https://github.com"
-        value={form.url}
-        required
-        id="url"
-        ref={urlInput}
+        autoFocus
+        invalid={!!errors.url}
         variant={mode === "create" ? "primary" : "modal"}
+        {...register("url", {
+          required: true,
+        })}
       />
 
       <div
@@ -105,9 +165,7 @@ const TeensyForm = (props: TeensyFormProps) => {
           ✍️ Customize
           {isSlugInvalid && (
             <span className="text-center font-medium text-red-450">
-              {form.slug.includes(" ")
-                ? "Alias cannot contain spaces."
-                : "Already in use."}
+              {errors.slug?.message ? errors.slug.message : "Already in use."}
             </span>
           )}
         </span>
@@ -116,19 +174,17 @@ const TeensyForm = (props: TeensyFormProps) => {
           label={`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
           variant={mode === "create" ? "primary" : "modal"}
-          value={form.slug}
-          onChange={handleSlugChange}
-          minLength={1}
           placeholder="alias e.g. ig for instagram"
           invalid={isSlugInvalid}
-          defaultValue={currentTeensy?.slug || ""}
-          pattern={"^[-a-zA-Z0-9]+$"}
-          title="Only alphanumeric characters and hypens are allowed. No spaces."
-          required
+          title="Only alphanumeric characters and hyphens are allowed. No spaces."
+          {...register("slug", {
+            required: true,
+          })}
         />
         <div className="flex items-center justify-center gap-5">
           <div className="ml-2 flex flex-1 items-center justify-center">or</div>
           <Button
+            type="button"
             variant="outline"
             className={cn("m-0 mt-1 w-full text-sm", {
               "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
@@ -136,11 +192,8 @@ const TeensyForm = (props: TeensyFormProps) => {
             })}
             onClick={() => {
               const slug = nanoidForSlug();
-              setForm({
-                ...form,
-                slug,
-              });
-              void slugCheck.refetch();
+              setValue("slug", slug);
+              void trigger("slug");
             }}
           >
             Generate an alias
@@ -150,13 +203,7 @@ const TeensyForm = (props: TeensyFormProps) => {
           <input
             type="checkbox"
             id="password-protection-checkbox"
-            checked={form.isPasswordProtected}
-            onChange={(e) =>
-              setForm((prevData) => ({
-                ...prevData,
-                isPasswordProtected: e.target.checked,
-              }))
-            }
+            {...register("isPasswordProtected")}
           />
           <label
             htmlFor="password-protection-checkbox"
@@ -166,18 +213,10 @@ const TeensyForm = (props: TeensyFormProps) => {
           </label>
         </div>
         <Input
-          disabled={!form.isPasswordProtected}
+          disabled={!isPasswordProtected}
           placeholder="e.g. 12345"
           type="password"
-          minLength={5}
-          value={form.password}
-          onChange={(e) =>
-            setForm((prevData) => ({
-              ...prevData,
-              password: e.target.value,
-            }))
-          }
-          required={form.isPasswordProtected}
+          {...register("password")}
         />
         {mode === "create" ? (
           <>
@@ -185,13 +224,7 @@ const TeensyForm = (props: TeensyFormProps) => {
               <input
                 type="checkbox"
                 id="auto-delete-checkbox"
-                checked={form.isAutoDelete}
-                onChange={(e) =>
-                  setForm((prevData) => ({
-                    ...prevData,
-                    isAutoDelete: e.target.checked,
-                  }))
-                }
+                {...register("isAutoDelete")}
               />
               <label
                 htmlFor="auto-delete-checkbox"
@@ -202,16 +235,12 @@ const TeensyForm = (props: TeensyFormProps) => {
             </div>
             <Dropdown
               data={AUTO_DELETE_OPTIONS}
-              disabled={!form.isAutoDelete}
-              label={
-                form.expiresIn ? getFormattedTime(form.expiresIn) : "e.g 1 day"
-              }
-              onChange={(mins: number) =>
-                setForm((prevData) => ({
-                  ...prevData,
-                  expiresIn: mins,
-                }))
-              }
+              disabled={!isAutoDelete}
+              label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
+              onChange={(mins: number) => {
+                setValue("expiresIn", mins);
+                void trigger("expiresIn");
+              }}
             />
           </>
         ) : (
@@ -230,17 +259,10 @@ const TeensyForm = (props: TeensyFormProps) => {
         )}
       </div>
       <Button
-        type="submit"
         variant={theme === "dark" || mode === "create" ? "default" : "tertiary"}
         className="mb-2 w-full self-center"
-        disabled={
-          isSlugInvalid ||
-          !form.url ||
-          !form.slug ||
-          (form.isPasswordProtected &&
-            (!form.password || form.password.length < 5)) ||
-          (form.isAutoDelete && !form.expiresIn)
-        }
+        isLoading={isSubmitting}
+        disabled={isSlugInvalid || !isValid || slugCheck.isRefetching}
       >
         {mode === "create" ? "Teensy it!" : "Edit it!"}
       </Button>
