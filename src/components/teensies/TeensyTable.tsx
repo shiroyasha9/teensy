@@ -97,7 +97,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-3">
-      <h1 className="text-center text-2xl sm:text-xl">My Teensies</h1>
       <div className="my-4 w-[90vw] sm:w-[85vw]">
         <label htmlFor="table-search" className="sr-only">
           Search
@@ -109,7 +108,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
           <Input
             type="text"
             className="my-0 block w-full rounded-lg border !p-2 px-3 py-0 !pl-10 text-sm"
-            placeholder="Search for items"
+            placeholder="Search for any url or slug..."
             noContainer
             defaultValue=""
             onChange={debouncedSearchChangeHandler}
