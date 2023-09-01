@@ -1,4 +1,4 @@
-import Login from "@/components/Login";
+import Login from "@/components/auth/Login";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/utils";
 import Link from "next/link";
