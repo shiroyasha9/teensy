@@ -44,7 +44,6 @@ type TeensyTableProps = {
 const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
   const router = useRouter();
   const editModalRef = useRef<HTMLButtonElement>(null);
-  const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
   const { Canvas } = useQRCode();
@@ -59,11 +58,11 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
     deleteTeensy.mutate({ id });
   }
 
-  function downloadQRCode() {
+  function downloadQRCode(slug: string) {
     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
     const image = canvas.toDataURL("image/png");
     const link = document.createElement("a");
-    link.download = `qrcode-${currentTeensy?.slug ?? ""}.png`;
+    link.download = `qrcode-${slug}.png`;
     link.href = image;
     link.click();
   }
@@ -213,7 +212,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                                 </p>
                                 <Button
                                   title="Download PNG"
-                                  onClick={downloadQRCode}
+                                  onClick={() => downloadQRCode(teensy.slug)}
                                   variant={
                                     theme === "dark" ? "primary" : "tertiary"
                                   }
