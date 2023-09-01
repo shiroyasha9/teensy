@@ -1,21 +1,32 @@
 "use client";
 
 import Button from "@/components/Button";
-import DeleteLink from "@/components/DeleteLink";
 import EditLink from "@/components/EditLink";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { showToastMessage } from "@/utils";
 
+import { trpc } from "@/app/_trpc/client";
 import { env } from "@/env.mjs";
 import type { Teensy, Visit } from "@prisma/client";
 import copy from "copy-to-clipboard";
 import debounce from "lodash.debounce";
 import { useQRCode } from "next-qrcode";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
-import { useRouter } from "next/navigation";
 
 type TeensyTableProps = {
   userTeensies: (Teensy & { visits: Visit[] })[];
@@ -24,12 +35,17 @@ type TeensyTableProps = {
 const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
   const router = useRouter();
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
   const { Canvas } = useQRCode();
+
+  const deleteTeensy = trpc.deleteSlug.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
 
   function handleQRClick(teensy: Teensy) {
     setCurrentTeensy(teensy);
@@ -41,9 +57,8 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
     setShowEditModal(true);
   }
 
-  function handleDeleteClick(teensy: Teensy) {
-    setCurrentTeensy(teensy);
-    setShowDeleteModal(true);
+  function handleDeleteClick(id: number) {
+    deleteTeensy.mutate({ id });
   }
 
   function downloadQRCode() {
@@ -165,12 +180,34 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                       >
                         Edit
                       </button>
-                      <button
-                        onClick={() => handleDeleteClick(teensy)}
-                        className="font-medium text-red-500 hover:underline dark:text-red-450"
-                      >
-                        Delete
-                      </button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button className="font-medium text-red-500 hover:underline dark:text-red-450">
+                            Delete
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="text-black dark:text-white">
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete this teensy.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel className="text-black dark:text-white">
+                              Cancel
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDeleteClick(teensy.id)}
+                            >
+                              Continue
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </td>
                   </tr>
                 ))}
@@ -226,18 +263,6 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
           onClose={() => {
             setShowEditModal(false);
 
-            router.refresh();
-          }}
-          currentTeensy={currentTeensy!}
-        />
-      </Modal>
-      <Modal
-        showModal={showDeleteModal}
-        closeModal={() => setShowDeleteModal(false)}
-      >
-        <DeleteLink
-          onClose={() => {
-            setShowDeleteModal(false);
             router.refresh();
           }}
           currentTeensy={currentTeensy!}
