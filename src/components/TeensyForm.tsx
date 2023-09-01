@@ -49,18 +49,13 @@ type FormValues = z.infer<typeof formSchema>;
 
 type TeensyFormProps = {
   ownerId: string | undefined;
+  onClose?: () => void;
   mode?: "create" | "edit";
-  additionalIsSlugInvalid?: boolean;
   currentTeensy?: Teensy;
 };
 
 const TeensyForm = (props: TeensyFormProps) => {
-  const {
-    ownerId,
-    mode = "create",
-    additionalIsSlugInvalid,
-    currentTeensy,
-  } = props;
+  const { ownerId, mode = "create", currentTeensy, onClose } = props;
   const { theme } = useTheme();
   const router = useRouter();
 
@@ -75,13 +70,13 @@ const TeensyForm = (props: TeensyFormProps) => {
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues: {
-      slug: "",
-      url: "",
-      isPasswordProtected: false,
-      password: undefined,
-      isAutoDelete: false,
+      slug: currentTeensy?.slug ?? "",
+      url: currentTeensy?.url ?? "",
+      isPasswordProtected: !!currentTeensy?.password ?? false,
+      password: currentTeensy?.password ?? undefined,
+      isAutoDelete: !!currentTeensy?.expiresAt ?? false,
       expiresIn: undefined,
-      expiresAt: undefined,
+      expiresAt: currentTeensy?.expiresAt ?? undefined,
     },
   });
 
@@ -89,6 +84,8 @@ const TeensyForm = (props: TeensyFormProps) => {
   const isPasswordProtected = watch("isPasswordProtected");
   const isAutoDelete = watch("isAutoDelete");
   const expiresIn = watch("expiresIn");
+  const additionalIsSlugInvalid =
+    mode === "edit" ? slug !== currentTeensy?.slug : false;
 
   const slugCheck = trpc.slugCheck.useQuery(
     { slug },
@@ -103,6 +100,12 @@ const TeensyForm = (props: TeensyFormProps) => {
   const createSlug = trpc.createSlug.useMutation({
     onSuccess: () => {
       router.push(`/success?slug=${slug}`);
+    },
+  });
+
+  const updateSlug = trpc.updateSlug.useMutation({
+    onSuccess: () => {
+      router.refresh();
     },
   });
 
@@ -122,6 +125,15 @@ const TeensyForm = (props: TeensyFormProps) => {
         password: isPasswordProtected ? password : undefined,
         expiresIn: isAutoDelete ? expiresIn : undefined,
       });
+    } else {
+      if (!currentTeensy) return;
+      updateSlug.mutate({
+        slug,
+        url,
+        password: isPasswordProtected ? password : undefined,
+        id: currentTeensy.id,
+      });
+      onClose?.();
     }
   };
 
@@ -266,9 +278,11 @@ const TeensyForm = (props: TeensyFormProps) => {
       >
         {mode === "create" ? "Teensy it!" : "Edit it!"}
       </Button>
-      <Link href="/multiple" className="text-center text-sm text-lemon-400">
-        or Create multiple Teensies at once🚀
-      </Link>
+      {mode === "create" && (
+        <Link href="/multiple" className="text-center text-sm text-lemon-400">
+          or Create multiple Teensies at once🚀
+        </Link>
+      )}
     </form>
   );
 };

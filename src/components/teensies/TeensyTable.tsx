@@ -1,9 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
-import EditLink from "@/components/EditLink";
 import Input from "@/components/Input";
-import Modal from "@/components/Modal";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -33,17 +31,19 @@ import debounce from "lodash.debounce";
 import { useQRCode } from "next-qrcode";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
+import TeensyForm from "../TeensyForm";
 import { buttonVariants } from "../ui/button";
 
 type TeensyTableProps = {
   userTeensies: (Teensy & { visits: Visit[] })[];
+  ownerId: string;
 };
 
-const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
+const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
   const router = useRouter();
-  const [showEditModal, setShowEditModal] = useState(false);
+  const editModalRef = useRef<HTMLButtonElement>(null);
   const [currentTeensy, setCurrentTeensy] = useState<Teensy | null>(null);
   const [search, setSearch] = useState("");
   const { theme } = useTheme();
@@ -54,11 +54,6 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
       router.refresh();
     },
   });
-
-  function handleEditClick(teensy: Teensy) {
-    setCurrentTeensy(teensy);
-    setShowEditModal(true);
-  }
 
   function handleDeleteClick(id: number) {
     deleteTeensy.mutate({ id });
@@ -173,9 +168,9 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                     <td className="flex justify-center gap-8 px-6 py-4">
                       <Dialog>
                         <DialogTrigger>
-                          <button className="font-medium text-black hover:underline dark:text-gray-200">
+                          <span className="font-medium text-black hover:underline dark:text-gray-200">
                             QR
-                          </button>
+                          </span>
                         </DialogTrigger>
                         <DialogContent className="text-black dark:text-white">
                           <DialogHeader>
@@ -228,17 +223,29 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                           </DialogHeader>
                         </DialogContent>
                       </Dialog>
-                      <button
-                        onClick={() => handleEditClick(teensy)}
-                        className="font-medium text-purple-600 hover:underline dark:text-lemon-400"
-                      >
-                        Edit
-                      </button>
+                      <Dialog>
+                        <DialogTrigger ref={editModalRef}>
+                          <span className="font-medium text-purple-600 hover:underline dark:text-lemon-400">
+                            Edit
+                          </span>
+                        </DialogTrigger>
+                        <DialogContent className="text-black dark:text-white">
+                          <DialogHeader>
+                            <DialogTitle>Edit Teensy</DialogTitle>
+                          </DialogHeader>
+                          <TeensyForm
+                            onClose={() => editModalRef.current?.click()}
+                            ownerId={ownerId}
+                            mode="edit"
+                            currentTeensy={teensy}
+                          />
+                        </DialogContent>
+                      </Dialog>
                       <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <button className="font-medium text-red-500 hover:underline dark:text-red-450">
+                        <AlertDialogTrigger>
+                          <span className="font-medium text-red-500 hover:underline dark:text-red-450">
                             Delete
-                          </button>
+                          </span>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
@@ -273,19 +280,6 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
           </table>
         </div>
       </div>
-      <Modal
-        showModal={showEditModal}
-        closeModal={() => setShowEditModal(false)}
-      >
-        <EditLink
-          onClose={() => {
-            setShowEditModal(false);
-
-            router.refresh();
-          }}
-          currentTeensy={currentTeensy!}
-        />
-      </Modal>
     </div>
   );
 };

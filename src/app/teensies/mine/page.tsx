@@ -39,5 +39,5 @@ export default async function TeensiesPage() {
     include: { visits: true },
   });
 
-  return <TeensyTable userTeensies={teensies} />;
+  return <TeensyTable userTeensies={teensies} ownerId={session.user.id} />;
 }
