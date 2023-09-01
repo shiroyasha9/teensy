@@ -35,6 +35,7 @@ import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
+import { buttonVariants } from "../ui/button";
 
 type TeensyTableProps = {
   userTeensies: (Teensy & { visits: Visit[] })[];
@@ -182,9 +183,7 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                             <DialogDescription>
                               <div className="flex flex-col items-center justify-center px-4 pt-8">
                                 <Canvas
-                                  text={`${env.NEXT_PUBLIC_SITE_URL}/${
-                                    teensy.slug || ""
-                                  }`}
+                                  text={`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`}
                                   logo={{
                                     src: "/icon-192x192.png",
                                     options: { width: 45 },
@@ -206,9 +205,7 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                                     className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
                                     onClick={() => {
                                       copy(
-                                        `${env.NEXT_PUBLIC_SITE_URL}/${
-                                          teensy.slug || ""
-                                        }`,
+                                        `${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`,
                                       );
                                       showToastMessage("Link Copied!");
                                     }}
@@ -216,7 +213,7 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                                     {`${env.NEXT_PUBLIC_SITE_URL.replaceAll(
                                       /https?:\/\//gi,
                                       "",
-                                    )}/${teensy.slug || ""}`}
+                                    )}/${teensy.slug}`}
                                   </span>
                                 </p>
                                 <Button
@@ -258,6 +255,10 @@ const TeensyTable = ({ userTeensies }: TeensyTableProps) => {
                               Cancel
                             </AlertDialogCancel>
                             <AlertDialogAction
+                              className={buttonVariants({
+                                variant:
+                                  theme === "dark" ? "default" : "tertiary",
+                              })}
                               onClick={() => handleDeleteClick(teensy.id)}
                             >
                               Continue
