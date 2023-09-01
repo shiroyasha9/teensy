@@ -24,7 +24,7 @@ const Page = async () => {
   const top5Visits = top5?.slice(0, 5).map((teensy) => teensy.visits.length);
 
   return (
-    <div className="mt-8 h-[20rem] w-[90vw] sm:w-[85vw]">
+    <div className="w-full">
       <AnalyticsPieChart top5Slugs={top5Slugs} top5Visits={top5Visits} />
     </div>
   );

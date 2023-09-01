@@ -33,7 +33,7 @@ export default function RootLayout({
             <Header />
             {authModal}
             <Toaster />
-            <section className="flex flex-1 flex-col items-center justify-center pt-12">
+            <section className="mt-12 flex flex-1 flex-col items-center justify-center">
               {children}
             </section>
             <Footer />
