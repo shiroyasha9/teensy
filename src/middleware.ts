@@ -11,6 +11,7 @@ const IGNORE_MIDDLEWARE_PATHS = [
   "/wa",
   "/_",
   "/api",
+  "/teensies",
 ];
 
 export async function middleware(req: NextRequest) {

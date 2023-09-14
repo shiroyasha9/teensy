@@ -26,6 +26,7 @@ export default function SelectedSegment() {
     <div className="flex divide-x divide-gray-200 rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400">
       <div className="w-full">
         <Link
+          prefetch={false}
           href="/teensies/mine"
           className={tabButtonClassNames(segment, "mine", "rounded-l-lg")}
         >
@@ -35,6 +36,7 @@ export default function SelectedSegment() {
 
       <div className="w-full">
         <Link
+          prefetch={false}
           href="/teensies/analytics"
           className={tabButtonClassNames(segment, "analytics", "rounded-r-lg")}
         >
