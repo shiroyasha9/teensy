@@ -120,6 +120,9 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
           <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
             <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
+                <th scope="col" className="w-[10vw] px-6 py-3 text-center">
+                  Actions
+                </th>
                 <th scope="col" className="w-[10vw] px-6 py-3">
                   Teensy Slug
                 </th>
@@ -128,9 +131,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                 </th>
                 <th scope="col" className="w-[10vw] px-6 py-3">
                   Visits
-                </th>
-                <th scope="col" className="w-[10vw] px-6 py-3 text-center">
-                  Actions
                 </th>
               </tr>
             </thead>
@@ -141,28 +141,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-[#37415180] dark:hover:bg-gray-700/75"
                     key={teensy.id}
                   >
-                    <td
-                      scope="row"
-                      className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:underline dark:text-white "
-                      onClick={() => {
-                        copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
-                        showToastMessage("Link Copied!");
-                      }}
-                    >
-                      /{teensy.slug}
-                    </td>
-                    <td className="px-6 py-4">
-                      <a
-                        href={teensy.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="line-clamp-1 hover:underline"
-                      >
-                        {teensy.url}
-                      </a>
-                    </td>
-                    <td className="px-6 py-4">{teensy.visits.length}</td>
-
                     <td className="flex justify-center gap-8 px-6 py-4">
                       <Dialog>
                         <DialogTrigger>
@@ -272,6 +250,27 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                         </AlertDialogContent>
                       </AlertDialog>
                     </td>
+                    <td
+                      scope="row"
+                      className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:underline dark:text-white "
+                      onClick={() => {
+                        copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
+                        showToastMessage("Link Copied!");
+                      }}
+                    >
+                      /{teensy.slug}
+                    </td>
+                    <td className="px-6 py-4">
+                      <a
+                        href={teensy.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="line-clamp-1 hover:underline"
+                      >
+                        {teensy.url}
+                      </a>
+                    </td>
+                    <td className="px-6 py-4">{teensy.visits.length}</td>
                   </tr>
                 ))}
             </tbody>
