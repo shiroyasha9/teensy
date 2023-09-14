@@ -87,7 +87,6 @@ export const appRouter = createTRPCRouter({
         },
       });
       const usedSlugs = count.map((c) => c.slug);
-      console.log({ usedSlugs });
       return { usedSlugs };
     }),
   createMultipleTeensies: publicProcedure
@@ -199,7 +198,6 @@ export const appRouter = createTRPCRouter({
         });
         return { success: true };
       } catch (e) {
-        console.log(e);
         return { success: false };
       }
     }),
@@ -232,7 +230,6 @@ export const appRouter = createTRPCRouter({
         });
         return { success: true };
       } catch (e) {
-        console.log(e);
         return { success: false };
       }
     }),
@@ -257,7 +254,6 @@ export const appRouter = createTRPCRouter({
         });
         return { success: true };
       } catch (e) {
-        console.log(e);
         return { success: false };
       }
     }),
