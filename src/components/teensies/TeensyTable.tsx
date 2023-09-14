@@ -22,6 +22,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { showToastMessage } from "@/utils";
+import { BiPencil } from "react-icons/bi";
+import { BsQrCode } from "react-icons/bs";
 
 import { trpc } from "@/app/_trpc/client";
 import { env } from "@/env.mjs";
@@ -32,7 +34,7 @@ import { useQRCode } from "next-qrcode";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
-import { MdSearch } from "react-icons/md";
+import { MdOutlineDelete, MdSearch } from "react-icons/md";
 import TeensyForm from "../TeensyForm";
 import { buttonVariants } from "../ui/button";
 
@@ -144,9 +146,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     <td className="flex justify-center gap-8 px-6 py-4">
                       <Dialog>
                         <DialogTrigger>
-                          <span className="font-medium text-black hover:underline dark:text-gray-200">
-                            QR
-                          </span>
+                          <BsQrCode className="ml-1 inline-block text-lg text-black hover:underline dark:text-gray-200" />
                         </DialogTrigger>
                         <DialogContent className="text-black dark:text-white">
                           <DialogHeader>
@@ -201,9 +201,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                       </Dialog>
                       <Dialog>
                         <DialogTrigger ref={editModalRef}>
-                          <span className="font-medium text-purple-600 hover:underline dark:text-lemon-400">
-                            Edit
-                          </span>
+                          <BiPencil className="ml-1 inline-block text-lg text-purple-600 hover:underline dark:text-lemon-400" />
                         </DialogTrigger>
                         <DialogContent className="text-black dark:text-white">
                           <DialogHeader>
@@ -219,9 +217,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                       </Dialog>
                       <AlertDialog>
                         <AlertDialogTrigger>
-                          <span className="font-medium text-red-500 hover:underline dark:text-red-450">
-                            Delete
-                          </span>
+                          <MdOutlineDelete className="ml-1 inline-block text-lg text-red-500 hover:underline dark:text-red-450" />
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
