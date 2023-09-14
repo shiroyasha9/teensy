@@ -118,7 +118,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
         </div>
       </div>
       <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
-        <div className="table-wrp block h-64 max-h-64 rounded-md">
+        <div className="block h-64 max-h-64 rounded-md">
           <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
             <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -128,11 +128,11 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                 <th scope="col" className="px-4 py-3">
                   Teensy Slug
                 </th>
-                <th scope="col" className="px-4 py-3 ">
-                  Full URL
-                </th>
                 <th scope="col" className="px-4 py-3">
                   Visits
+                </th>
+                <th scope="col" className="px-4 py-3 ">
+                  Full URL
                 </th>
               </tr>
             </thead>
@@ -256,6 +256,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     >
                       /{teensy.slug}
                     </td>
+                    <td className="p-4">{teensy.visits.length}</td>
                     <td className="p-4">
                       <a
                         href={teensy.url}
@@ -266,7 +267,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                         {teensy.url}
                       </a>
                     </td>
-                    <td className="p-4">{teensy.visits.length}</td>
                   </tr>
                 ))}
             </tbody>
