@@ -31,41 +31,44 @@ const MobileNav = ({ isSignedIn }: MobileNavProps) => {
           focus
           className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
         >
-          <div className="divide-y-2 divide-gray-400 rounded-lg bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="px-5 pb-6 pt-5">
-              <div className="flex items-center justify-between">
+          {({ close }) => (
+            <div className="divide-y-2 divide-gray-400 rounded-lg bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="px-5 pb-6 pt-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-2xl text-lemon-400">teensy</span>
+                  </div>
+                  <div className="-mr-2">
+                    <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
+                      <span className="sr-only">Close menu</span>
+                      <HiXMark className="h-6 w-6" aria-hidden="true" />
+                    </Popover.Button>
+                  </div>
+                </div>
+                <div className="mt-6">
+                  <nav className="grid gap-y-8">
+                    {NAV_ITEMS.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="-m-3 flex items-center rounded-md p-3 hover:text-lemon-400"
+                        onClick={() => close()}
+                      >
+                        <span className="ml-3 text-base text-gray-50">
+                          {item.name}
+                        </span>
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+              </div>
+              <div className="space-y-6 px-5 py-6">
                 <div>
-                  <span className="text-2xl text-lemon-400">teensy</span>
-                </div>
-                <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
-                    <span className="sr-only">Close menu</span>
-                    <HiXMark className="h-6 w-6" aria-hidden="true" />
-                  </Popover.Button>
+                  <AuthButton isSignedIn={isSignedIn} />
                 </div>
               </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  {NAV_ITEMS.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="-m-3 flex items-center rounded-md p-3 hover:text-lemon-400"
-                    >
-                      <span className="ml-3 text-base text-gray-50">
-                        {item.name}
-                      </span>
-                    </Link>
-                  ))}
-                </nav>
-              </div>
             </div>
-            <div className="space-y-6 px-5 py-6">
-              <div>
-                <AuthButton isSignedIn={isSignedIn} />
-              </div>
-            </div>
-          </div>
+          )}
         </Popover.Panel>
       </Transition>
     </Popover>
