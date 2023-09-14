@@ -262,7 +262,8 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                         href={teensy.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="line-clamp-1 hover:underline"
+                        title={teensy.url}
+                        className="line-clamp-1 max-w-[50ch] hover:underline md:max-w-[60ch] lg:max-w-[70ch]"
                       >
                         {teensy.url}
                       </a>
