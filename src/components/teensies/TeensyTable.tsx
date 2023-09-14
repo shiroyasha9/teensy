@@ -122,16 +122,16 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
           <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
             <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" className="w-[10vw] px-6 py-3 text-center">
+                <th scope="col" className="px-4 py-3 text-center">
                   Actions
                 </th>
-                <th scope="col" className="w-[10vw] px-6 py-3">
+                <th scope="col" className="px-4 py-3">
                   Teensy Slug
                 </th>
-                <th scope="col" className="w-[30vw] px-6 py-3 sm:w-[30vw]">
+                <th scope="col" className="px-4 py-3 ">
                   Full URL
                 </th>
-                <th scope="col" className="w-[10vw] px-6 py-3">
+                <th scope="col" className="px-4 py-3">
                   Visits
                 </th>
               </tr>
@@ -143,7 +143,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-[#37415180] dark:hover:bg-gray-700/75"
                     key={teensy.id}
                   >
-                    <td className="flex justify-center gap-8 px-6 py-4">
+                    <td className="flex justify-center gap-x-4 p-4">
                       <Dialog>
                         <DialogTrigger>
                           <BsQrCode className="ml-1 inline-block text-lg text-black hover:underline dark:text-gray-200" />
@@ -248,7 +248,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     </td>
                     <td
                       scope="row"
-                      className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium text-gray-900 hover:underline dark:text-white "
+                      className="cursor-pointer p-4 font-medium text-gray-900 hover:underline dark:text-white "
                       onClick={() => {
                         copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
                         showToastMessage("Link Copied!");
@@ -256,7 +256,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     >
                       /{teensy.slug}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="p-4">
                       <a
                         href={teensy.url}
                         target="_blank"
@@ -266,7 +266,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                         {teensy.url}
                       </a>
                     </td>
-                    <td className="px-6 py-4">{teensy.visits.length}</td>
+                    <td className="p-4">{teensy.visits.length}</td>
                   </tr>
                 ))}
             </tbody>
