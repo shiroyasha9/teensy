@@ -1,15 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { LuX } from "react-icons/lu";
 import type { FC } from "react";
+import { LuX } from "react-icons/lu";
 import { Button } from "./ui/button";
 
 const CloseModal: FC = () => {
   const router = useRouter();
   return (
     <Button
-      variant="subtle"
+      variant="ghost"
       className="h-6 w-6 rounded-md p-0"
       onClick={() => router.back()}
     >

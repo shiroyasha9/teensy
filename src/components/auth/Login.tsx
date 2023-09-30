@@ -1,11 +1,7 @@
 import { cn } from "@/utils";
 import UserAuthForm from "./UserAuthForm";
 
-type LoginProps = {
-  bodyClassName?: string;
-};
-
-const Login = ({ bodyClassName }: LoginProps) => {
+const Login = () => {
   return (
     <div className="py-12">
       <div className="px-4 sm:px-12">
@@ -15,8 +11,7 @@ const Login = ({ bodyClassName }: LoginProps) => {
 
         <div
           className={cn(
-            "mt-2 text-center text-base text-gray-100 dark:text-gray-300",
-            bodyClassName,
+            "mt-2 text-center text-base text-gray-500 dark:text-gray-300",
           )}
         >
           Please create an account to save your teensies to edit/delete them
@@ -24,7 +19,7 @@ const Login = ({ bodyClassName }: LoginProps) => {
         </div>
 
         <div className="mt-10">
-          <UserAuthForm className={bodyClassName} />
+          <UserAuthForm />
         </div>
       </div>
     </div>
