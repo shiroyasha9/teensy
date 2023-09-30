@@ -271,7 +271,6 @@ const TeensyForm = (props: TeensyFormProps) => {
         )}
       </div>
       <Button
-        variant={theme === "dark" || mode === "create" ? "default" : "tertiary"}
         className="mb-2 w-full self-center"
         isLoading={isSubmitting}
         disabled={isSlugInvalid || !isValid || slugCheck.isRefetching}

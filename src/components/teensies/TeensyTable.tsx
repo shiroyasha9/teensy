@@ -190,9 +190,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                                 <Button
                                   title="Download PNG"
                                   onClick={() => downloadQRCode(teensy.slug)}
-                                  variant={
-                                    theme === "dark" ? "primary" : "tertiary"
-                                  }
                                 />
                               </div>
                             </DialogDescription>
@@ -234,10 +231,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                               Cancel
                             </AlertDialogCancel>
                             <AlertDialogAction
-                              className={buttonVariants({
-                                variant:
-                                  theme === "dark" ? "default" : "tertiary",
-                              })}
+                              className={buttonVariants()}
                               onClick={() => handleDeleteClick(teensy.id)}
                             >
                               Continue
