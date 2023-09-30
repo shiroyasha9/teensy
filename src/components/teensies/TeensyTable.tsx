@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import Input from "@/components/Input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { showToastMessage } from "@/utils";
 import { BiPencil } from "react-icons/bi";
 import { BsQrCode } from "react-icons/bs";
@@ -31,7 +31,6 @@ import type { Teensy, Visit } from "@prisma/client";
 import copy from "copy-to-clipboard";
 import debounce from "lodash.debounce";
 import { useQRCode } from "next-qrcode";
-import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { MdOutlineDelete, MdSearch } from "react-icons/md";
@@ -47,7 +46,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
   const router = useRouter();
   const editModalRef = useRef<HTMLButtonElement>(null);
   const [search, setSearch] = useState("");
-  const { theme } = useTheme();
   const { Canvas } = useQRCode();
 
   const deleteTeensy = trpc.deleteSlug.useMutation({

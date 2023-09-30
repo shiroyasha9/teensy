@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import z from "zod";
 import Dropdown from "./Dropdown";
-import Input from "./Input";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 const formSchema = z
   .object({

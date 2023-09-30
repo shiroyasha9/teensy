@@ -1,7 +1,7 @@
 "use client";
 
-import Input from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Teensy } from "@prisma/client";
 import { useRouter } from "next/navigation";
