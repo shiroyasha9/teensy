@@ -1,25 +1,15 @@
 import { cn } from "@/utils";
-import {
-  forwardRef,
-  type DetailedHTMLProps,
-  type InputHTMLAttributes,
-} from "react";
+import React from "react";
 
-type InputProps = {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean;
   label?: string;
   inlineLabel?: boolean;
-  variant?: "primary" | "modal";
   noContainer?: boolean;
-};
+}
 
-type InputRef = HTMLInputElement;
-
-const Input = forwardRef<
-  InputRef,
-  InputProps &
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
->((props, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     className: overrideClassName,
     invalid,
@@ -27,27 +17,21 @@ const Input = forwardRef<
     inlineLabel,
     noContainer,
     id,
-    variant = "primary",
     ...rest
   } = props;
 
   const classNames = cn(
-    "my-1 block w-full rounded-md border border-slate-300 bg-white py-2 px-3 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 sm:px-2 sm:text-sm dark:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-60",
+    "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
     {
-      "text-black dark:text-gray-200":
-        (variant === "primary" || variant === "modal") && !invalid,
-      "focus:border-primary focus:ring-primary":
-        variant === "primary" && !invalid,
-      "focus:border-purple-600 focus:ring-purple-600 dark:focus:border-primary dark:focus:ring-primary":
-        variant === "modal" && !invalid,
       "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450":
         invalid,
-      [overrideClassName || ""]: !!overrideClassName,
     },
+    overrideClassName,
   );
 
   const containerClassNames = cn("w-full", {
     "flex items-center": inlineLabel,
+    "space-y-1.5": !inlineLabel,
   });
 
   const content = <input id={id} className={classNames} ref={ref} {...rest} />;

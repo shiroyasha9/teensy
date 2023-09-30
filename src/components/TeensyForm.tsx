@@ -6,7 +6,6 @@ import { env } from "@/env.mjs";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Teensy } from "@prisma/client";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -56,7 +55,6 @@ type TeensyFormProps = {
 
 const TeensyForm = (props: TeensyFormProps) => {
   const { ownerId, mode = "create", currentTeensy, onClose } = props;
-  const { theme } = useTheme();
   const router = useRouter();
 
   const {
@@ -161,17 +159,12 @@ const TeensyForm = (props: TeensyFormProps) => {
         placeholder="e.g. https://github.com"
         autoFocus
         invalid={!!errors.url}
-        variant={mode === "create" ? "primary" : "modal"}
         {...register("url", {
           required: true,
         })}
       />
 
-      <div
-        className={cn("flex flex-col rounded-lg p-4", {
-          "bg-gray-300 dark:bg-gray-800": mode === "create",
-        })}
-      >
+      <div className="space-y-1.5">
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
           ✍️ Customize
           {isSlugInvalid && (
@@ -184,7 +177,6 @@ const TeensyForm = (props: TeensyFormProps) => {
           type="text"
           label={`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
-          variant={mode === "create" ? "primary" : "modal"}
           placeholder="alias e.g. ig for instagram"
           invalid={isSlugInvalid}
           title="Only alphanumeric characters and hyphens are allowed. No spaces."
@@ -210,7 +202,10 @@ const TeensyForm = (props: TeensyFormProps) => {
             Generate an alias
           </Button>
         </div>
-        <div className="mt-3 flex items-center gap-1">
+      </div>
+
+      <div className="space-y-1.5">
+        <div className="flex items-center gap-x-1">
           <input
             type="checkbox"
             id="password-protection-checkbox"
@@ -229,46 +224,46 @@ const TeensyForm = (props: TeensyFormProps) => {
           type="password"
           {...register("password")}
         />
-        {mode === "create" ? (
-          <>
-            <div className="mt-3 flex items-center gap-1">
-              <input
-                type="checkbox"
-                id="auto-delete-checkbox"
-                {...register("isAutoDelete")}
-              />
-              <label
-                htmlFor="auto-delete-checkbox"
-                className="mr-2 whitespace-nowrap text-sm font-medium"
-              >
-                Auto delete in
-              </label>
-            </div>
-            <Dropdown
-              data={AUTO_DELETE_OPTIONS}
-              disabled={!isAutoDelete}
-              label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
-              onChange={(mins: number) => {
-                setValue("expiresIn", mins);
-                void trigger("expiresIn");
-              }}
+      </div>
+      {mode === "create" ? (
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-x-1">
+            <input
+              type="checkbox"
+              id="auto-delete-checkbox"
+              {...register("isAutoDelete")}
             />
-          </>
-        ) : (
-          currentTeensy &&
-          currentTeensy.expiresAt && (
             <label
               htmlFor="auto-delete-checkbox"
-              className="whitespace-nowrap text-sm font-medium"
+              className="mr-2 whitespace-nowrap text-sm font-medium"
             >
-              Auto deletes in{" "}
-              {getFormattedTime(
-                getRemaingTime(currentTeensy?.expiresAt || new Date()),
-              )}
+              Auto delete in
             </label>
-          )
-        )}
-      </div>
+          </div>
+          <Dropdown
+            data={AUTO_DELETE_OPTIONS}
+            disabled={!isAutoDelete}
+            label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
+            onChange={(mins: number) => {
+              setValue("expiresIn", mins);
+              void trigger("expiresIn");
+            }}
+          />
+        </div>
+      ) : (
+        currentTeensy &&
+        currentTeensy.expiresAt && (
+          <label
+            htmlFor="auto-delete-checkbox"
+            className="whitespace-nowrap text-sm font-medium"
+          >
+            Auto deletes in{" "}
+            {getFormattedTime(
+              getRemaingTime(currentTeensy?.expiresAt || new Date()),
+            )}
+          </label>
+        )
+      )}
       <Button
         className="mb-2 w-full self-center"
         isLoading={isSubmitting}
