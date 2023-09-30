@@ -26,7 +26,6 @@ export default function AnalyticsPieChart({
               position: "bottom",
               labels: {
                 padding: 16,
-                color: "white",
                 font: {
                   size: 14,
                 },
@@ -40,7 +39,7 @@ export default function AnalyticsPieChart({
           datasets: [
             {
               data: top5Visits,
-              label: "# of Votes",
+              label: "No. of Views",
               backgroundColor: [
                 "hsl(0, 75%, 70%)",
                 "hsl(48, 75%, 70%)",
