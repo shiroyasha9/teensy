@@ -173,7 +173,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                                 <p className="mt-4 flex gap-1">
                                   <span>QR Code for</span>
                                   <span
-                                    className="cursor-pointer text-purple-600 hover:underline dark:text-lemon-400"
+                                    className="cursor-pointer text-purple-600 hover:underline dark:text-primary"
                                     onClick={() => {
                                       copy(
                                         `${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`,
@@ -201,7 +201,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                       </Dialog>
                       <Dialog>
                         <DialogTrigger ref={editModalRef}>
-                          <BiPencil className="ml-1 inline-block text-lg text-purple-600 hover:underline dark:text-lemon-400" />
+                          <BiPencil className="ml-1 inline-block text-lg text-purple-600 hover:underline dark:text-primary" />
                         </DialogTrigger>
                         <DialogContent className="text-black dark:text-white">
                           <DialogHeader>

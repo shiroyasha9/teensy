@@ -15,7 +15,7 @@ export default async function HeaderNew() {
     <div className="fixed inset-x-0 top-0 px-6 pb-2 pt-4">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2">
         <Link href="/" className="z-10">
-          <p className="text-4xl text-lemon-400">teensy</p>
+          <p className="text-4xl text-primary">teensy</p>
         </Link>
         <div className="-my-2 -mr-2 flex items-center md:hidden">
           <ThemeToggle />
@@ -27,7 +27,7 @@ export default async function HeaderNew() {
             <Link
               key={item.name}
               href={item.href}
-              className=" hover:text-lemon-400"
+              className=" hover:text-primary"
             >
               {item.name}
             </Link>

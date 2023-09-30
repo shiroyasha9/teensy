@@ -92,7 +92,7 @@ const Multiple = () => {
                       <input
                         type="url"
                         required
-                        className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm "
+                        className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm "
                         placeholder="https://example.com"
                         value={teensy.url}
                         onChange={(e) => {
@@ -113,11 +113,10 @@ const Multiple = () => {
                       <input
                         type="text"
                         required
-                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-lemon-400 focus:outline-none focus:ring-2 focus:ring-lemon-400 disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${
-                          showErrors && teensy.used
+                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${showErrors && teensy.used
                             ? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
                             : ""
-                        }`}
+                          }`}
                         placeholder="example"
                         value={teensy.slug}
                         onChange={(e) => {

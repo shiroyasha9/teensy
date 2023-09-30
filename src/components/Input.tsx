@@ -18,7 +18,7 @@ type InputRef = HTMLInputElement;
 const Input = forwardRef<
   InputRef,
   InputProps &
-    DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 >((props, ref) => {
   const {
     className: overrideClassName,
@@ -36,9 +36,9 @@ const Input = forwardRef<
     {
       "text-black dark:text-gray-200":
         (variant === "primary" || variant === "modal") && !invalid,
-      "focus:border-lemon-400 focus:ring-lemon-400":
+      "focus:border-primary focus:ring-primary":
         variant === "primary" && !invalid,
-      "focus:border-purple-600 focus:ring-purple-600 dark:focus:border-lemon-400 dark:focus:ring-lemon-400":
+      "focus:border-purple-600 focus:ring-purple-600 dark:focus:border-primary dark:focus:ring-primary":
         variant === "modal" && !invalid,
       "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450":
         invalid,

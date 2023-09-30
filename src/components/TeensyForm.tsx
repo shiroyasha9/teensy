@@ -279,7 +279,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         {mode === "create" ? "Teensy it!" : "Edit it!"}
       </Button>
       {mode === "create" && (
-        <Link href="/multiple" className="text-center text-sm text-lemon-400">
+        <Link href="/multiple" className="text-center text-sm text-primary">
           or Create multiple Teensies at once🚀
         </Link>
       )}

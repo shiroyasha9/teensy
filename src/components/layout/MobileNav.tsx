@@ -14,7 +14,7 @@ type MobileNavProps = {
 const MobileNav = ({ isSignedIn }: MobileNavProps) => {
   return (
     <Popover className="z-20">
-      <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-lemon-400 hover:text-lemon-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
+      <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-primary hover:text-primary/90 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
         <span className="sr-only">Open menu</span>
         <HiBars3 className="h-6 w-6" aria-hidden="true" />
       </Popover.Button>
@@ -36,10 +36,10 @@ const MobileNav = ({ isSignedIn }: MobileNavProps) => {
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-2xl text-lemon-400">teensy</span>
+                    <span className="text-2xl text-primary">teensy</span>
                   </div>
                   <div className="-mr-2">
-                    <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lemon-400">
+                    <Popover.Button className="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
                       <span className="sr-only">Close menu</span>
                       <HiXMark className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
@@ -51,7 +51,7 @@ const MobileNav = ({ isSignedIn }: MobileNavProps) => {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="-m-3 flex items-center rounded-md p-3 hover:text-lemon-400"
+                        className="-m-3 flex items-center rounded-md p-3 hover:text-primary"
                         onClick={() => close()}
                       >
                         <span className="ml-3 text-base text-gray-50">

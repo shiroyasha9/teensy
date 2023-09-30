@@ -23,7 +23,7 @@ const Button = (props: ButtonProps & React.HTMLProps<HTMLButtonElement>) => {
         variant === "primary" ||
         variant === "secondary" ||
         variant === "danger",
-      "bg-lemon-400 hover:bg-lemon-200": variant === "primary",
+      "bg-primary hover:bg-primary/90": variant === "primary",
       "bg-white hover:bg-gray-200": variant === "secondary",
       "text-white": variant === "tertiary" || variant === "outlined",
       "border border-gray-300 hover:border-gray-400": variant === "outlined",
