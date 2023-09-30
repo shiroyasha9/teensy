@@ -169,8 +169,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 
       <div
         className={cn("flex flex-col rounded-lg p-4", {
-          "bg-[#37415180]": mode === "create",
-          "bg-gray-300 dark:bg-gray-600": mode === "edit",
+          "bg-gray-300 dark:bg-gray-800": mode === "create",
         })}
       >
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
@@ -198,10 +197,10 @@ const TeensyForm = (props: TeensyFormProps) => {
           <Button
             type="button"
             variant="outline"
-            className={cn("m-0 mt-1 w-full text-sm", {
-              "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
-                mode === "edit",
-            })}
+            className={cn(
+              "m-0 mt-1 w-full border-gray-500 text-sm hover:border-gray-700 dark:border-gray-400 dark:hover:border-gray-200",
+              {},
+            )}
             onClick={() => {
               const slug = nanoidForSlug();
               setValue("slug", slug);

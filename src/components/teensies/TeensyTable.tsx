@@ -120,7 +120,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
       <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
         <div className="block h-64 max-h-64 rounded-md">
           <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="sticky top-0 z-0 bg-gray-200 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-4 py-3 text-center">
                   Actions
@@ -140,7 +140,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
               {filteredData &&
                 filteredData.map((teensy) => (
                   <tr
-                    className="border-b bg-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-[#37415180] dark:hover:bg-gray-700/75"
+                    className="border-b bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800  dark:hover:bg-gray-700/75"
                     key={teensy.id}
                   >
                     <td className="flex justify-center gap-x-4 p-4">
