@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -7,7 +7,7 @@ export default function NotFound() {
       <h1 className="mb-3 text-9xl font-bold">404</h1>
       <p>Invalid alias, check for typos, or</p>
       <Link href="/">
-        <Button title="Go back to home page 🏠" />
+        <Button>Go back to home page 🏠</Button>
       </Link>
     </main>
   );

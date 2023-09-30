@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import Input from "@/components/Input";
 import {
   AlertDialog,
@@ -188,9 +188,10 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                                   </span>
                                 </p>
                                 <Button
-                                  title="Download PNG"
                                   onClick={() => downloadQRCode(teensy.slug)}
-                                />
+                                >
+                                  Download PNG
+                                </Button>
                               </div>
                             </DialogDescription>
                           </DialogHeader>
