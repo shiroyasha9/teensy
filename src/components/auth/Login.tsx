@@ -11,7 +11,7 @@ const Login = () => {
 
         <div
           className={cn(
-            "mt-2 text-center text-base text-gray-500 dark:text-gray-300",
+            "mt-2 text-center text-base text-zinc-500 dark:text-zinc-300",
           )}
         >
           Please create an account to save your teensies to edit/delete them

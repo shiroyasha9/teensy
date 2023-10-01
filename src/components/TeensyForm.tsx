@@ -190,7 +190,7 @@ const TeensyForm = (props: TeensyFormProps) => {
             type="button"
             variant="outline"
             className={cn(
-              "m-0 mt-1 w-full border-gray-500 text-sm hover:border-gray-700 dark:border-gray-400 dark:hover:border-gray-200",
+              "m-0 mt-1 w-full border-zinc-500 text-sm hover:border-zinc-700 dark:border-zinc-400 dark:hover:border-zinc-200",
               {},
             )}
             onClick={() => {

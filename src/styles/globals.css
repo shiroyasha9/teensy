@@ -76,7 +76,7 @@
 }
 
 *::-webkit-scrollbar-track {
-  @apply bg-gray-800/50;
+  @apply bg-zinc-800/50;
 }
 
 *::-webkit-scrollbar-thumb {

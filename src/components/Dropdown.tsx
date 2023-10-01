@@ -25,15 +25,14 @@ const Dropdown = (props: DropdownProps) => {
         <FiChevronDown className="ml-2 h-4 w-4" />
       </button>
       <div
-        className={`z-10 mt-1 w-full divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-900  ${
-          isOpen ? "absolute" : "hidden"
-        }`}
+        className={`z-10 mt-1 w-full divide-y divide-zinc-100 rounded-lg bg-white shadow dark:bg-zinc-900  ${isOpen ? "absolute" : "hidden"
+          }`}
       >
-        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+        <ul className="py-2 text-sm text-zinc-700 dark:text-zinc-200">
           {data.map((item) => (
             <li key={item.label}>
               <button
-                className="block w-full px-4 py-2 text-left hover:bg-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
+                className="block w-full px-4 py-2 text-left hover:bg-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
                 onClick={() => {
                   onChange(item.minutesToExpire);
                   setIsOpen(false);

@@ -18,7 +18,7 @@ const Modal = ({ children, showModal, closeModal }: ModalProps) => {
       >
         <Dialog.Overlay className="fixed inset-0 bg-black/75 backdrop-blur-sm dark:bg-black/10" />
 
-        <div className="min-h-screen text-center text-black dark:text-gray-300">
+        <div className="min-h-screen text-center text-black dark:text-zinc-300">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -48,11 +48,11 @@ const Modal = ({ children, showModal, closeModal }: ModalProps) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="relative my-8 inline-block w-[90%] max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all dark:bg-gray-700">
+            <div className="relative my-8 inline-block w-[90%] max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all dark:bg-zinc-700">
               {/* Close icon */}
               <button
                 onClick={closeModal}
-                className="absolute top-2 right-2 shrink-0 rounded-md p-1 transition hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600"
+                className="absolute right-2 top-2 shrink-0 rounded-md p-1 transition hover:bg-zinc-100 focus:outline-none dark:hover:bg-zinc-600"
               >
                 <HiX className="h-5 w-5" />
               </button>

@@ -21,7 +21,7 @@ const Page = ({ searchParams: { slug } }: SuccessPageProps) => {
         </h3>
         <a
           href={`/${slug}`}
-          className="mt-1 rounded-2xl bg-gray-200/30 px-3 py-1"
+          className="mt-1 rounded-2xl bg-zinc-200/30 px-3 py-1"
         >
           <h1>{`${env.NEXT_PUBLIC_SITE_URL}/${slug}`}</h1>
         </a>

@@ -67,8 +67,8 @@ const Multiple = () => {
       >
         <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
           <div className="table-wrp block h-64 max-h-64 rounded-md">
-            <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
-              <thead className="sticky top-0 z-0 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full rounded-md text-left text-sm text-zinc-500 dark:text-zinc-400">
+              <thead className="sticky top-0 z-0 bg-zinc-50 text-xs uppercase text-zinc-700 dark:bg-zinc-700 dark:text-zinc-400">
                 <tr>
                   <th scope="col" className=" px-6 py-3 sm:w-[30vw]">
                     Full URL
@@ -86,13 +86,13 @@ const Multiple = () => {
                 {multipleTeensiesData.map((teensy, index) => (
                   <tr
                     key={index}
-                    className="border-b border-gray-200 dark:border-gray-600"
+                    className="border-b border-zinc-200 dark:border-zinc-600"
                   >
                     <td className="px-6 py-4">
                       <input
                         type="url"
                         required
-                        className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm "
+                        className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-zinc-700 dark:text-zinc-200 sm:px-2 sm:text-sm "
                         placeholder="https://example.com"
                         value={teensy.url}
                         onChange={(e) => {
@@ -113,7 +113,7 @@ const Multiple = () => {
                       <input
                         type="text"
                         required
-                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-gray-700 dark:text-gray-200 sm:px-2 sm:text-sm ${showErrors && teensy.used
+                        className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-zinc-700 dark:text-zinc-200 sm:px-2 sm:text-sm ${showErrors && teensy.used
                             ? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
                             : ""
                           }`}
@@ -134,7 +134,7 @@ const Multiple = () => {
                       <div className="flex items-center justify-center space-x-4 text-sm">
                         <button
                           type="button"
-                          className="bg-gray-450 rounded bg-white p-2 text-black  dark:bg-gray-700 dark:text-gray-200"
+                          className="bg-zinc-450 rounded bg-white p-2 text-black  dark:bg-zinc-700 dark:text-zinc-200"
                           onClick={() => {
                             const slug = nanoidForSlug();
                             const newTeensies = [...multipleTeensiesData];
@@ -148,7 +148,7 @@ const Multiple = () => {
                         {multipleTeensiesData.length !== 1 && (
                           <button
                             type="button"
-                            className="rounded bg-red-450 p-2 text-white dark:text-gray-200 "
+                            className="rounded bg-red-450 p-2 text-white dark:text-zinc-200 "
                             onClick={() => {
                               if (multipleTeensiesData.length === 1) return;
                               const newTeensies = [...multipleTeensiesData];
@@ -169,14 +169,14 @@ const Multiple = () => {
         </div>
         <div className="flex flex-wrap justify-center gap-4 px-6 py-4 text-center">
           <button
-            className="rounded-md bg-gray-100 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-200"
+            className="rounded-md bg-zinc-100 px-4 py-2 font-semibold text-zinc-700 hover:bg-zinc-200"
             onClick={addTeensy}
             type="button"
           >
             Add one more
           </button>
           <button
-            className="rounded-md bg-gray-100 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-200"
+            className="rounded-md bg-zinc-100 px-4 py-2 font-semibold text-zinc-700 hover:bg-zinc-200"
             type="submit"
           >
             Submit
