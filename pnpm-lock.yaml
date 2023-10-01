@@ -8,9 +8,6 @@ dependencies:
   '@babel/core':
     specifier: ^7.22.11
     version: 7.22.11
-  '@headlessui/react':
-    specifier: ^1.7.17
-    version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
   '@hookform/resolvers':
     specifier: ^3.3.0
     version: 3.3.0(react-hook-form@7.45.4)
@@ -1303,18 +1300,6 @@ packages:
 
   /@floating-ui/utils@0.1.4:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
-    dev: false
-
-  /@headlessui/react@1.7.17(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-4am+tzvkqDSSgiwrsEpGWqgGo9dz8qU5M3znCkC4PgkpY4HcCZzEDEvozltGGGHIKl9jbXbZPSH5TWn4sWJdow==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: ^16 || ^17 || ^18
-      react-dom: ^16 || ^17 || ^18
-    dependencies:
-      client-only: 0.0.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@hookform/resolvers@3.3.0(react-hook-form@7.45.4):
