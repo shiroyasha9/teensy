@@ -103,7 +103,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
         </label>
         <div className="relative mx-[2px] mt-1">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <MdSearch className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <MdSearch className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
           </div>
           <Input
             type="text"
@@ -117,8 +117,8 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
       </div>
       <div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
         <div className="block h-64 max-h-64 rounded-md">
-          <table className="w-full rounded-md text-left text-sm text-gray-500 dark:text-gray-400">
-            <thead className="sticky top-0 z-0 bg-gray-200 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full rounded-md text-left text-sm text-zinc-500 dark:text-zinc-400">
+            <thead className="sticky top-0 z-0 bg-zinc-200 text-xs uppercase text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
               <tr>
                 <th scope="col" className="px-4 py-3 text-center">
                   Actions
@@ -138,13 +138,13 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
               {filteredData &&
                 filteredData.map((teensy) => (
                   <tr
-                    className="border-b bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800  dark:hover:bg-gray-700/75"
+                    className="border-b bg-zinc-50 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900  dark:hover:bg-zinc-800/80"
                     key={teensy.id}
                   >
                     <td className="flex justify-center gap-x-4 p-4">
                       <Dialog>
                         <DialogTrigger>
-                          <BsQrCode className="ml-1 inline-block text-lg text-black hover:underline dark:text-gray-200" />
+                          <BsQrCode className="ml-1 inline-block text-lg text-black hover:underline dark:text-zinc-200" />
                         </DialogTrigger>
                         <DialogContent className="text-black dark:text-white">
                           <DialogHeader>
@@ -241,7 +241,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
                     </td>
                     <td
                       scope="row"
-                      className="cursor-pointer p-4 font-medium text-gray-900 hover:underline dark:text-white "
+                      className="cursor-pointer p-4 font-medium text-zinc-900 hover:underline dark:text-white "
                       onClick={() => {
                         copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
                         showToastMessage("Link Copied!");
