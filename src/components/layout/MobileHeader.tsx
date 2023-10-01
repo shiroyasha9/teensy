@@ -11,11 +11,11 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 
-type MobileNavProps = {
+type MobileHeaderProps = {
   isSignedIn: boolean;
 };
 
-const MobileNav = ({ isSignedIn }: MobileNavProps) => {
+const MobileHeader = ({ isSignedIn }: MobileHeaderProps) => {
   return (
     <Menubar className="border-none bg-transparent">
       <MenubarMenu>
@@ -40,4 +40,4 @@ const MobileNav = ({ isSignedIn }: MobileNavProps) => {
   );
 };
 
-export default MobileNav;
+export default MobileHeader;
