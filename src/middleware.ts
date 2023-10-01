@@ -21,7 +21,6 @@ export async function middleware(req: NextRequest) {
     IGNORE_MIDDLEWARE_PATHS.some((path) =>
       req.nextUrl.pathname.startsWith(path),
     );
-  console.log({ isIgnoredPath, pathname: req.nextUrl.pathname });
 
   const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
   if (phoneNumber) {
