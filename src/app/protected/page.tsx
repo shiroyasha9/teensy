@@ -32,10 +32,12 @@ type ProtectedTeensyPageProps = {
   };
 };
 
-export default async function Page({ searchParams }: ProtectedTeensyPageProps) {
+export default async function Page({
+  searchParams: { slug },
+}: ProtectedTeensyPageProps) {
   const teensy = await db.teensy.findFirst({
     where: {
-      slug: searchParams.slug,
+      slug,
     },
   });
 
