@@ -12,12 +12,16 @@ const IGNORE_MIDDLEWARE_PATHS = [
   "/_",
   "/api",
   "/teensies",
+  "/favicon.ico",
 ];
 
 export async function middleware(req: NextRequest) {
-  const isIgnoredPath = IGNORE_MIDDLEWARE_PATHS.some((path) =>
-    req.nextUrl.pathname.startsWith(path),
-  );
+  const isIgnoredPath =
+    req.nextUrl.pathname === "/" ||
+    IGNORE_MIDDLEWARE_PATHS.some((path) =>
+      req.nextUrl.pathname.startsWith(path),
+    );
+  console.log({ isIgnoredPath, pathname: req.nextUrl.pathname });
 
   const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
   if (phoneNumber) {
