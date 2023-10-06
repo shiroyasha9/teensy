@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function ExpiredTeensy() {
@@ -9,7 +9,7 @@ export default function ExpiredTeensy() {
         teensy link has expired, contact the owner, create this teensy or
       </p>
       <Link href="/">
-        <Button title="Go back to home page 🏠" />
+        <Button>Go back to home page 🏠</Button>
       </Link>
     </main>
   );

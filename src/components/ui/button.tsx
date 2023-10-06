@@ -1,3 +1,4 @@
+import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { LuLoader2 } from "react-icons/lu";
@@ -14,13 +15,12 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-gray-300 hover:border-gray-200 bg-transparent text-white",
-        subtle: "hover:bg-zinc-200 bg-zinc-100 text-zinc-900",
+          "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
+        subtle: "hover:bg-zinc-200 bg-zinc-100 text-zinc-900",
         link: "text-primary underline-offset-4 hover:underline",
-        tertiary: "bg-purple-600 hover:bg-purple-900 text-white",
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -40,12 +40,25 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, isLoading, children, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      isLoading,
+      children,
+      asChild = false,
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : "button";
     return (
-      <button
+      <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         disabled={isLoading}
@@ -53,7 +66,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading ? <LuLoader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
         {children}
-      </button>
+      </Comp>
     );
   },
 );

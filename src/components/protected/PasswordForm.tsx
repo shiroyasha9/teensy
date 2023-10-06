@@ -1,10 +1,10 @@
 "use client";
 
-import Input from "@/components/Input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Teensy } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
@@ -20,6 +20,11 @@ type PasswordFormProps = {
 
 const PasswordForm = ({ teensy }: PasswordFormProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams().toString();
+  const stringifiedSearchParams =
+    searchParams.indexOf("&") !== -1
+      ? "?" + searchParams.slice(searchParams.indexOf("&") + 1)
+      : "";
 
   const {
     handleSubmit,
@@ -32,7 +37,7 @@ const PasswordForm = ({ teensy }: PasswordFormProps) => {
 
   const submitHandler: SubmitHandler<FormValues> = ({ password }) => {
     if (teensy.password === password) {
-      router.push(teensy.url);
+      router.push(`${teensy.url}${stringifiedSearchParams}`);
     } else {
       setError("password", {
         type: "manual",

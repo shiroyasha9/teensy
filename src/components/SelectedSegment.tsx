@@ -12,9 +12,9 @@ const tabButtonClassNames = (
   cn(
     "inline-block w-full px-4 py-2 focus:outline-none",
     {
-      "active bg-white text-black dark:bg-gray-600 dark:text-white":
+      "active bg-white text-black dark:bg-zinc-600 dark:text-white":
         segment == activePath,
-      "bg-gray-300  text-gray-800 dark:bg-gray-800 dark:text-white":
+      "bg-zinc-300  text-zinc-800 dark:bg-zinc-800 dark:text-white":
         segment != activePath,
     },
     className,
@@ -23,7 +23,7 @@ const tabButtonClassNames = (
 export default function SelectedSegment() {
   const segment = useSelectedLayoutSegment();
   return (
-    <div className="flex divide-x divide-gray-200 rounded-lg text-center text-sm font-medium text-gray-500 shadow dark:divide-gray-700 dark:text-gray-400">
+    <div className="flex divide-x divide-zinc-200 rounded-lg text-center text-sm font-medium text-zinc-500 shadow dark:divide-zinc-700 dark:text-zinc-400">
       <div className="w-full">
         <Link
           prefetch={false}

@@ -6,14 +6,13 @@ import { env } from "@/env.mjs";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Teensy } from "@prisma/client";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import z from "zod";
 import Dropdown from "./Dropdown";
-import Input from "./Input";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 const formSchema = z
   .object({
@@ -56,7 +55,6 @@ type TeensyFormProps = {
 
 const TeensyForm = (props: TeensyFormProps) => {
   const { ownerId, mode = "create", currentTeensy, onClose } = props;
-  const { theme } = useTheme();
   const router = useRouter();
 
   const {
@@ -161,18 +159,12 @@ const TeensyForm = (props: TeensyFormProps) => {
         placeholder="e.g. https://github.com"
         autoFocus
         invalid={!!errors.url}
-        variant={mode === "create" ? "primary" : "modal"}
         {...register("url", {
           required: true,
         })}
       />
 
-      <div
-        className={cn("flex flex-col rounded-lg p-4", {
-          "bg-[#37415180]": mode === "create",
-          "bg-gray-300 dark:bg-gray-600": mode === "edit",
-        })}
-      >
+      <div className="space-y-1.5">
         <span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
           ✍️ Customize
           {isSlugInvalid && (
@@ -185,7 +177,6 @@ const TeensyForm = (props: TeensyFormProps) => {
           type="text"
           label={`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/`}
           inlineLabel
-          variant={mode === "create" ? "primary" : "modal"}
           placeholder="alias e.g. ig for instagram"
           invalid={isSlugInvalid}
           title="Only alphanumeric characters and hyphens are allowed. No spaces."
@@ -198,10 +189,10 @@ const TeensyForm = (props: TeensyFormProps) => {
           <Button
             type="button"
             variant="outline"
-            className={cn("m-0 mt-1 w-full text-sm", {
-              "border-gray-500 !text-black hover:border-gray-700 dark:border-gray-400 dark:!text-white dark:hover:border-gray-200":
-                mode === "edit",
-            })}
+            className={cn(
+              "m-0 mt-1 w-full border-zinc-500 text-sm hover:border-zinc-700 dark:border-zinc-400 dark:hover:border-zinc-200",
+              {},
+            )}
             onClick={() => {
               const slug = nanoidForSlug();
               setValue("slug", slug);
@@ -211,7 +202,10 @@ const TeensyForm = (props: TeensyFormProps) => {
             Generate an alias
           </Button>
         </div>
-        <div className="mt-3 flex items-center gap-1">
+      </div>
+
+      <div className="space-y-1.5">
+        <div className="flex items-center gap-x-1">
           <input
             type="checkbox"
             id="password-protection-checkbox"
@@ -230,48 +224,47 @@ const TeensyForm = (props: TeensyFormProps) => {
           type="password"
           {...register("password")}
         />
-        {mode === "create" ? (
-          <>
-            <div className="mt-3 flex items-center gap-1">
-              <input
-                type="checkbox"
-                id="auto-delete-checkbox"
-                {...register("isAutoDelete")}
-              />
-              <label
-                htmlFor="auto-delete-checkbox"
-                className="mr-2 whitespace-nowrap text-sm font-medium"
-              >
-                Auto delete in
-              </label>
-            </div>
-            <Dropdown
-              data={AUTO_DELETE_OPTIONS}
-              disabled={!isAutoDelete}
-              label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
-              onChange={(mins: number) => {
-                setValue("expiresIn", mins);
-                void trigger("expiresIn");
-              }}
+      </div>
+      {mode === "create" ? (
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-x-1">
+            <input
+              type="checkbox"
+              id="auto-delete-checkbox"
+              {...register("isAutoDelete")}
             />
-          </>
-        ) : (
-          currentTeensy &&
-          currentTeensy.expiresAt && (
             <label
               htmlFor="auto-delete-checkbox"
-              className="whitespace-nowrap text-sm font-medium"
+              className="mr-2 whitespace-nowrap text-sm font-medium"
             >
-              Auto deletes in{" "}
-              {getFormattedTime(
-                getRemaingTime(currentTeensy?.expiresAt || new Date()),
-              )}
+              Auto delete in
             </label>
-          )
-        )}
-      </div>
+          </div>
+          <Dropdown
+            data={AUTO_DELETE_OPTIONS}
+            disabled={!isAutoDelete}
+            label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
+            onChange={(mins: number) => {
+              setValue("expiresIn", mins);
+              void trigger("expiresIn");
+            }}
+          />
+        </div>
+      ) : (
+        currentTeensy &&
+        currentTeensy.expiresAt && (
+          <label
+            htmlFor="auto-delete-checkbox"
+            className="whitespace-nowrap text-sm font-medium"
+          >
+            Auto deletes in{" "}
+            {getFormattedTime(
+              getRemaingTime(currentTeensy?.expiresAt || new Date()),
+            )}
+          </label>
+        )
+      )}
       <Button
-        variant={theme === "dark" || mode === "create" ? "default" : "tertiary"}
         className="mb-2 w-full self-center"
         isLoading={isSubmitting}
         disabled={isSlugInvalid || !isValid || slugCheck.isRefetching}
@@ -279,7 +272,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         {mode === "create" ? "Teensy it!" : "Edit it!"}
       </Button>
       {mode === "create" && (
-        <Link href="/multiple" className="text-center text-sm text-lemon-400">
+        <Link href="/multiple" className="text-center text-sm text-primary">
           or Create multiple Teensies at once🚀
         </Link>
       )}

@@ -36,7 +36,7 @@ const Page = async () => {
         <p className="text-center text-sm">
           <Link
             href="/login"
-            className="font-semibold text-lemon-400 hover:text-lemon-200"
+            className="font-semibold text-primary hover:text-primary/90"
           >
             Login
           </Link>{" "}

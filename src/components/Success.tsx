@@ -7,7 +7,7 @@ import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineCloudDownload } from "react-icons/ai";
-import Button from "./Button";
+import { Button } from "./ui/button";
 
 type SuccessProps = {
   slug: string;
@@ -53,9 +53,8 @@ const Success = ({ slug }: SuccessProps) => {
           }}
         />
         <div
-          className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${
-            showDownloadQRButton ? "absolute" : "hidden"
-          }`}
+          className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${showDownloadQRButton ? "absolute" : "hidden"
+            }`}
         >
           <AiOutlineCloudDownload
             onClick={downloadQRCode}
@@ -64,21 +63,23 @@ const Success = ({ slug }: SuccessProps) => {
         </div>
       </div>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-x-4">
         <Button
-          title="Copy Teensy"
           className="mt-5 px-3 py-1.5 text-base"
           onClick={() => {
             copy(`${env.NEXT_PUBLIC_SITE_URL}/${slug}`);
             showToastMessage("Link Copied!");
           }}
-        />
+        >
+          Copy Teensy
+        </Button>
         <Button
-          title="Back to Home"
           variant="secondary"
           onClick={resetHandler}
           className="mt-5 px-3 py-1.5 text-base"
-        />
+        >
+          Back to Home
+        </Button>
       </div>
     </>
   );

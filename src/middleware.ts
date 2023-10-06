@@ -12,12 +12,15 @@ const IGNORE_MIDDLEWARE_PATHS = [
   "/_",
   "/api",
   "/teensies",
+  "/favicon.ico",
 ];
 
 export async function middleware(req: NextRequest) {
-  const isIgnoredPath = IGNORE_MIDDLEWARE_PATHS.some((path) =>
-    req.nextUrl.pathname.startsWith(path),
-  );
+  const isIgnoredPath =
+    req.nextUrl.pathname === "/" ||
+    IGNORE_MIDDLEWARE_PATHS.some((path) =>
+      req.nextUrl.pathname.startsWith(path),
+    );
 
   const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
   if (phoneNumber) {
@@ -29,6 +32,7 @@ export async function middleware(req: NextRequest) {
     return;
   }
   const slug = req.nextUrl.pathname.split("/").pop();
+  const params = req.nextUrl.searchParams.toString();
   const slugFetch = await fetch(
     `${req.nextUrl.origin}/api/url?slug=${slug || ""}`,
   );
@@ -48,12 +52,14 @@ export async function middleware(req: NextRequest) {
   };
 
   if (data.password) {
+    const searchParams = params ? `&${params}` : "";
     return NextResponse.redirect(
-      `${req.nextUrl.origin}/protected?slug=${data.slug}`,
+      `${req.nextUrl.origin}/protected?slug=${data.slug}${searchParams}`,
     );
   }
 
-  return NextResponse.redirect(data.url);
+  const urlWithParams = `${data.url}${params ? `?${params}` : ""}`;
+  return NextResponse.redirect(urlWithParams);
 }
 
 export const config = {

@@ -28,7 +28,7 @@ export default function WhatsAppPage() {
       <WhatsAppForm />
       <p className="text-center">
         <span>you will be redirected to a page, click on</span>{" "}
-        <span className="text-lemon-400">Continue to chat</span>
+        <span className="text-primary">Continue to chat</span>
       </p>
     </div>
   );
