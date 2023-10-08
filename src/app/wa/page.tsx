@@ -4,8 +4,9 @@ export const metadata = {
   title: "Contactless Whatsapp",
   description: "No more saving unwanted contacts!",
   keywords: ["whatsapp", "contactless", "teensy"],
+  metadataBase: new URL("https://teensy.tech"),
   openGraph: {
-    images: "https://teensy.tech/wa.png",
+    images: "/wa.png",
     description: "No more saving unwanted contacts!",
     type: "website",
     url: "https://teensy.tech/wa",

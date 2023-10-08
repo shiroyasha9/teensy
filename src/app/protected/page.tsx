@@ -6,8 +6,9 @@ export const metadata = {
   title: "Protected Teensy",
   description: "A Customizable URL shortener. Paste URL, give it a name, done!",
   keywords: ["url", "shortener", "teensy", "protected"],
+  metadataBase: new URL("https://teensy.tech"),
   openGraph: {
-    images: "https://teensy.tech/teensy.png",
+    images: "/teensy.png",
     description:
       "A Customizable URL shortener. Paste URL, give it a name, done!",
     type: "website",
