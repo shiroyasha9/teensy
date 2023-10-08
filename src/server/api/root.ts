@@ -207,7 +207,7 @@ export const appRouter = createTRPCRouter({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         id: z.number(),
-        password: z.string().or(z.undefined()),
+        password: z.string().or(z.undefined()).or(z.null()),
       }),
     )
     .output(

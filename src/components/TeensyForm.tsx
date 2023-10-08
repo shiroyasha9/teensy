@@ -128,7 +128,7 @@ const TeensyForm = (props: TeensyFormProps) => {
       updateSlug.mutate({
         slug,
         url,
-        password: isPasswordProtected ? password : undefined,
+        password: isPasswordProtected ? password : null,
         id: currentTeensy.id,
       });
       onClose?.();
