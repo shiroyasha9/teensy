@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("antialiased", rubik.className)}>
-      <body className="flex h-screen flex-col p-6">
+      <body className="flex h-screen flex-col p-6 md:overflow-x-hidden">
         <Providers>
           <AddVisitCount>
             <Header />
