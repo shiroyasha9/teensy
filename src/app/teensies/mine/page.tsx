@@ -8,22 +8,25 @@ export const metadata = {
   description: "Save your teensies to edit/delete them later!",
   keywords: ["url", "shortener", "teensy"],
   metadataBase: new URL("https://teensy.tech"),
+
   openGraph: {
     images: "/my-teensy-links.png",
     description: "Edit/Delete your saved teensies.",
     type: "website",
     url: "https://teensy.tech/teensies",
   },
+
   twitter: {
     card: "summary",
     images: "https://teensy.tech/my-teensy-links.png",
   },
+
   icons: {
     icon: "/icon-192x192.png",
     shortcut: "/favicon.ico",
     apple: "/icon-192x192.png",
   },
-  themeColor: "#712fb9",
+
   manifest: "/manifest.json",
 };
 
@@ -42,3 +45,7 @@ export default async function TeensiesPage() {
 
   return <TeensyTable userTeensies={teensies} ownerId={session.user.id} />;
 }
+
+export const viewport = {
+  themeColor: "#712fb9",
+};

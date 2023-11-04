@@ -7,6 +7,7 @@ export const metadata = {
   description: "A Customizable URL shortener. Paste URL, give it a name, done!",
   keywords: ["url", "shortener", "teensy"],
   metadataBase: new URL("https://teensy.tech"),
+
   openGraph: {
     images: "/teensy.png",
     description:
@@ -14,16 +15,18 @@ export const metadata = {
     type: "website",
     url: "https://teensy.tech/",
   },
+
   twitter: {
     card: "summary",
     images: "https://teensy.tech/teensy.png",
   },
+
   icons: {
     icon: "/icon-192x192.png",
     shortcut: "/favicon.ico",
     apple: "/icon-192x192.png",
   },
-  themeColor: "#712fb9",
+
   manifest: "/manifest.json",
 };
 
@@ -49,3 +52,7 @@ const Page = async () => {
 };
 
 export default Page;
+
+export const viewport = {
+  themeColor: "#712fb9",
+};
