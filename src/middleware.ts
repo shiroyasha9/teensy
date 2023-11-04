@@ -13,6 +13,7 @@ const IGNORE_MIDDLEWARE_PATHS = [
   "/api",
   "/teensies",
   "/favicon.ico",
+  "/blogs",
 ];
 
 export async function middleware(req: NextRequest) {

@@ -5,7 +5,7 @@ export default async function Footer() {
   const visitorsCount = await db.globalVisits.count();
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pb-4">
       <a
         href="https://www.buymeacoffee.com/mubinansari"
         target="_blank"

@@ -15,6 +15,7 @@ export const NOT_ALLOWED_SLUGS = new Set([
   "teensies",
   "protected",
   "login",
+  "blogs",
 ]);
 
 export const NAV_ITEMS = [
