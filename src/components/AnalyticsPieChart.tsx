@@ -39,7 +39,8 @@ export default function AnalyticsPieChart({
           datasets: [
             {
               data: top5Visits,
-              label: "No. of Views",
+              label: " Visited by",
+
               backgroundColor: [
                 "hsl(0, 75%, 70%)",
                 "hsl(48, 75%, 70%)",
