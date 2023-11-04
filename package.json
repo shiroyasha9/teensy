@@ -28,6 +28,7 @@
     "@trpc/next": "^10.38.5",
     "@trpc/react-query": "^10.38.5",
     "@trpc/server": "^10.38.5",
+    "@vercel/kv": "^0.2.4",
     "chart.js": "^4.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
