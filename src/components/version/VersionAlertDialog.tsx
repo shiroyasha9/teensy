@@ -24,24 +24,25 @@ const VersionAlertDialog = ({ backendVersion }: VersionAlertDialogProps) => {
   const { toast } = useToast();
 
   const handleChangeShowModal = (open: boolean) => {
-    if (!open) {
-      toast({
-        variant: "destructive",
-        title: `Revisit it later!`,
-        description: `You can always read the blog later by clicking on ${backendVersion} at the top.`,
-        action: (
-          <ToastAction altText="Read!" asChild>
-            <Link
-              href={`/blogs/releases/${backendVersion}`}
-              className="rounded border border-zinc-300 px-2 py-1"
-            >
-              Read!
-            </Link>
-          </ToastAction>
-        ),
-      });
-    }
     setShow(open);
+  };
+
+  const handleShowToast = () => {
+    toast({
+      variant: "destructive",
+      title: `Revisit it later!`,
+      description: `You can always read the blog later by clicking on ${backendVersion} at the top.`,
+      action: (
+        <ToastAction altText="Read!" asChild>
+          <Link
+            href={`/blogs/releases/${backendVersion}`}
+            className="rounded border border-zinc-300 px-2 py-1"
+          >
+            Read!
+          </Link>
+        </ToastAction>
+      ),
+    });
   };
 
   useEffect(() => {
@@ -65,7 +66,9 @@ const VersionAlertDialog = ({ backendVersion }: VersionAlertDialogProps) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="mt-4">
-          <AlertDialogCancel>I&apos;m Loving It Already</AlertDialogCancel>
+          <AlertDialogCancel onClick={handleShowToast}>
+            I&apos;m Loving It Already
+          </AlertDialogCancel>
           <AlertDialogAction asChild>
             <Link href={`/blogs/releases/${backendVersion}`}>
               Read The Blog 🔥
