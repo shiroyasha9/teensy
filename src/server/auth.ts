@@ -1,21 +1,47 @@
-import { type GetServerSidePropsContext } from "next";
-import { unstable_getServerSession } from "next-auth";
+import { getServerSession, type NextAuthOptions } from "next-auth";
+import { db } from "@/server/db";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
 
-import { authOptions } from "../pages/api/auth/[...nextauth]";
-
-/**
- * Wrapper for unstable_getServerSession, used in trpc createContext and the
- * restricted API route
- *
- * Don't worry too much about the "unstable", it's safe to use but the syntax
- * may change in future versions
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-
-export const getServerAuthSession = async (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return await unstable_getServerSession(ctx.req, ctx.res, authOptions);
+export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/login",
+    signOut: "/login",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  // Include user.id on session
+  callbacks: {
+    session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+  },
+  // Configure one or more authentication providers
+  adapter: PrismaAdapter(db),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID || "",
+      clientSecret: process.env.GOOGLE_SECRET || "",
+    }),
+    /**
+     * ...add more providers here
+     *
+     * For example, the GitHub provider requires you to add the
+     * `refresh_token_expires_in` field to the Account model. Refer to the
+     * NextAuth.js docs for the provider you want to use. Example:
+     * @see https://next-auth.js.org/providers/github
+     */
+  ],
 };
+
+export const getAuthSession = () => getServerSession(authOptions);

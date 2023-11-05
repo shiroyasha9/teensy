@@ -2,36 +2,41 @@ import type { Teensy, Visit } from "@prisma/client";
 import { NextResponse, type NextRequest } from "next/server";
 
 const IGNORE_MIDDLEWARE_PATHS = [
-  "/protected/",
+  "/protected",
   "/bmc.svg",
   "/icon-",
   "/.well-known/",
   "/manifest.json",
   "/multiple",
   "/wa",
+  "/_",
+  "/api",
+  "/teensies",
+  "/favicon.ico",
+  "/blogs",
 ];
 
 export async function middleware(req: NextRequest) {
-  const isIgnoredPath = IGNORE_MIDDLEWARE_PATHS.some((path) =>
-    req.nextUrl.pathname.startsWith(path),
-  );
+  const isIgnoredPath =
+    req.nextUrl.pathname === "/" ||
+    IGNORE_MIDDLEWARE_PATHS.some((path) =>
+      req.nextUrl.pathname.startsWith(path),
+    );
 
-  if (
-    req.nextUrl.pathname.startsWith("/wa/") &&
-    !req.nextUrl.pathname.endsWith("/wa/")
-  ) {
-    const phoneNumber = req.nextUrl.pathname.split("/").pop();
-    if (phoneNumber) {
-      const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
-      return NextResponse.redirect(WHATSAPP_URL);
-    }
+  const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
+  if (phoneNumber) {
+    const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+    return NextResponse.redirect(WHATSAPP_URL);
   }
 
   if (isIgnoredPath) {
     return;
   }
   const slug = req.nextUrl.pathname.split("/").pop();
-  const slugFetch = await fetch(`${req.nextUrl.origin}/api/url/${slug || ""}`);
+  const params = req.nextUrl.searchParams.toString();
+  const slugFetch = await fetch(
+    `${req.nextUrl.origin}/api/url?slug=${slug || ""}`,
+  );
 
   if (slugFetch.status === 404) {
     return;
@@ -48,12 +53,14 @@ export async function middleware(req: NextRequest) {
   };
 
   if (data.password) {
+    const searchParams = params ? `&${params}` : "";
     return NextResponse.redirect(
-      `${req.nextUrl.origin}/protected/${data.slug}`,
+      `${req.nextUrl.origin}/protected?slug=${data.slug}${searchParams}`,
     );
   }
 
-  return NextResponse.redirect(data.url);
+  const urlWithParams = `${data.url}${params ? `?${params}` : ""}`;
+  return NextResponse.redirect(urlWithParams);
 }
 
 export const config = {

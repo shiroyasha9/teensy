@@ -1,12 +1,6 @@
-import type { FormData, MultipleTeensiesFormData } from "$types";
+import type { MultipleTeensiesFormData } from "@/types";
 import { atom } from "jotai";
 
-export const formAtom = atom<FormData>({
-  slug: "",
-  url: "",
-  isPasswordProtected: false,
-  isAutoDelete: false,
-});
 export const multipleFormAtom = atom<MultipleTeensiesFormData[]>([
   {
     slug: "",
@@ -14,9 +8,3 @@ export const multipleFormAtom = atom<MultipleTeensiesFormData[]>([
     isPasswordProtected: false,
   },
 ]);
-
-export const teensyUrlAtom = atom<string>("teensy.tech");
-
-export const isSuccessfulAtom = atom<boolean>(false);
-
-export const showAuthModalAtom = atom<boolean>(false);

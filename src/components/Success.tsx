@@ -1,29 +1,25 @@
-import { formAtom, isSuccessfulAtom, teensyUrlAtom } from "$store";
-import { showToastMessage } from "$utils/functions";
+"use client";
+
+import { env } from "@/env.mjs";
+import { showToastMessage } from "@/utils";
 import copy from "copy-to-clipboard";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useQRCode } from "next-qrcode";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineCloudDownload } from "react-icons/ai";
-import Button from "./Button";
+import { Button } from "./ui/button";
 
-const Success = () => {
-  const [{ slug }, setForm] = useAtom(formAtom);
-  const teensyUrl = useAtomValue(teensyUrlAtom);
+type SuccessProps = {
+  slug: string;
+};
+
+const Success = ({ slug }: SuccessProps) => {
   const { Canvas } = useQRCode();
-  const setIsSuccessful = useSetAtom(isSuccessfulAtom);
   const [showDownloadQRButton, setShowDownloadQRButton] = useState(false);
+  const router = useRouter();
 
   const resetHandler = () => {
-    setForm({
-      slug: "",
-      url: "",
-      isPasswordProtected: false,
-      password: undefined,
-      isAutoDelete: false,
-      expiresAt: undefined,
-    });
-    setIsSuccessful(false);
+    router.push("/");
   };
 
   function downloadQRCode() {
@@ -36,25 +32,14 @@ const Success = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center  justify-center">
-        <h3 className="mb-3 text-xl">
-          Successful! 🥳 Here&apos;s your teensy:{" "}
-        </h3>
-        <a
-          href={`/${slug}`}
-          className="mt-1 rounded-2xl bg-gray-200/30 px-3 py-1"
-        >
-          <h1>{`${teensyUrl}/${slug}`}</h1>
-        </a>
-      </div>
+    <>
       <div
         className="mt-3 flex items-center justify-center"
         onMouseOver={() => setShowDownloadQRButton(true)}
         onMouseOut={() => setShowDownloadQRButton(false)}
       >
         <Canvas
-          text={`${teensyUrl}/${slug}`}
+          text={`${env.NEXT_PUBLIC_SITE_URL}/${slug}`}
           logo={{ src: "/icon-192x192.png", options: { width: 45 } }}
           options={{
             errorCorrectionLevel: "M",
@@ -68,9 +53,8 @@ const Success = () => {
           }}
         />
         <div
-          className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${
-            showDownloadQRButton ? "absolute" : "hidden"
-          }`}
+          className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${showDownloadQRButton ? "absolute" : "hidden"
+            }`}
         >
           <AiOutlineCloudDownload
             onClick={downloadQRCode}
@@ -79,23 +63,25 @@ const Success = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-x-4">
         <Button
-          title="Copy Teensy"
           className="mt-5 px-3 py-1.5 text-base"
           onClick={() => {
-            copy(`${window.location.protocol}//${teensyUrl}/${slug}`);
+            copy(`${env.NEXT_PUBLIC_SITE_URL}/${slug}`);
             showToastMessage("Link Copied!");
           }}
-        />
+        >
+          Copy Teensy
+        </Button>
         <Button
-          title="Back to Home"
           variant="secondary"
           onClick={resetHandler}
           className="mt-5 px-3 py-1.5 text-base"
-        />
+        >
+          Back to Home
+        </Button>
       </div>
-    </div>
+    </>
   );
 };
 

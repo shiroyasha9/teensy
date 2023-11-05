@@ -1,6 +1,6 @@
-import { getExpiryDate } from "$utils/functions";
+import { getExpiryDate } from "@/utils";
 import { z } from "zod";
-import { prisma } from "../db";
+import { db } from "../db";
 import {
   createTRPCRouter,
   enforceUserIsAuthorized,
@@ -17,23 +17,14 @@ export const appRouter = createTRPCRouter({
   fetchGlobalVisitsCounts: publicProcedure
     .output(z.number())
     .query(async () => {
-      return await prisma.globalVisits.count();
+      return await db.globalVisits.count();
     }),
   addGlobalVisit: protectedProcedure.mutation(async () => {
-    await prisma.globalVisits.create({
+    await db.globalVisits.create({
       data: {},
     });
   }),
   slugCheck: publicProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        path: "/slug-check",
-        summary:
-          "This endpoint can be used to check if a given teensy i.e. short url is already in use",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         slug: z.string(),
@@ -45,7 +36,7 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const teensy = await prisma.teensy.findFirst({
+      const teensy = await db.teensy.findFirst({
         where: {
           slug: input.slug,
         },
@@ -58,7 +49,7 @@ export const appRouter = createTRPCRouter({
         teensy.expiresAt &&
         new Date(teensy.expiresAt) < new Date()
       ) {
-        await prisma.expiredTeensy.create({
+        await db.expiredTeensy.create({
           data: {
             slug: teensy.slug,
             url: teensy.url,
@@ -67,7 +58,7 @@ export const appRouter = createTRPCRouter({
             ownerId: teensy.ownerId,
           },
         });
-        await prisma.teensy.delete({
+        await db.teensy.delete({
           where: {
             id: teensy.id,
           },
@@ -90,13 +81,12 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const slugs = input.map((i) => i.slug);
-      const count = await prisma.teensy.findMany({
+      const count = await db.teensy.findMany({
         where: {
           slug: { in: slugs },
         },
       });
       const usedSlugs = count.map((c) => c.slug);
-      console.log({ usedSlugs });
       return { usedSlugs };
     }),
   createMultipleTeensies: publicProcedure
@@ -110,9 +100,8 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const { prisma, session } = ctx;
-        console.log({ ownerId: session?.user ? session.user.id : undefined });
-        await prisma.teensy.createMany({
+        const { session } = ctx;
+        await db.teensy.createMany({
           data: input.map((i) => ({
             slug: i.slug,
             url: i.url,
@@ -125,15 +114,6 @@ export const appRouter = createTRPCRouter({
       }
     }),
   fetchUserTeensy: protectedProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        path: "/fetch-user-teensy",
-        protect: true,
-        summary: "This endpoint can be used to fetch a teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(z.object({ slug: z.string() }))
     .output(
       z.object({
@@ -147,7 +127,7 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const teensy = await prisma.teensy.findFirstOrThrow({
+      const teensy = await db.teensy.findFirstOrThrow({
         where: {
           slug: input.slug,
         },
@@ -155,16 +135,6 @@ export const appRouter = createTRPCRouter({
       return teensy;
     }),
   fetchUserSlugs: protectedProcedure
-    .meta({
-      openapi: {
-        method: "GET",
-        path: "/fetch-user-slugs",
-        protect: true,
-        summary:
-          "This endpoint can be used to fetch all the teensies of a given user.",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(z.void())
     .output(
       z.object({
@@ -190,7 +160,7 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx }) => {
-      const teensies = await prisma.teensy.findMany({
+      const teensies = await db.teensy.findMany({
         where: { owner: { email: ctx.session.user.email } },
         orderBy: { createdAt: "desc" },
         include: { visits: true },
@@ -199,14 +169,6 @@ export const appRouter = createTRPCRouter({
       return { teensies };
     }),
   createSlug: publicProcedure
-    .meta({
-      openapi: {
-        method: "POST",
-        path: "/create-slug",
-        summary: "This endpoint can be used to create a new teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         slug: z.string(),
@@ -223,7 +185,7 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await prisma.teensy.create({
+        await db.teensy.create({
           data: {
             slug: input.slug,
             url: input.url,
@@ -236,26 +198,16 @@ export const appRouter = createTRPCRouter({
         });
         return { success: true };
       } catch (e) {
-        console.log(e);
         return { success: false };
       }
     }),
   updateSlug: protectedProcedure
-    .meta({
-      openapi: {
-        method: "PATCH",
-        path: "/update-slug",
-        protect: true,
-        summary: "This endpoint can be used to update a teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         slug: z.string(),
         url: z.string().regex(/^(?!https:\/\/teensy).*/),
         id: z.number(),
-        password: z.string().or(z.undefined()),
+        password: z.string().or(z.undefined()).or(z.null()),
       }),
     )
     .output(
@@ -266,7 +218,7 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
-        await prisma.teensy.update({
+        await db.teensy.update({
           where: {
             id: input.id,
           },
@@ -278,20 +230,10 @@ export const appRouter = createTRPCRouter({
         });
         return { success: true };
       } catch (e) {
-        console.log(e);
         return { success: false };
       }
     }),
   deleteSlug: protectedProcedure
-    .meta({
-      openapi: {
-        method: "DELETE",
-        path: "/delete-slug",
-        protect: true,
-        summary: "This endpoint can be used to delete a teensy",
-        headers: [{ name: "secret-key", required: true }],
-      },
-    })
     .input(
       z.object({
         id: z.number(),
@@ -305,14 +247,13 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
-        await prisma.teensy.delete({
+        await db.teensy.delete({
           where: {
             id: input.id,
           },
         });
         return { success: true };
       } catch (e) {
-        console.log(e);
         return { success: false };
       }
     }),
