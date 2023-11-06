@@ -1,15 +1,16 @@
 import AddVisitCount from "@/components/layout/AddVisitCount";
 import Providers from "@/components/layout/Providers";
+import { Toaster as ShadcnToast } from "@/components/ui/toaster";
 import { cn } from "@/utils";
+import { Analytics } from "@vercel/analytics/react";
 import { Rubik } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import { Toaster as ShadcnToast } from "@/components/ui/toaster";
 
-import "@/styles/globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import Confetti from "@/components/layout/Confetti";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import VersionModal from "@/components/version/VersionModal";
+import "@/styles/globals.css";
 
 export const metadata = {
   title: "Teensy your URLs",
@@ -44,6 +45,7 @@ export default function RootLayout({
           <VersionModal />
           <ShadcnToast />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
