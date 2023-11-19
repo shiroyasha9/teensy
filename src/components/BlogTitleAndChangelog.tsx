@@ -21,7 +21,7 @@ export const BlogTitleAndChangelog = ({
         <span className="font-medium">{blogSubtitle}</span>
       </div>
       <div className="font-extralight text-white">
-        What's new?&nbsp;
+        What&apos;s new?&nbsp;
         <Link target="_blank" className="font-extralight" href={changeLogURL}>
           Changelog on GitHub.
         </Link>
