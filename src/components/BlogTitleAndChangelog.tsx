@@ -16,11 +16,13 @@ export const BlogTitleAndChangelog = ({
   return (
     <div className="flex flex-col gap-2">
       <title>{tabTitle}</title>
-      <div className=" text-5xl font-medium text-white opacity-100">
+      <div className=" text-5xl font-medium text-gray-950 opacity-100 dark:text-white">
         {blogTitle} <br />
-        <span className="font-medium">{blogSubtitle}</span>
+        <span className="font-medium text-gray-950 dark:text-white">
+          {blogSubtitle}
+        </span>
       </div>
-      <div className="font-extralight text-white">
+      <div className="font-extralight text-gray-950 dark:text-white">
         What&apos;s new?&nbsp;
         <Link target="_blank" className="font-extralight" href={changeLogURL}>
           Changelog on GitHub.
