@@ -11,6 +11,7 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import VersionModal from "@/components/version/VersionModal";
 import "@/styles/globals.css";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Teensy your URLs",
@@ -39,7 +40,9 @@ export default function RootLayout({
             <section className="mt-12 flex flex-1 flex-col items-center justify-center">
               {children}
             </section>
-            <Footer />
+            <Suspense fallback={null}>
+              <Footer />
+            </Suspense>
           </AddVisitCount>
           <Confetti />
           <VersionModal />

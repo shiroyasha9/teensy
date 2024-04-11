@@ -1,9 +1,8 @@
-import { kv } from "@vercel/kv";
 import VersionAlertDialog from "./VersionAlertDialog";
+import { appVersion } from "@/constants/config";
 
-const VersionModal = async () => {
-  const backendVersion = (await kv.get("teensyVersion")) as string;
-  return <VersionAlertDialog backendVersion={backendVersion} />;
+const VersionModal = () => {
+  return <VersionAlertDialog backendVersion={appVersion} />;
 };
 
 export default VersionModal;
