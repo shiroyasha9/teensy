@@ -7,5 +7,4 @@ export * from "./account";
 export * from "./session";
 export * from "./teensy";
 export * from "./expiredTeensy";
-export * from "./prismaMigrations";
 export * from "./relations";
