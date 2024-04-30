@@ -13,9 +13,9 @@ const tabButtonClassNames = (
     "inline-block w-full px-4 py-2 focus:outline-none",
     {
       "active bg-white text-black dark:bg-zinc-600 dark:text-white":
-        segment == activePath,
+        segment === activePath,
       "bg-zinc-300  text-zinc-800 dark:bg-zinc-800 dark:text-white":
-        segment != activePath,
+        segment !== activePath,
     },
     className,
   );

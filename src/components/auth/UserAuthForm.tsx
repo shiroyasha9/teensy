@@ -15,7 +15,7 @@ const UserAuthForm = () => {
       void signIn("google", {
         callbackUrl: `${window.location.origin}/`,
       });
-    } catch (err) {
+    } catch (_err) {
       toast.error("There was an error signing in.");
     } finally {
       setIsLoading(false);

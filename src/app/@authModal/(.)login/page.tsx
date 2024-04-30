@@ -1,6 +1,6 @@
 import CloseModal from "@/components/CloseModal";
 import Login from "@/components/auth/Login";
-import { type FC } from "react";
+import type { FC } from "react";
 
 const page: FC = () => {
   return (

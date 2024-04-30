@@ -14,7 +14,7 @@ export default function ThemeToggle() {
   }, []);
 
   const renderThemeChanger = () => {
-    if (!mounted) return null;
+    if (!mounted) { return null; }
     const currentTheme = theme === "system" ? systemTheme : theme;
 
     if (currentTheme === "dark") {
@@ -25,7 +25,7 @@ export default function ThemeToggle() {
           onClick={() => setTheme("light")}
         />
       );
-    } else {
+    }
       return (
         <MdOutlineDarkMode
           className="h-7 w-7"
@@ -33,7 +33,6 @@ export default function ThemeToggle() {
           onClick={() => setTheme("dark")}
         />
       );
-    }
   };
   return <div className="mr-2 cursor-pointer">{renderThemeChanger()}</div>;
 }

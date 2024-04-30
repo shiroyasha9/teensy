@@ -166,7 +166,6 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
         </AlertDialog>
       </td>
       <td
-        scope="row"
         className="cursor-pointer p-4 font-medium text-zinc-900 hover:underline dark:text-white "
         onClick={() => {
           copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);

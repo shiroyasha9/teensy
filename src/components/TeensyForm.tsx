@@ -124,7 +124,7 @@ const TeensyForm = (props: TeensyFormProps) => {
         expiresIn: isAutoDelete ? expiresIn : undefined,
       });
     } else {
-      if (!currentTeensy) return;
+      if (!currentTeensy) { return; }
       updateSlug.mutate({
         slug,
         url,
@@ -251,8 +251,7 @@ const TeensyForm = (props: TeensyFormProps) => {
           />
         </div>
       ) : (
-        currentTeensy &&
-        currentTeensy.expiresAt && (
+        currentTeensy?.expiresAt && (
           <label
             htmlFor="auto-delete-checkbox"
             className="whitespace-nowrap text-sm font-medium"

@@ -44,7 +44,7 @@ export async function middleware(req: NextRequest) {
 
   if (slugFetch.status === 498) {
     const url = req.nextUrl;
-    url.pathname = `/498`;
+    url.pathname = "/498";
     return NextResponse.rewrite(url);
   }
 

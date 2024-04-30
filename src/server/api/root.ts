@@ -43,8 +43,7 @@ export const appRouter = createTRPCRouter({
         },
       });
       if (
-        teensy &&
-        teensy.expiresAt &&
+        teensy?.expiresAt &&
         new Date(teensy.expiresAt) < new Date()
       ) {
         await db.insert(expiredTeensy).values({
@@ -99,7 +98,7 @@ export const appRouter = createTRPCRouter({
           })),
         );
         return { success: true };
-      } catch (e) {
+      } catch (_e) {
         return { success: false };
       }
     }),
@@ -176,7 +175,7 @@ export const appRouter = createTRPCRouter({
             : undefined,
         });
         return { success: true };
-      } catch (e) {
+      } catch (_e) {
         return { success: false };
       }
     }),
@@ -206,7 +205,7 @@ export const appRouter = createTRPCRouter({
           })
           .where(eq(teensyTable.id, input.id));
         return { success: true };
-      } catch (e) {
+      } catch (_e) {
         return { success: false };
       }
     }),
@@ -226,7 +225,7 @@ export const appRouter = createTRPCRouter({
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
         await db.delete(teensyTable).where(eq(teensyTable.id, input.id));
         return { success: true };
-      } catch (e) {
+      } catch (_e) {
         return { success: false };
       }
     }),

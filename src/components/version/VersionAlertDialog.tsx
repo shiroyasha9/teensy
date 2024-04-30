@@ -30,7 +30,7 @@ const VersionAlertDialog = ({ backendVersion }: VersionAlertDialogProps) => {
   const handleShowToast = () => {
     toast({
       variant: "destructive",
-      title: `Revisit it later!`,
+      title: "Revisit it later!",
       description: `You can always read the blog later by clicking on ${backendVersion} at the top.`,
       action: (
         <ToastAction altText="Read!" asChild>

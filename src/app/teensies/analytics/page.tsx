@@ -20,7 +20,7 @@ const Page = async () => {
     return b.visits.length - a.visits.length;
   });
 
-  const top5Slugs = top5?.slice(0, 5).map((teensy) => "/" + teensy.slug);
+  const top5Slugs = top5?.slice(0, 5).map((teensy) => `/${teensy.slug}`);
   const top5Visits = top5?.slice(0, 5).map((teensy) => teensy.visits.length);
 
   return (

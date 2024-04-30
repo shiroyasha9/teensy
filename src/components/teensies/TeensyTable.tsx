@@ -23,9 +23,8 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
             teensy.slug.toLowerCase().includes(search.toLowerCase()) ||
             teensy.url.toLowerCase().includes(search.toLowerCase()),
         );
-      } else {
-        return userTeensies;
       }
+        return userTeensies;
     }
   }, [userTeensies, search]);
 
@@ -83,8 +82,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
               </tr>
             </thead>
             <tbody className="max-h-64 overflow-y-auto">
-              {filteredData &&
-                filteredData.map((teensy) => (
+              {filteredData?.map((teensy) => (
                   <TeensyRow
                     teensy={teensy}
                     ownerId={ownerId}
