@@ -1,6 +1,12 @@
-[{
-        "relation": ["delegate_permission/common.handle_all_urls"],
-        "target" : { "namespace": "android_app", "package_name": "tech.teensy",
-                     "sha256_cert_fingerprints": ["76:56:99:E0:33:F7:0F:97:0B:C4:49:9C:3B:01:5D:23:23:C9:27:55:3F:DD:03:B9:37:58:14:FA:1D:D8:80:2B"] }
-      }
+[
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "tech.teensy",
+			"sha256_cert_fingerprints": [
+				"76:56:99:E0:33:F7:0F:97:0B:C4:49:9C:3B:01:5D:23:23:C9:27:55:3F:DD:03:B9:37:58:14:FA:1D:D8:80:2B"
+			]
+		}
+	}
 ]

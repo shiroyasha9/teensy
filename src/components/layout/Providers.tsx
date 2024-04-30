@@ -1,23 +1,20 @@
 "use client";
 
-import TRPCProvider from "@/app/_trpc/TRPCProvider";
-import { SessionProvider } from "next-auth/react";
+import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "next-themes";
 
 type ProviderProps = {
-  children: React.ReactNode;
+	children: React.ReactNode;
 };
 
 const Providers = ({ children }: ProviderProps) => {
-  return (
-    <TRPCProvider>
-      <SessionProvider>
-        <ThemeProvider enableSystem={true} attribute="class">
-          {children}
-        </ThemeProvider>
-      </SessionProvider>
-    </TRPCProvider>
-  );
+	return (
+		<TRPCReactProvider>
+			<ThemeProvider enableSystem={true} attribute="class">
+				{children}
+			</ThemeProvider>
+		</TRPCReactProvider>
+	);
 };
 
 export default Providers;

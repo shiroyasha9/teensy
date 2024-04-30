@@ -4,13 +4,13 @@ import { nanoid } from "nanoid";
 import type { z } from "zod";
 
 export const globalVisits = pgTable("GlobalVisits", {
-  id: text("id")
-    .primaryKey()
-    .notNull()
-    .$defaultFn(() => nanoid()),
-  createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
-    .defaultNow()
-    .notNull(),
+	id: text("id")
+		.primaryKey()
+		.notNull()
+		.$defaultFn(() => nanoid()),
+	createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
+		.defaultNow()
+		.notNull(),
 });
 
 export const selectGlobalVisitsSchema = createSelectSchema(globalVisits);

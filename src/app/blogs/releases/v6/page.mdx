@@ -1,0 +1,38 @@
+import { BlogTitleAndChangelog } from "@/components/BlogTitleAndChangelog";
+import Link from "next/link";
+
+<BlogTitleAndChangelog
+  tabTitle={"Teensy v6: Release Notes"}
+  blogTitle={"Teensy v6"}
+  blogSubtitle={"Making it even faster 🚀"}
+  changeLogURL={
+    "https://github.com/shiroyasha9/teensy/compare/teensy@5...teensy@6"
+  }
+/>
+
+<p className="text-purple-700 dark:text-yellow-200">Looking for the changelog for Teensy v5? Check out the previous <Link className="text-purple-800 dark:text-yellow-300 hover:text-purple-900 dark:hover:text-yellow-400" href="/blogs/releases/v5">release notes</Link>.</p>
+
+Hello, awesome Teensy community!
+
+Today, we're thrilled to unveil the brand new Teensy v6, a milestone that not only elevates your experience but transforms the speed and efficiency of our service. We've worked meticulously to supercharge every aspect of Teensy, and we're buzzing with excitement to share these upgrades with you!
+
+## Faster Cold Starts with Drizzle
+We've said goodbye to Prisma, which, despite its merits, had slow cold starts. Now, we've adopted [Drizzle](https://orm.drizzle.team), cutting cold start times down to just 1-2 seconds. Teensy is now more responsive than ever!
+
+## Build Speeds Halved with Bun
+We've embraced [Bun](https://bun.sh/), the latest in tech, slashing our build times by half and significantly improving developer experience (DX).
+
+## Enhanced PWA Support
+Moving away from an outdated library, we've upgraded to [serwist](https://serwist.pages.dev/), a top-notch library that simplifies building PWAs.
+
+And we've refined the small details too:
+
+- Transitioned from `eslint` and `prettier` to [BiomeJS](https://biomejs.dev/) for linting and formatting, enhancing speed by 250x.
+- Updated all packages to their latest versions, ensuring access to the newest features and bug fixes.
+
+Explore the fresh, zippy Teensy v6 today, and experience link shortening at the speed of thought. We can't wait to hear what you think!
+
+With gratitude,
+The Teensy Team 🌟🌟
+
+---

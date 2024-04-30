@@ -1,68 +1,74 @@
-import { NextResponse, type NextRequest } from "next/server";
-import type { Teensy, Visit } from "./server/schema";
+import { type NextRequest, NextResponse } from "next/server";
+import type { Teensy, Visit } from "./server/db/schema";
 
 const IGNORE_MIDDLEWARE_PATHS = [
-  "/protected",
-  "/bmc.svg",
-  "/icon-",
-  "/.well-known/",
-  "/manifest.json",
-  "/multiple",
-  "/wa",
-  "/_",
-  "/api",
-  "/teensies",
-  "/favicon.ico",
-  "/blogs",
+	"/protected",
+	"/bmc.svg",
+	"/icon-",
+	"/.well-known/",
+	"/manifest.json",
+	"/multiple",
+	"/wa",
+	"/_",
+	"/api",
+	"/teensies",
+	"/favicon.ico",
+	"/blogs",
+	"sw.js",
 ];
 
 export async function middleware(req: NextRequest) {
-  const isIgnoredPath =
-    req.nextUrl.pathname === "/" ||
-    IGNORE_MIDDLEWARE_PATHS.some((path) =>
-      req.nextUrl.pathname.startsWith(path),
-    );
+	const isIgnoredPath =
+		req.nextUrl.pathname === "/" ||
+		IGNORE_MIDDLEWARE_PATHS.some((path) =>
+			req.nextUrl.pathname.startsWith(path),
+		);
 
-  const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
-  if (phoneNumber) {
-    const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
-    return NextResponse.redirect(WHATSAPP_URL);
-  }
+	const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
+	if (phoneNumber) {
+		const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+		return NextResponse.redirect(WHATSAPP_URL);
+	}
 
-  if (isIgnoredPath) {
-    return;
-  }
-  const slug = req.nextUrl.pathname.split("/").pop();
-  const params = req.nextUrl.searchParams.toString();
-  const slugFetch = await fetch(
-    `${req.nextUrl.origin}/api/url?slug=${slug || ""}`,
-  );
+	if (isIgnoredPath) {
+		return;
+	}
+	const slug = req.nextUrl.pathname.split("/").pop();
 
-  if (slugFetch.status === 404) {
-    return;
-  }
+	if (slug?.startsWith("sw.") || slug?.startsWith("manifest.")) {
+		return;
+	}
 
-  if (slugFetch.status === 498) {
-    const url = req.nextUrl;
-    url.pathname = `/498`;
-    return NextResponse.rewrite(url);
-  }
+	const params = req.nextUrl.searchParams.toString();
+	const slugFetch = await fetch(
+		`${req.nextUrl.origin}/api/url?slug=${slug || ""}`,
+	);
 
-  const data = (await slugFetch.json()) as Teensy & {
-    visits: Visit[];
-  };
+	if (slugFetch.status === 404) {
+		return;
+	}
 
-  if (data.password) {
-    const searchParams = params ? `&${params}` : "";
-    return NextResponse.redirect(
-      `${req.nextUrl.origin}/protected?slug=${data.slug}${searchParams}`,
-    );
-  }
+	if (slugFetch.status === 498) {
+		const url = req.nextUrl;
+		url.pathname = "/498";
+		return NextResponse.rewrite(url);
+	}
 
-  const urlWithParams = `${data.url}${params ? `?${params}` : ""}`;
-  return NextResponse.redirect(urlWithParams);
+	const data = (await slugFetch.json()) as Teensy & {
+		visits: Visit[];
+	};
+
+	if (data.password) {
+		const searchParams = params ? `&${params}` : "";
+		return NextResponse.redirect(
+			`${req.nextUrl.origin}/protected?slug=${data.slug}${searchParams}`,
+		);
+	}
+
+	const urlWithParams = `${data.url}${params ? `?${params}` : ""}`;
+	return NextResponse.redirect(urlWithParams);
 }
 
 export const config = {
-  matcher: ["/:slug*", "/wa/:number*"],
+	matcher: ["/:slug*", "/wa/:number*"],
 };
