@@ -5,7 +5,7 @@ import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
 import { env } from "@/env.mjs";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Teensy } from "@prisma/client";
+import type { Teensy } from "@/server/schema";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";

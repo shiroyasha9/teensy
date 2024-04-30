@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import type { Teensy, Visit } from "@prisma/client";
+import type { Teensy, Visit } from "@/server/schema";
 import debounce from "lodash.debounce";
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";

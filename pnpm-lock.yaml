@@ -23,15 +23,9 @@ importers:
       '@mdx-js/react':
         specifier: ^3.0.0
         version: 3.0.0(@types/react@18.2.34)(react@18.2.0)
-      '@next-auth/prisma-adapter':
-        specifier: ^1.0.7
-        version: 1.0.7(@prisma/client@5.5.2(prisma@5.5.2))(next-auth@4.24.7(next@14.0.1(@babel/core@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       '@next/mdx':
         specifier: ^14.0.1
         version: 14.0.1(@mdx-js/loader@3.0.0(webpack@5.88.2(esbuild@0.19.12)))(@mdx-js/react@3.0.0(@types/react@18.2.34)(react@18.2.0))
-      '@prisma/client':
-        specifier: ^5.5.2
-        version: 5.5.2(prisma@5.5.2)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.0.5
         version: 1.0.5(@types/react-dom@18.2.14)(@types/react@18.2.34)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -71,9 +65,6 @@ importers:
       '@vercel/analytics':
         specifier: ^1.1.1
         version: 1.1.1
-      '@vercel/kv':
-        specifier: ^0.2.4
-        version: 0.2.4
       chart.js:
         specifier: ^4.4.0
         version: 4.4.0
@@ -210,9 +201,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.5.6
         version: 0.5.6(prettier@3.0.3)
-      prisma:
-        specifier: ^5.5.2
-        version: 5.5.2
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
@@ -1212,12 +1200,6 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@next-auth/prisma-adapter@1.0.7':
-    resolution: {integrity: sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==}
-    peerDependencies:
-      '@prisma/client': '>=2.26.0 || >=3'
-      next-auth: ^4
-
   '@next/env@13.5.3':
     resolution: {integrity: sha512-X4te86vsbjsB7iO4usY9jLPtZ827Mbx+WcwNBGUOIuswuTAKQtzsuoxc/6KLxCMvogKG795MhrR1LDhYgDvasg==}
 
@@ -1364,21 +1346,6 @@ packages:
   '@pkgr/utils@2.3.1':
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
-
-  '@prisma/client@5.5.2':
-    resolution: {integrity: sha512-54XkqR8M+fxbzYqe+bIXimYnkkcGqgOh0dn0yWtIk6CQT4IUCAvNFNcQZwk2KqaLU+/1PHTSWrcHtx4XjluR5w==}
-    engines: {node: '>=16.13'}
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-
-  '@prisma/engines-version@5.5.1-1.aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a':
-    resolution: {integrity: sha512-O+qHFnZvAyOFk1tUco2/VdiqS0ym42a3+6CYLScllmnpbyiTplgyLt2rK/B9BTjYkSHjrgMhkG47S0oqzdIckA==}
-
-  '@prisma/engines@5.5.2':
-    resolution: {integrity: sha512-Be5hoNF8k+lkB3uEMiCHbhbfF6aj1GnrTBnn5iYFT7GEr3TsOEp1soviEcBR0tYCgHbxjcIxJMhdbvxALJhAqg==}
 
   '@radix-ui/primitive@1.0.1':
     resolution: {integrity: sha512-yQ8oGX2GVsEYMWGxcovu1uGWPCxV5BFfeeYxqPmuAzUyLT9qmaMXSAhXpb0WrspIeqYzdJpkh2vHModJPgRIaw==}
@@ -1951,15 +1918,8 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@upstash/redis@1.24.3':
-    resolution: {integrity: sha512-gw6d4IA1biB4eye5ESaXc0zOlVQI94aptsBvVcTghYWu1kRmOrJFoMFEDCa8p5uzluyYAOFCuY2GWLR6O4ZoIw==}
-
   '@vercel/analytics@1.1.1':
     resolution: {integrity: sha512-+NqgNmSabg3IFfxYhrWCfB/H+RCUOCR5ExRudNG2+pcRehq628DJB5e1u1xqwpLtn4pAYii4D98w7kofORAGQA==}
-
-  '@vercel/kv@0.2.4':
-    resolution: {integrity: sha512-wbIOOXhg6MzmNMzKFSWbbLAS65hCZcJN33z1coENzI1M0fOX55yE9v9LwVGqkzdItp3eZsv6pYvwcmGtllyLTw==}
-    engines: {node: '>=14.6'}
 
   '@webassemblyjs/ast@1.12.1':
     resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
@@ -2362,9 +2322,6 @@ packages:
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
-
-  crypto-js@4.2.0:
-    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   crypto-random-string@2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
@@ -4015,11 +3972,6 @@ packages:
 
   pretty-format@3.8.0:
     resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
-
-  prisma@5.5.2:
-    resolution: {integrity: sha512-WQtG6fevOL053yoPl6dbHV+IWgKo25IRN4/pwAGqcWmg7CrtoCzvbDbN9fXUc7QS2KK0LimHIqLsaCOX/vHl8w==}
-    engines: {node: '>=16.13'}
-    hasBin: true
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -5895,11 +5847,6 @@ snapshots:
       '@types/react': 18.2.34
       react: 18.2.0
 
-  '@next-auth/prisma-adapter@1.0.7(@prisma/client@5.5.2(prisma@5.5.2))(next-auth@4.24.7(next@14.0.1(@babel/core@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))':
-    dependencies:
-      '@prisma/client': 5.5.2(prisma@5.5.2)
-      next-auth: 4.24.7(next@14.0.1(@babel/core@7.23.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-
   '@next/env@13.5.3': {}
 
   '@next/env@14.0.1': {}
@@ -5991,16 +5938,6 @@ snapshots:
       picocolors: 1.0.0
       tiny-glob: 0.2.9
       tslib: 2.4.1
-
-  '@prisma/client@5.5.2(prisma@5.5.2)':
-    dependencies:
-      '@prisma/engines-version': 5.5.1-1.aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a
-    optionalDependencies:
-      prisma: 5.5.2
-
-  '@prisma/engines-version@5.5.1-1.aebc046ce8b88ebbcb45efe31cbe7d06fd6abc0a': {}
-
-  '@prisma/engines@5.5.2': {}
 
   '@radix-ui/primitive@1.0.1':
     dependencies:
@@ -6630,17 +6567,9 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@upstash/redis@1.24.3':
-    dependencies:
-      crypto-js: 4.2.0
-
   '@vercel/analytics@1.1.1':
     dependencies:
       server-only: 0.0.1
-
-  '@vercel/kv@0.2.4':
-    dependencies:
-      '@upstash/redis': 1.24.3
 
   '@webassemblyjs/ast@1.12.1':
     dependencies:
@@ -7082,8 +7011,6 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-
-  crypto-js@4.2.0: {}
 
   crypto-random-string@2.0.0: {}
 
@@ -9048,10 +8975,6 @@ snapshots:
   pretty-bytes@5.6.0: {}
 
   pretty-format@3.8.0: {}
-
-  prisma@5.5.2:
-    dependencies:
-      '@prisma/engines': 5.5.2
 
   prop-types@15.8.1:
     dependencies:
