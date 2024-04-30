@@ -21,7 +21,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { showToastMessage } from "@/utils";
-import type { Teensy, Visit } from "@prisma/client";
+import type { Teensy, Visit } from "@/server/schema";
 import { BiPencil } from "react-icons/bi";
 import { BsQrCode } from "react-icons/bs";
 

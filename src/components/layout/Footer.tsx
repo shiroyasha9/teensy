@@ -1,8 +1,12 @@
 import { db } from "@/server/db";
+import { globalVisits } from "@/server/schema";
+import { count } from "drizzle-orm";
 import Image from "next/image";
 
 export default async function Footer() {
-  const visitorsCount = await db.globalVisits.count();
+  const visitorsCount = (
+    await db.select({ count: count() }).from(globalVisits)
+  )[0]?.count;
 
   return (
     <div className="flex flex-col items-center justify-center pb-4">

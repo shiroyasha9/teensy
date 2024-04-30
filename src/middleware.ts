@@ -1,5 +1,5 @@
-import type { Teensy, Visit } from "@prisma/client";
 import { NextResponse, type NextRequest } from "next/server";
+import type { Teensy, Visit } from "./server/schema";
 
 const IGNORE_MIDDLEWARE_PATHS = [
   "/protected",

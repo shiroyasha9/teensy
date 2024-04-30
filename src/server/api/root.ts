@@ -7,6 +7,13 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "./trpc";
+import {
+  expiredTeensy,
+  globalVisits,
+  selectTeensySchema,
+  teensy as teensyTable,
+} from "../schema";
+import { eq } from "drizzle-orm";
 
 /**
  * This is the primary router for your server.
@@ -14,15 +21,8 @@ import {
  * All routers added in /api/routers should be manually added here
  */
 export const appRouter = createTRPCRouter({
-  fetchGlobalVisitsCounts: publicProcedure
-    .output(z.number())
-    .query(async () => {
-      return await db.globalVisits.count();
-    }),
   addGlobalVisit: protectedProcedure.mutation(async () => {
-    await db.globalVisits.create({
-      data: {},
-    });
+    await db.insert(globalVisits).values({});
   }),
   slugCheck: publicProcedure
     .input(
@@ -36,11 +36,9 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const teensy = await db.teensy.findFirst({
-        where: {
-          slug: input.slug,
-        },
-        include: {
+      const teensy = await db.query.teensy.findFirst({
+        where: (t, { eq }) => eq(t.slug, input.slug),
+        with: {
           visits: true,
         },
       });
@@ -49,20 +47,14 @@ export const appRouter = createTRPCRouter({
         teensy.expiresAt &&
         new Date(teensy.expiresAt) < new Date()
       ) {
-        await db.expiredTeensy.create({
-          data: {
-            slug: teensy.slug,
-            url: teensy.url,
-            visitCount: teensy.visits.length,
-            password: teensy.password,
-            ownerId: teensy.ownerId,
-          },
+        await db.insert(expiredTeensy).values({
+          slug: teensy.slug,
+          url: teensy.url,
+          visitCount: teensy.visits.length,
+          password: teensy.password,
+          ownerId: teensy.ownerId,
         });
-        await db.teensy.delete({
-          where: {
-            id: teensy.id,
-          },
-        });
+        await db.delete(teensyTable).where(eq(teensyTable.id, teensy.id));
         return {
           used: false,
         };
@@ -81,10 +73,8 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const slugs = input.map((i) => i.slug);
-      const count = await db.teensy.findMany({
-        where: {
-          slug: { in: slugs },
-        },
+      const count = await db.query.teensy.findMany({
+        where: (t, { inArray }) => inArray(t.slug, slugs),
       });
       const usedSlugs = count.map((c) => c.slug);
       return { usedSlugs };
@@ -101,13 +91,13 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       try {
         const { session } = ctx;
-        await db.teensy.createMany({
-          data: input.map((i) => ({
+        await db.insert(teensyTable).values(
+          input.map((i) => ({
             slug: i.slug,
             url: i.url,
             ownerId: session?.user ? session.user.id : undefined,
           })),
-        });
+        );
         return { success: true };
       } catch (e) {
         return { success: false };
@@ -115,23 +105,14 @@ export const appRouter = createTRPCRouter({
     }),
   fetchUserTeensy: protectedProcedure
     .input(z.object({ slug: z.string() }))
-    .output(
-      z.object({
-        id: z.number(),
-        url: z.string(),
-        slug: z.string(),
-        createdAt: z.date(),
-        updatedAt: z.date(),
-        ownerId: z.string().nullable(),
-        password: z.string().nullable(),
-      }),
-    )
+    .output(selectTeensySchema)
     .query(async ({ input }) => {
-      const teensy = await db.teensy.findFirstOrThrow({
-        where: {
-          slug: input.slug,
-        },
+      const teensy = await db.query.teensy.findFirst({
+        where: (t, { eq }) => eq(t.slug, input.slug),
       });
+      if (!teensy) {
+        throw new Error("Teensy not found");
+      }
       return teensy;
     }),
   fetchUserSlugs: protectedProcedure
@@ -160,10 +141,10 @@ export const appRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx }) => {
-      const teensies = await db.teensy.findMany({
-        where: { owner: { email: ctx.session.user.email } },
-        orderBy: { createdAt: "desc" },
-        include: { visits: true },
+      const teensies = await db.query.teensy.findMany({
+        where: (t, { eq }) => eq(t.ownerId, ctx.session.user.id),
+        orderBy: (t, { desc }) => desc(t.createdAt),
+        with: { visits: true },
       });
 
       return { teensies };
@@ -185,16 +166,14 @@ export const appRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await db.teensy.create({
-          data: {
-            slug: input.slug,
-            url: input.url,
-            ownerId: input.ownerId,
-            password: input.password,
-            expiresAt: input.expiresIn
-              ? getExpiryDate(input.expiresIn)
-              : undefined,
-          },
+        await db.insert(teensyTable).values({
+          slug: input.slug,
+          url: input.url,
+          ownerId: input.ownerId,
+          password: input.password,
+          expiresAt: input.expiresIn
+            ? getExpiryDate(input.expiresIn)
+            : undefined,
         });
         return { success: true };
       } catch (e) {
@@ -218,16 +197,14 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
-        await db.teensy.update({
-          where: {
-            id: input.id,
-          },
-          data: {
+        await db
+          .update(teensyTable)
+          .set({
             slug: input.slug,
             url: input.url,
             password: input.password,
-          },
-        });
+          })
+          .where(eq(teensyTable.id, input.id));
         return { success: true };
       } catch (e) {
         return { success: false };
@@ -247,11 +224,7 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         await enforceUserIsAuthorized(ctx.session.user.id, input.id);
-        await db.teensy.delete({
-          where: {
-            id: input.id,
-          },
-        });
+        await db.delete(teensyTable).where(eq(teensyTable.id, input.id));
         return { success: true };
       } catch (e) {
         return { success: false };
