@@ -1,5 +1,3 @@
-import "server-only";
-
 import { db } from "@/server/db";
 import {
 	expiredTeensy as expiredTeensyTable,
@@ -10,14 +8,13 @@ import {
 import { isDevEnvironment } from "@/utils";
 import { eq } from "drizzle-orm";
 
-export const checkSlug = async (slug: string) => {
-	if (!slug) {
-		return {
-			data: null,
-			status: 404,
-		};
-	}
+export async function GET(req: Request) {
+	const url = new URL(req.url);
+	const slug = url.searchParams.get("slug");
 
+	if (!slug) {
+		return new Response("Please pass a slug", { status: 404 });
+	}
 	const data = await db.query.teensy.findFirst({
 		where: (t, { eq }) => eq(t.slug, slug),
 		with: {
@@ -31,17 +28,9 @@ export const checkSlug = async (slug: string) => {
 		});
 
 		if (expiredTeensy) {
-			// slug has expired
-			return {
-				data: null,
-				status: 498,
-			};
+			return new Response("Slug has expired", { status: 498 });
 		}
-		return {
-			// slug not found
-			data: null,
-			status: 404,
-		};
+		return new Response("Slug not found", { status: 404 });
 	}
 
 	if (data.expiresAt && new Date(data.expiresAt) < new Date()) {
@@ -53,13 +42,8 @@ export const checkSlug = async (slug: string) => {
 			ownerId: data.ownerId,
 		});
 		await db.delete(teensy).where(eq(teensy.id, data.id));
-		return {
-			// slug has expired
-			data: null,
-			status: 498,
-		};
+		return new Response("Slug has expired", { status: 498 });
 	}
-
 	if (!isDevEnvironment) {
 		await db.insert(visit).values({
 			teensyId: data.id,
@@ -67,8 +51,5 @@ export const checkSlug = async (slug: string) => {
 		await db.insert(globalVisits).values({});
 	}
 
-	return {
-		data,
-		status: 200,
-	};
-};
+	return new Response(JSON.stringify(data));
+}

@@ -1,5 +1,5 @@
-import { Pool } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-serverless";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 
 import { env } from "@/env";
 // biome-ignore lint/style/noNamespaceImport: needed here
@@ -10,21 +10,17 @@ import * as schema from "./schema";
  * update.
  */
 const globalForDb = globalThis as unknown as {
-	pool: Pool | undefined;
+	conn: postgres.Sql | undefined;
 };
 
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-	throw new Error("DATABASE_URL is not set");
-}
+const connectionString = process.env.DATABASE_URL!;
 
 // Disable prefetch as it is not supported for "Transaction" pool mode
 export const client =
-	globalForDb.pool ?? new Pool({ connectionString: connectionString });
+	globalForDb.conn ?? postgres(connectionString, { prepare: false });
 
 if (env.NODE_ENV !== "production") {
-	globalForDb.pool = client;
+	globalForDb.conn = client;
 }
 
 export const db = drizzle(client, { schema });

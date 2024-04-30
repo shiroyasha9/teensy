@@ -1,4 +1,4 @@
-import { migrate } from "drizzle-orm/neon-serverless/migrator";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 
 import { client, db } from "./index";
 
