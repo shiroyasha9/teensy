@@ -6,12 +6,11 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
-		"lint": "next lint",
+		"lint": "biome lint --no-errors-on-unmatched --files-ignore-unknown=true ./",
 		"start": "next start",
-		"drizzle-kit": "drizzle-kit",
-		"drizzle:generate-migration": "drizzle-kit generate:pg --schema src/server/schema/index.ts",
-		"drizzle:apply-migration": "bun run ./src/server/migrate.ts",
-		"drizzle:studio": "drizzle-kit studio",
+		"db:gen-migration": "drizzle-kit generate:pg --schema src/server/schema/index.ts",
+		"db:apply-migration": "bun run ./src/server/migrate.ts",
+		"db:studio": "drizzle-kit studio",
 		"postinstall": "lefthook install"
 	},
 	"dependencies": {
@@ -82,5 +81,6 @@
 	},
 	"ct3aMetadata": {
 		"initVersion": "7.3.2"
-	}
+	},
+	"packageManager": "pnpm@9.0.6"
 }
