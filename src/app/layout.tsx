@@ -3,6 +3,7 @@ import Providers from "@/components/layout/Providers";
 import { Toaster as ShadcnToast } from "@/components/ui/toaster";
 import { cn } from "@/utils";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Rubik } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
@@ -68,6 +69,7 @@ export default function RootLayout({
 					<ShadcnToast />
 				</Providers>
 				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);

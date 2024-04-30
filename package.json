@@ -34,6 +34,7 @@
 		"@trpc/react-query": "next",
 		"@trpc/server": "next",
 		"@vercel/analytics": "^1.2.2",
+		"@vercel/speed-insights": "^1.0.10",
 		"chart.js": "^4.4.2",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
