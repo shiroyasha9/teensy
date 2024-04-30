@@ -36,7 +36,9 @@ const Success = ({ slug }: SuccessProps) => {
       <div
         className="mt-3 flex items-center justify-center"
         onMouseOver={() => setShowDownloadQRButton(true)}
+        onFocus={() => setShowDownloadQRButton(true)}
         onMouseOut={() => setShowDownloadQRButton(false)}
+        onBlur={() => setShowDownloadQRButton(false)}
       >
         <Canvas
           text={`${env.NEXT_PUBLIC_SITE_URL}/${slug}`}

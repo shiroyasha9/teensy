@@ -102,6 +102,12 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
                     <span>QR Code for</span>
                     <span
                       className="cursor-pointer text-purple-600 hover:underline dark:text-primary"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
+                          showToastMessage("Link Copied!");
+                        }
+                      }}
                       onClick={() => {
                         copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
                         showToastMessage("Link Copied!");
@@ -170,6 +176,12 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
         onClick={() => {
           copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
           showToastMessage("Link Copied!");
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
+            showToastMessage("Link Copied!");
+          }
         }}
       >
         /{teensy.slug}
