@@ -19,7 +19,6 @@ export default function AddVisitCount({ children }: AddVisitCountProps) {
 				sessionStorage.setItem("isVisited", "true");
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return <>{children}</>;

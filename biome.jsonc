@@ -45,6 +45,9 @@
 				"noForEach": "warn",
 				"noUselessCatch": "warn",
 				"useSimplifiedLogicExpression": "error"
+			},
+			"nursery": {
+				"useSortedClasses": "warn"
 			}
 		}
 	}

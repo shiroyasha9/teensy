@@ -10,6 +10,9 @@ const withMDX = (await import("@next/mdx")).default({});
 /** @type {import('next').NextConfig} */
 const config = {
 	reactStrictMode: true,
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 	pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 	experimental: {
 		mdxRs: true,
