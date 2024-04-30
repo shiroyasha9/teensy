@@ -1,28 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
 import type { Teensy, Visit } from "./server/db/schema";
 
-const IGNORE_MIDDLEWARE_PATHS = [
-	"/protected",
-	"/bmc.svg",
-	"/icon-",
-	"/.well-known/",
-	"/manifest.json",
-	"/multiple",
-	"/wa",
-	"/_",
-	"/api",
-	"/teensies",
-	"/favicon.ico",
-	"/blogs",
-	"sw.js",
-];
-
 export async function middleware(req: NextRequest) {
 	const isIgnoredPath =
-		req.nextUrl.pathname === "/" ||
-		IGNORE_MIDDLEWARE_PATHS.some((path) =>
-			req.nextUrl.pathname.startsWith(path),
-		);
+		req.nextUrl.pathname === "/" || req.nextUrl.pathname === "/wa";
 
 	const phoneNumber = req.nextUrl.searchParams.get("phoneNumber");
 	if (phoneNumber) {
@@ -69,6 +50,11 @@ export async function middleware(req: NextRequest) {
 	return NextResponse.redirect(urlWithParams);
 }
 
+/*
+ * This middleware ignores any paths mentioned between the (?!) characters.
+ */
 export const config = {
-	matcher: ["/:slug*", "/wa/:number*"],
+	matcher: [
+		"/((?!protected|bmc.svg|icon-|.well-known|manifest.json|multiple|teensies|success|498|api|blogs|_next/static|_next/image|favicon.ico|sw.js).*)*",
+	],
 };
