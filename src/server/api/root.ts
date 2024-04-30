@@ -1,4 +1,4 @@
-import { teensyRouter } from "@/server/api/routers/teensy";
+import { teensyRouter } from "@/server/api/routers/teensyRouter";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
 /**
