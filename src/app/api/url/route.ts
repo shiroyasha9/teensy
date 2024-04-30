@@ -4,7 +4,7 @@ import {
 	globalVisits,
 	teensy,
 	visit,
-} from "@/server/schema";
+} from "@/server/db/schema";
 import { isDevEnvironment } from "@/utils";
 import { eq } from "drizzle-orm";
 

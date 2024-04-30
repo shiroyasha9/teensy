@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { Teensy, Visit } from "./server/schema";
+import type { Teensy, Visit } from "./server/db/schema";
 
 const IGNORE_MIDDLEWARE_PATHS = [
 	"/protected",

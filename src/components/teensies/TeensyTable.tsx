@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import type { Teensy, Visit } from "@/server/schema";
+import type { Teensy, Visit } from "@/server/db/schema";
 import debounce from "lodash.debounce";
 import { type ChangeEvent, useEffect, useMemo, useState } from "react";
 import { MdSearch } from "react-icons/md";

@@ -20,13 +20,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { Teensy, Visit } from "@/server/schema";
+import type { Teensy, Visit } from "@/server/db/schema";
 import { showToastMessage } from "@/utils";
 import { BiPencil } from "react-icons/bi";
 import { BsQrCode } from "react-icons/bs";
 
 import { trpc } from "@/app/_trpc/client";
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import copy from "copy-to-clipboard";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";

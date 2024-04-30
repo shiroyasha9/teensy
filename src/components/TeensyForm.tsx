@@ -2,8 +2,8 @@
 
 import { trpc } from "@/app/_trpc/client";
 import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
-import { env } from "@/env.mjs";
-import type { Teensy } from "@/server/schema";
+import { env } from "@/env";
+import type { Teensy } from "@/server/db/schema";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";

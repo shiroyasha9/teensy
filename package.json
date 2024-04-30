@@ -8,6 +8,7 @@
 		"dev": "next dev",
 		"lint": "biome lint --no-errors-on-unmatched --files-ignore-unknown=true ./",
 		"start": "next start",
+		"tsc": "tsc --noEmit --pretty",
 		"db:gen-migration": "drizzle-kit generate:pg --schema src/server/schema/index.ts",
 		"db:apply-migration": "bun run ./src/server/migrate.ts",
 		"db:studio": "drizzle-kit studio",

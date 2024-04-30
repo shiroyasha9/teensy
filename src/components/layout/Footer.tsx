@@ -1,5 +1,5 @@
 import { db } from "@/server/db";
-import { globalVisits } from "@/server/schema";
+import { globalVisits } from "@/server/db/schema";
 import { count } from "drizzle-orm";
 import Image from "next/image";
 

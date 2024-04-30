@@ -7,7 +7,7 @@ import {
 	globalVisits,
 	selectTeensySchema,
 	teensy as teensyTable,
-} from "../schema";
+} from "../db/schema";
 import {
 	createTRPCRouter,
 	enforceUserIsAuthorized,

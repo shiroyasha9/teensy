@@ -1,6 +1,6 @@
 "use client";
 
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import { showToastMessage } from "@/utils";
 import copy from "copy-to-clipboard";
 import { useQRCode } from "next-qrcode";
