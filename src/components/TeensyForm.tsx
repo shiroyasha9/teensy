@@ -85,7 +85,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 	const additionalIsSlugInvalid =
 		mode === "edit" ? slug !== currentTeensy?.slug : false;
 
-	const slugCheck = trpc.slugCheck.useQuery(
+	const slugCheck = trpc.teensy.slugCheck.useQuery(
 		{ slug },
 		{
 			enabled: !!slug,
@@ -95,13 +95,13 @@ const TeensyForm = (props: TeensyFormProps) => {
 		},
 	);
 
-	const createSlug = trpc.createSlug.useMutation({
+	const createSlug = trpc.teensy.createSlug.useMutation({
 		onSuccess: () => {
 			router.push(`/success?slug=${slug}`);
 		},
 	});
 
-	const updateSlug = trpc.updateSlug.useMutation({
+	const updateSlug = trpc.teensy.updateSlug.useMutation({
 		onSuccess: () => {
 			router.refresh();
 		},

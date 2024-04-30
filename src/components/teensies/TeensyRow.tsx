@@ -47,7 +47,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const deleteTeensy = trpc.deleteSlug.useMutation({
+	const deleteTeensy = trpc.teensy.deleteSlug.useMutation({
 		onSuccess: () => {
 			router.refresh();
 		},

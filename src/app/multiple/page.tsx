@@ -21,9 +21,10 @@ const Multiple = () => {
 			{ slug: "", url: "", used: false, isPasswordProtected: false },
 		]);
 	};
-	const { mutateAsync: checkSlugs } = trpc.slugCheckMultiple.useMutation();
+	const { mutateAsync: checkSlugs } =
+		trpc.teensy.slugCheckMultiple.useMutation();
 	const { mutateAsync: createMultipleTeensies } =
-		trpc.createMultipleTeensies.useMutation();
+		trpc.teensy.createMultipleTeensies.useMutation();
 
 	const handleSubmitCreateTeensies = async (e: React.SyntheticEvent) => {
 		e.preventDefault();

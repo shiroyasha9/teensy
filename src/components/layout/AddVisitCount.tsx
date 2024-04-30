@@ -9,7 +9,7 @@ type AddVisitCountProps = {
 };
 
 export default function AddVisitCount({ children }: AddVisitCountProps) {
-	const addGlobalVisitCount = trpc.addGlobalVisit.useMutation();
+	const addGlobalVisitCount = trpc.teensy.addGlobalVisit.useMutation();
 
 	useEffect(() => {
 		if (window.sessionStorage && !isDevEnvironment) {
