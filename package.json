@@ -82,5 +82,6 @@
 	"ct3aMetadata": {
 		"initVersion": "7.3.2"
 	},
-	"packageManager": "pnpm@9.0.6"
+	"packageManager": "bun@1.1.6",
+	"trustedDependencies": ["@biomejs/biome", "es5-ext", "esbuild", "lefthook"]
 }
