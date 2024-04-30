@@ -23,7 +23,9 @@ export const teensy = pgTable(
     updatedAt: timestamp("updatedAt", {
       precision: 3,
       mode: "date",
-    }).notNull(),
+    })
+      .notNull()
+      .defaultNow(),
     ownerId: text("ownerId").references(() => user.id, {
       onDelete: "set null",
       onUpdate: "cascade",

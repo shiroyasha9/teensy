@@ -37,10 +37,10 @@ export default async function TeensiesPage() {
     redirect("/login");
   }
 
-  const teensies = await db.teensy.findMany({
-    where: { owner: { email: session.user.email } },
-    orderBy: { createdAt: "desc" },
-    include: { visits: true },
+  const teensies = await db.query.teensy.findMany({
+    where: (t, { eq }) => eq(t.ownerId, session.user.id),
+    orderBy: (t, { desc }) => desc(t.createdAt),
+    with: { visits: true },
   });
 
   return <TeensyTable userTeensies={teensies} ownerId={session.user.id} />;

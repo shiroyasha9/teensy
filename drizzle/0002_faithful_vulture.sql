@@ -1,0 +1,1 @@
+ALTER TABLE "Teensy" ALTER COLUMN "updatedAt" SET DEFAULT now();

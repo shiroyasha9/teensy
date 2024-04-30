@@ -70,8 +70,8 @@ export const enforceUserIsAuthorized = async (
   teensyId: number,
 ) => {
   try {
-    const teensy = await db.teensy.findUnique({
-      where: { id: teensyId },
+    const teensy = await db.query.teensy.findFirst({
+      where: (t, { eq }) => eq(t.id, teensyId),
     });
     if (!teensy || teensy.ownerId !== userId) {
       throw new Error("Not authorized");
