@@ -14,6 +14,7 @@ const IGNORE_MIDDLEWARE_PATHS = [
 	"/teensies",
 	"/favicon.ico",
 	"/blogs",
+	"sw.js",
 ];
 
 export async function middleware(req: NextRequest) {
@@ -33,6 +34,11 @@ export async function middleware(req: NextRequest) {
 		return;
 	}
 	const slug = req.nextUrl.pathname.split("/").pop();
+
+	if (slug?.startsWith("sw.") || slug?.startsWith("manifest.")) {
+		return;
+	}
+
 	const params = req.nextUrl.searchParams.toString();
 	const slugFetch = await fetch(
 		`${req.nextUrl.origin}/api/url?slug=${slug || ""}`,

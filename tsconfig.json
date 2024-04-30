@@ -15,7 +15,8 @@
 		"checkJs": true,
 
 		/* Bundled projects */
-		"lib": ["dom", "dom.iterable", "ES2022"],
+		"lib": ["dom", "dom.iterable", "ES2022", "WebWorker"],
+		"types": ["@serwist/next/typings"],
 		"noEmit": true,
 		"module": "ESNext",
 		"moduleResolution": "Bundler",

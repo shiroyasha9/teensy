@@ -2,6 +2,7 @@
 	"name": "teensy",
 	"version": "0.1.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
@@ -10,6 +11,7 @@
 		"drizzle-kit": "drizzle-kit",
 		"drizzle:generate-migration": "drizzle-kit generate:pg --schema src/server/schema/index.ts",
 		"drizzle:apply-migration": "bun run ./src/server/migrate.ts",
+		"drizzle:studio": "drizzle-kit studio",
 		"postinstall": "lefthook install"
 	},
 	"dependencies": {
@@ -25,7 +27,8 @@
 		"@radix-ui/react-menubar": "^1.0.4",
 		"@radix-ui/react-slot": "^1.0.2",
 		"@radix-ui/react-toast": "^1.1.5",
-		"@t3-oss/env-nextjs": "^0.7.1",
+		"@serwist/next": "^9.0.2",
+		"@t3-oss/env-nextjs": "^0.10.1",
 		"@tanstack/react-query": "^4.35.3",
 		"@trpc/client": "^10.38.5",
 		"@trpc/next": "^10.38.5",
@@ -41,8 +44,8 @@
 		"drizzle-zod": "^0.5.1",
 		"jotai": "^2.5.0",
 		"lodash.debounce": "^4.0.8",
-		"nanoid": "^5.0.2",
-		"next": "14.0.1",
+		"nanoid": "^5.0.7",
+		"next": "14.2.3",
 		"next-auth": "^4.24.7",
 		"next-pwa": "^5.6.0",
 		"next-qrcode": "^2.5.1",
@@ -75,6 +78,7 @@
 		"drizzle-kit": "^0.20.17",
 		"lefthook": "^1.6.10",
 		"postcss": "^8.4.31",
+		"serwist": "^9.0.2",
 		"tailwindcss": "^3.3.5",
 		"typescript": "^5.2.2"
 	},
