@@ -1,7 +1,7 @@
 import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { user } from "./user";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
+import { user } from "./user";
 
 export const session = pgTable("session", {
 	sessionToken: text("sessionToken").primaryKey(),

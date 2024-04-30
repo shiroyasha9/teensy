@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import type { Teensy, Visit } from "./server/schema";
 
 const IGNORE_MIDDLEWARE_PATHS = [

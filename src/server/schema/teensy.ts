@@ -1,10 +1,10 @@
 import {
+	index,
 	pgTable,
-	uniqueIndex,
+	serial,
 	text,
 	timestamp,
-	index,
-	serial,
+	uniqueIndex,
 	varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";

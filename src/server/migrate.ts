@@ -1,6 +1,6 @@
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 
-import { db, client } from "./db";
+import { client, db } from "./db";
 
 async function main() {
 	// biome-ignore lint/suspicious/noConsoleLog: This is a dev script

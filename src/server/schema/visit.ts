@@ -1,8 +1,8 @@
-import { pgTable, text, timestamp, integer } from "drizzle-orm/pg-core";
-import { teensy } from "./teensy";
+import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import type { z } from "zod";
 import { nanoid } from "nanoid";
+import type { z } from "zod";
+import { teensy } from "./teensy";
 
 export const visit = pgTable("Visit", {
 	id: text("id")

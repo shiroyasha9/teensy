@@ -6,8 +6,8 @@ import type React from "react";
 import { useState } from "react";
 import superjson from "superjson";
 
-import { trpc } from "./client";
 import { getBaseUrl } from "@/utils";
+import { trpc } from "./client";
 
 export default function TRPCProvider({
 	children,

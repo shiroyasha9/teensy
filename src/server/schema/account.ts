@@ -1,8 +1,8 @@
-import { pgTable, text, integer, primaryKey } from "drizzle-orm/pg-core";
+import { integer, pgTable, primaryKey, text } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import type { AdapterAccount } from "next-auth/adapters";
 import type { z } from "zod";
 import { user } from "./user";
-import type { AdapterAccount } from "next-auth/adapters";
 
 export const account = pgTable(
 	"account",

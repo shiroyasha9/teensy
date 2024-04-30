@@ -1,7 +1,7 @@
 import { SLUG_CHARACTERS } from "@/constants";
+import clsx, { type ClassValue } from "clsx";
 import { customAlphabet } from "nanoid";
 import { toast } from "react-hot-toast";
-import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {

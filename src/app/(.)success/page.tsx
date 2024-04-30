@@ -1,6 +1,6 @@
 import Success from "@/components/Success";
-import { notFound } from "next/navigation";
 import { env } from "@/env.mjs";
+import { notFound } from "next/navigation";
 
 type SuccessPageProps = {
 	searchParams: {

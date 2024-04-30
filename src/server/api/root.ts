@@ -1,19 +1,19 @@
 import { getExpiryDate } from "@/utils";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../db";
-import {
-	createTRPCRouter,
-	enforceUserIsAuthorized,
-	protectedProcedure,
-	publicProcedure,
-} from "./trpc";
 import {
 	expiredTeensy,
 	globalVisits,
 	selectTeensySchema,
 	teensy as teensyTable,
 } from "../schema";
-import { eq } from "drizzle-orm";
+import {
+	createTRPCRouter,
+	enforceUserIsAuthorized,
+	protectedProcedure,
+	publicProcedure,
+} from "./trpc";
 
 /**
  * This is the primary router for your server.

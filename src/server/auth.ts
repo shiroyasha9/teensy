@@ -1,6 +1,6 @@
-import { getServerSession, type NextAuthOptions } from "next-auth";
 import { db } from "@/server/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { type NextAuthOptions, getServerSession } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 

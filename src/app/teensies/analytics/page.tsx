@@ -1,7 +1,7 @@
+import AnalyticsPieChart from "@/components/AnalyticsPieChart";
 import { getAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { redirect } from "next/navigation";
-import AnalyticsPieChart from "@/components/AnalyticsPieChart";
 
 const Page = async () => {
 	const session = await getAuthSession();

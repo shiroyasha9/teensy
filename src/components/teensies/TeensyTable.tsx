@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import type { Teensy, Visit } from "@/server/schema";
 import debounce from "lodash.debounce";
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { type ChangeEvent, useEffect, useMemo, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import TeensyRow from "./TeensyRow";
 
