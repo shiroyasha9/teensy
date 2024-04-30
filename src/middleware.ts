@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { Teensy, Visit } from "./server/db/schema";
+
+import { checkSlug } from "@/utils/checkSlug";
 
 export async function middleware(req: NextRequest) {
 	const isIgnoredPath =
@@ -21,23 +22,21 @@ export async function middleware(req: NextRequest) {
 	}
 
 	const params = req.nextUrl.searchParams.toString();
-	const slugFetch = await fetch(
-		`${req.nextUrl.origin}/api/url?slug=${slug || ""}`,
-	);
+	const { status, data } = await checkSlug(slug || "");
 
-	if (slugFetch.status === 404) {
+	if (status === 404) {
 		return;
 	}
 
-	if (slugFetch.status === 498) {
+	if (status === 498) {
 		const url = req.nextUrl;
 		url.pathname = "/498";
 		return NextResponse.rewrite(url);
 	}
 
-	const data = (await slugFetch.json()) as Teensy & {
-		visits: Visit[];
-	};
+	if (!data) {
+		return;
+	}
 
 	if (data.password) {
 		const searchParams = params ? `&${params}` : "";
