@@ -1,9 +1,9 @@
 "use client";
 
-import { trpc } from "@/app/_trpc/client";
 import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
 import { env } from "@/env";
 import type { Teensy } from "@/server/db/schema";
+import { api } from "@/trpc/react";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -85,7 +85,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 	const additionalIsSlugInvalid =
 		mode === "edit" ? slug !== currentTeensy?.slug : false;
 
-	const slugCheck = trpc.teensy.slugCheck.useQuery(
+	const slugCheck = api.teensy.slugCheck.useQuery(
 		{ slug },
 		{
 			enabled: !!slug,
@@ -95,13 +95,13 @@ const TeensyForm = (props: TeensyFormProps) => {
 		},
 	);
 
-	const createSlug = trpc.teensy.createSlug.useMutation({
+	const createSlug = api.teensy.createSlug.useMutation({
 		onSuccess: () => {
 			router.push(`/success?slug=${slug}`);
 		},
 	});
 
-	const updateSlug = trpc.teensy.updateSlug.useMutation({
+	const updateSlug = api.teensy.updateSlug.useMutation({
 		onSuccess: () => {
 			router.refresh();
 		},
@@ -267,7 +267,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 			)}
 			<Button
 				className="mb-2 w-full self-center"
-				isLoading={isSubmitting || createSlug.isLoading || updateSlug.isLoading}
+				isLoading={isSubmitting || createSlug.isPending || updateSlug.isPending}
 				disabled={isSlugInvalid || !isValid || slugCheck.isRefetching}
 			>
 				{mode === "create" ? "Teensy it!" : "Edit it!"}

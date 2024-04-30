@@ -1,6 +1,7 @@
 "use client";
 
 import { multipleFormAtom } from "@/store";
+import { api } from "@/trpc/react";
 import { nanoidForSlug, showErrorMessage, showToastMessage } from "@/utils";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -8,7 +9,6 @@ import type React from "react";
 import { useState } from "react";
 import { flushSync } from "react-dom";
 import { MdBlock } from "react-icons/md";
-import { trpc } from "../_trpc/client";
 
 const Multiple = () => {
 	const router = useRouter();
@@ -22,9 +22,9 @@ const Multiple = () => {
 		]);
 	};
 	const { mutateAsync: checkSlugs } =
-		trpc.teensy.slugCheckMultiple.useMutation();
+		api.teensy.slugCheckMultiple.useMutation();
 	const { mutateAsync: createMultipleTeensies } =
-		trpc.teensy.createMultipleTeensies.useMutation();
+		api.teensy.createMultipleTeensies.useMutation();
 
 	const handleSubmitCreateTeensies = async (e: React.SyntheticEvent) => {
 		e.preventDefault();

@@ -25,8 +25,8 @@ import { showToastMessage } from "@/utils";
 import { BiPencil } from "react-icons/bi";
 import { BsQrCode } from "react-icons/bs";
 
-import { trpc } from "@/app/_trpc/client";
 import { env } from "@/env";
+import { api } from "@/trpc/react";
 import copy from "copy-to-clipboard";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
@@ -47,7 +47,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-	const deleteTeensy = trpc.teensy.deleteSlug.useMutation({
+	const deleteTeensy = api.teensy.deleteSlug.useMutation({
 		onSuccess: () => {
 			router.refresh();
 		},

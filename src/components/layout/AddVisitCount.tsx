@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@/app/_trpc/client";
+import { api } from "@/trpc/react";
 import { isDevEnvironment } from "@/utils";
 import { useEffect } from "react";
 
@@ -9,7 +9,7 @@ type AddVisitCountProps = {
 };
 
 export default function AddVisitCount({ children }: AddVisitCountProps) {
-	const addGlobalVisitCount = trpc.teensy.addGlobalVisit.useMutation();
+	const addGlobalVisitCount = api.teensy.addGlobalVisit.useMutation();
 
 	useEffect(() => {
 		if (window.sessionStorage && !isDevEnvironment) {
