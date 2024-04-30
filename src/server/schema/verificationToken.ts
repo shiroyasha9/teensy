@@ -1,22 +1,17 @@
-import { pgTable, uniqueIndex, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, primaryKey } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
 
 export const verificationToken = pgTable(
-  "VerificationToken",
+  "verificationToken",
   {
     identifier: text("identifier").notNull(),
     token: text("token").notNull(),
-    expires: timestamp("expires", { precision: 3, mode: "string" }).notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
   },
-  (table) => {
-    return {
-      tokenKey: uniqueIndex("VerificationToken_token_key").on(table.token),
-      identifierTokenKey: uniqueIndex(
-        "VerificationToken_identifier_token_key",
-      ).on(table.identifier, table.token),
-    };
-  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+  }),
 );
 
 export const selectVerificationTokenSchema =

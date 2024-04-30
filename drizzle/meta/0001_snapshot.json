@@ -1,11 +1,11 @@
 {
-  "id": "28802337-b199-4fd8-8ea7-5427494a98ce",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "dcc154bf-b4cc-479d-8764-898c219db936",
+  "prevId": "28802337-b199-4fd8-8ea7-5427494a98ce",
   "version": "5",
   "dialect": "pg",
   "tables": {
-    "User": {
-      "name": "User",
+    "user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
@@ -40,8 +40,8 @@
         }
       },
       "indexes": {
-        "User_email_key": {
-          "name": "User_email_key",
+        "user_email_key": {
+          "name": "user_email_key",
           "columns": [
             "email"
           ],
@@ -227,10 +227,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "account_userId_User_id_fk": {
-          "name": "account_userId_User_id_fk",
+        "account_userId_user_id_fk": {
+          "name": "account_userId_user_id_fk",
           "tableFrom": "account",
-          "tableTo": "User",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
@@ -277,10 +277,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "session_userId_User_id_fk": {
-          "name": "session_userId_User_id_fk",
+        "session_userId_user_id_fk": {
+          "name": "session_userId_user_id_fk",
           "tableFrom": "session",
-          "tableTo": "User",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
@@ -365,10 +365,10 @@
         }
       },
       "foreignKeys": {
-        "Teensy_ownerId_User_id_fk": {
-          "name": "Teensy_ownerId_User_id_fk",
+        "Teensy_ownerId_user_id_fk": {
+          "name": "Teensy_ownerId_user_id_fk",
           "tableFrom": "Teensy",
-          "tableTo": "User",
+          "tableTo": "user",
           "columnsFrom": [
             "ownerId"
           ],
@@ -441,10 +441,10 @@
         }
       },
       "foreignKeys": {
-        "ExpiredTeensy_ownerId_User_id_fk": {
-          "name": "ExpiredTeensy_ownerId_User_id_fk",
+        "ExpiredTeensy_ownerId_user_id_fk": {
+          "name": "ExpiredTeensy_ownerId_user_id_fk",
           "tableFrom": "ExpiredTeensy",
-          "tableTo": "User",
+          "tableTo": "user",
           "columnsFrom": [
             "ownerId"
           ],

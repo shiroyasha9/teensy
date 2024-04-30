@@ -49,15 +49,16 @@ END $$;
 CREATE TABLE IF NOT EXISTS "User" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text,
-	"email" text,
-	"emailVerified" timestamp(3),
+	"email" text NOT NULL,
+	"emailVerified" timestamp,
 	"image" text
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "VerificationToken" (
+CREATE TABLE IF NOT EXISTS "verificationToken" (
 	"identifier" text NOT NULL,
 	"token" text NOT NULL,
-	"expires" timestamp(3) NOT NULL
+	"expires" timestamp NOT NULL,
+	CONSTRAINT "verificationToken_identifier_token_pk" PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "Visit" (
@@ -71,8 +72,7 @@ CREATE TABLE IF NOT EXISTS "GlobalVisits" (
 	"createdAt" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "Account" (
-	"id" text PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS "account" (
 	"userId" text NOT NULL,
 	"type" text NOT NULL,
 	"provider" text NOT NULL,
@@ -84,15 +84,13 @@ CREATE TABLE IF NOT EXISTS "Account" (
 	"scope" text,
 	"id_token" text,
 	"session_state" text,
-	"oauth_token_secret" text,
-	"oauth_token" text
+	CONSTRAINT "account_provider_providerAccountId_pk" PRIMARY KEY("provider","providerAccountId")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "Session" (
-	"id" text PRIMARY KEY NOT NULL,
-	"sessionToken" text NOT NULL,
+CREATE TABLE IF NOT EXISTS "session" (
+	"sessionToken" text PRIMARY KEY NOT NULL,
 	"userId" text NOT NULL,
-	"expires" timestamp(3) NOT NULL
+	"expires" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "Teensy" (
@@ -128,10 +126,6 @@ CREATE TABLE IF NOT EXISTS "_prisma_migrations" (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "User_email_key" ON "User" ("email");--> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "VerificationToken_token_key" ON "VerificationToken" ("token");--> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "VerificationToken_identifier_token_key" ON "VerificationToken" ("identifier","token");--> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "Account_provider_providerAccountId_key" ON "Account" ("provider","providerAccountId");--> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "Session_sessionToken_key" ON "Session" ("sessionToken");--> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "Teensy_slug_key" ON "Teensy" ("slug");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "Teensy_slug_idx" ON "Teensy" ("slug");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "ExpiredTeensy_slug_idx" ON "ExpiredTeensy" ("slug");--> statement-breakpoint
@@ -142,13 +136,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_User_id_fk" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE cascade ON UPDATE cascade;
+ ALTER TABLE "account" ADD CONSTRAINT "account_userId_User_id_fk" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE cascade ON UPDATE cascade;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_User_id_fk" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE cascade ON UPDATE cascade;
+ ALTER TABLE "session" ADD CONSTRAINT "session_userId_User_id_fk" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

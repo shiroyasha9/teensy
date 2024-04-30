@@ -1,35 +1,31 @@
-import { pgTable, uniqueIndex, text, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, primaryKey } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
 import { user } from "./user";
+import type { AdapterAccount } from "next-auth/adapters";
 
 export const account = pgTable(
-  "Account",
+  "account",
   {
-    id: text("id").primaryKey().notNull(),
     userId: text("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-    type: text("type").notNull(),
+    type: text("type").$type<AdapterAccount["type"]>().notNull(),
     provider: text("provider").notNull(),
     providerAccountId: text("providerAccountId").notNull(),
-    refreshToken: text("refresh_token"),
-    accessToken: text("access_token"),
-    expiresAt: integer("expires_at"),
-    tokenType: text("token_type"),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
     scope: text("scope"),
-    idToken: text("id_token"),
-    sessionState: text("session_state"),
-    oauthTokenSecret: text("oauth_token_secret"),
-    oauthToken: text("oauth_token"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
   },
-  (table) => {
-    return {
-      providerProviderAccountIdKey: uniqueIndex(
-        "Account_provider_providerAccountId_key",
-      ).on(table.provider, table.providerAccountId),
-    };
-  },
+  (account) => ({
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
+  }),
 );
 
 export const selectAccountSchema = createSelectSchema(account);

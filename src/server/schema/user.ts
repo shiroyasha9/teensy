@@ -3,17 +3,20 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
 
 export const user = pgTable(
-  "User",
+  "user",
   {
-    id: text("id").primaryKey().notNull(),
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID())
+      .notNull(),
     name: text("name"),
-    email: text("email"),
-    emailVerified: timestamp("emailVerified", { precision: 3, mode: "string" }),
+    email: text("email").notNull(),
+    emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
   },
   (table) => {
     return {
-      emailKey: uniqueIndex("User_email_key").on(table.email),
+      emailKey: uniqueIndex("user_email_key").on(table.email),
     };
   },
 );
