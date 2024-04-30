@@ -5,16 +5,16 @@ import type { z } from "zod";
 import { nanoid } from "nanoid";
 
 export const visit = pgTable("Visit", {
-  id: text("id")
-    .primaryKey()
-    .notNull()
-    .$defaultFn(() => nanoid()),
-  createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
-    .defaultNow()
-    .notNull(),
-  teensyId: integer("teensyId")
-    .notNull()
-    .references(() => teensy.id, { onDelete: "cascade", onUpdate: "cascade" }),
+	id: text("id")
+		.primaryKey()
+		.notNull()
+		.$defaultFn(() => nanoid()),
+	createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+		.defaultNow()
+		.notNull(),
+	teensyId: integer("teensyId")
+		.notNull()
+		.references(() => teensy.id, { onDelete: "cascade", onUpdate: "cascade" }),
 });
 
 export const selectVisitSchema = createSelectSchema(visit);

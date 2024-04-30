@@ -5,19 +5,19 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 
 type ProviderProps = {
-  children: React.ReactNode;
+	children: React.ReactNode;
 };
 
 const Providers = ({ children }: ProviderProps) => {
-  return (
-    <TRPCProvider>
-      <SessionProvider>
-        <ThemeProvider enableSystem={true} attribute="class">
-          {children}
-        </ThemeProvider>
-      </SessionProvider>
-    </TRPCProvider>
-  );
+	return (
+		<TRPCProvider>
+			<SessionProvider>
+				<ThemeProvider enableSystem={true} attribute="class">
+					{children}
+				</ThemeProvider>
+			</SessionProvider>
+		</TRPCProvider>
+	);
 };
 
 export default Providers;

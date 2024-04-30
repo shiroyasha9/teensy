@@ -11,16 +11,16 @@ import superjson from "superjson";
 import type { Context } from "./context";
 
 const t = initTRPC.context<Context>().create({
-  transformer: superjson,
-  errorFormatter: ({ error, shape }) => {
-    if (
-      error.code === "INTERNAL_SERVER_ERROR" &&
-      process.env.NODE_ENV === "production"
-    ) {
-      return { ...shape, message: "Internal server error" };
-    }
-    return shape;
-  },
+	transformer: superjson,
+	errorFormatter: ({ error, shape }) => {
+		if (
+			error.code === "INTERNAL_SERVER_ERROR" &&
+			process.env.NODE_ENV === "production"
+		) {
+			return { ...shape, message: "Internal server error" };
+		}
+		return shape;
+	},
 });
 
 /**
@@ -50,15 +50,15 @@ export const publicProcedure = t.procedure;
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!(ctx.session?.user)) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-    },
-  });
+	if (!ctx.session?.user) {
+		throw new TRPCError({ code: "UNAUTHORIZED" });
+	}
+	return next({
+		ctx: {
+			// infers the `session` as non-nullable
+			session: { ...ctx.session, user: ctx.session.user },
+		},
+	});
 });
 
 /**
@@ -66,19 +66,19 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * make changes to the teensy before running the procedure
  */
 export const enforceUserIsAuthorized = async (
-  userId: string,
-  teensyId: number,
+	userId: string,
+	teensyId: number,
 ) => {
-  try {
-    const teensy = await db.query.teensy.findFirst({
-      where: (t, { eq }) => eq(t.id, teensyId),
-    });
-    if (!teensy || teensy.ownerId !== userId) {
-      throw new Error("Not authorized");
-    }
-  } catch (_e) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
+	try {
+		const teensy = await db.query.teensy.findFirst({
+			where: (t, { eq }) => eq(t.id, teensyId),
+		});
+		if (!teensy || teensy.ownerId !== userId) {
+			throw new Error("Not authorized");
+		}
+	} catch (_e) {
+		throw new TRPCError({ code: "UNAUTHORIZED" });
+	}
 };
 
 /**

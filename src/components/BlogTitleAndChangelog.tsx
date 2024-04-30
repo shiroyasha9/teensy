@@ -1,33 +1,33 @@
 import Link from "next/link";
 
 type BlogTitleAndChangelogProps = {
-  tabTitle: string;
-  blogTitle: string;
-  blogSubtitle: string;
-  changeLogURL: string;
+	tabTitle: string;
+	blogTitle: string;
+	blogSubtitle: string;
+	changeLogURL: string;
 };
 
 export const BlogTitleAndChangelog = ({
-  tabTitle,
-  blogTitle,
-  blogSubtitle,
-  changeLogURL,
+	tabTitle,
+	blogTitle,
+	blogSubtitle,
+	changeLogURL,
 }: BlogTitleAndChangelogProps) => {
-  return (
-    <div className="flex flex-col gap-2">
-      <title>{tabTitle}</title>
-      <div className=" text-5xl font-medium text-gray-950 opacity-100 dark:text-white">
-        {blogTitle} <br />
-        <span className="font-medium text-gray-950 dark:text-white">
-          {blogSubtitle}
-        </span>
-      </div>
-      <div className="font-extralight text-gray-950 dark:text-white">
-        What&apos;s new?&nbsp;
-        <Link target="_blank" className="font-extralight" href={changeLogURL}>
-          Changelog on GitHub.
-        </Link>
-      </div>
-    </div>
-  );
+	return (
+		<div className="flex flex-col gap-2">
+			<title>{tabTitle}</title>
+			<div className=" text-5xl font-medium text-gray-950 opacity-100 dark:text-white">
+				{blogTitle} <br />
+				<span className="font-medium text-gray-950 dark:text-white">
+					{blogSubtitle}
+				</span>
+			</div>
+			<div className="font-extralight text-gray-950 dark:text-white">
+				What&apos;s new?&nbsp;
+				<Link target="_blank" className="font-extralight" href={changeLogURL}>
+					Changelog on GitHub.
+				</Link>
+			</div>
+		</div>
+	);
 };
