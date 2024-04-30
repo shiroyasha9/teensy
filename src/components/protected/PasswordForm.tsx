@@ -14,8 +14,6 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-console.log("dummy");
-
 type PasswordFormProps = {
 	teensy: Teensy;
 };
