@@ -1,5 +1,5 @@
 import TeensyForm from "@/components/TeensyForm";
-import { getAuthSession } from "@/server/auth";
+import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
 
 export const metadata = {
@@ -31,7 +31,7 @@ export const metadata = {
 };
 
 const Page = async () => {
-	const session = await getAuthSession();
+	const session = await getServerAuthSession();
 
 	return (
 		<>

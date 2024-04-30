@@ -1,5 +1,5 @@
 import TeensyTable from "@/components/teensies/TeensyTable";
-import { getAuthSession } from "@/server/auth";
+import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { redirect } from "next/navigation";
 
@@ -31,7 +31,7 @@ export const metadata = {
 };
 
 export default async function TeensiesPage() {
-	const session = await getAuthSession();
+	const session = await getServerAuthSession();
 
 	if (!session) {
 		redirect("/login");
