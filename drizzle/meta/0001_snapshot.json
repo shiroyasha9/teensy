@@ -1,10 +1,8 @@
 {
-	"id": "dcc154bf-b4cc-479d-8764-898c219db936",
-	"prevId": "28802337-b199-4fd8-8ea7-5427494a98ce",
-	"version": "5",
-	"dialect": "pg",
+	"version": "6",
+	"dialect": "postgresql",
 	"tables": {
-		"user": {
+		"public.user": {
 			"name": "user",
 			"schema": "",
 			"columns": {
@@ -50,7 +48,7 @@
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
-		"verificationToken": {
+		"public.verificationToken": {
 			"name": "verificationToken",
 			"schema": "",
 			"columns": {
@@ -83,7 +81,7 @@
 			},
 			"uniqueConstraints": {}
 		},
-		"Visit": {
+		"public.Visit": {
 			"name": "Visit",
 			"schema": "",
 			"columns": {
@@ -112,17 +110,17 @@
 				"Visit_teensyId_Teensy_id_fk": {
 					"name": "Visit_teensyId_Teensy_id_fk",
 					"tableFrom": "Visit",
-					"tableTo": "Teensy",
 					"columnsFrom": ["teensyId"],
+					"tableTo": "Teensy",
 					"columnsTo": ["id"],
-					"onDelete": "cascade",
-					"onUpdate": "cascade"
+					"onUpdate": "cascade",
+					"onDelete": "cascade"
 				}
 			},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
-		"GlobalVisits": {
+		"public.GlobalVisits": {
 			"name": "GlobalVisits",
 			"schema": "",
 			"columns": {
@@ -145,7 +143,7 @@
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
-		"account": {
+		"public.account": {
 			"name": "account",
 			"schema": "",
 			"columns": {
@@ -221,11 +219,11 @@
 				"account_userId_user_id_fk": {
 					"name": "account_userId_user_id_fk",
 					"tableFrom": "account",
-					"tableTo": "user",
 					"columnsFrom": ["userId"],
+					"tableTo": "user",
 					"columnsTo": ["id"],
-					"onDelete": "cascade",
-					"onUpdate": "cascade"
+					"onUpdate": "cascade",
+					"onDelete": "cascade"
 				}
 			},
 			"compositePrimaryKeys": {
@@ -236,7 +234,7 @@
 			},
 			"uniqueConstraints": {}
 		},
-		"session": {
+		"public.session": {
 			"name": "session",
 			"schema": "",
 			"columns": {
@@ -264,17 +262,17 @@
 				"session_userId_user_id_fk": {
 					"name": "session_userId_user_id_fk",
 					"tableFrom": "session",
-					"tableTo": "user",
 					"columnsFrom": ["userId"],
+					"tableTo": "user",
 					"columnsTo": ["id"],
-					"onDelete": "cascade",
-					"onUpdate": "no action"
+					"onUpdate": "no action",
+					"onDelete": "cascade"
 				}
 			},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
-		"Teensy": {
+		"public.Teensy": {
 			"name": "Teensy",
 			"schema": "",
 			"columns": {
@@ -344,17 +342,17 @@
 				"Teensy_ownerId_user_id_fk": {
 					"name": "Teensy_ownerId_user_id_fk",
 					"tableFrom": "Teensy",
-					"tableTo": "user",
 					"columnsFrom": ["ownerId"],
+					"tableTo": "user",
 					"columnsTo": ["id"],
-					"onDelete": "set null",
-					"onUpdate": "cascade"
+					"onUpdate": "cascade",
+					"onDelete": "set null"
 				}
 			},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
-		"ExpiredTeensy": {
+		"public.ExpiredTeensy": {
 			"name": "ExpiredTeensy",
 			"schema": "",
 			"columns": {
@@ -414,17 +412,17 @@
 				"ExpiredTeensy_ownerId_user_id_fk": {
 					"name": "ExpiredTeensy_ownerId_user_id_fk",
 					"tableFrom": "ExpiredTeensy",
-					"tableTo": "user",
 					"columnsFrom": ["ownerId"],
+					"tableTo": "user",
 					"columnsTo": ["id"],
-					"onDelete": "set null",
-					"onUpdate": "cascade"
+					"onUpdate": "cascade",
+					"onDelete": "set null"
 				}
 			},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		},
-		"_prisma_migrations": {
+		"public._prisma_migrations": {
 			"name": "_prisma_migrations",
 			"schema": "",
 			"columns": {
@@ -486,87 +484,65 @@
 		}
 	},
 	"enums": {
-		"aal_level": {
+		"public.aal_level": {
 			"name": "aal_level",
-			"values": {
-				"aal3": "aal3",
-				"aal2": "aal2",
-				"aal1": "aal1"
-			}
+			"schema": "public",
+			"values": ["aal3", "aal2", "aal1"]
 		},
-		"action": {
+		"public.action": {
 			"name": "action",
-			"values": {
-				"ERROR": "ERROR",
-				"TRUNCATE": "TRUNCATE",
-				"DELETE": "DELETE",
-				"UPDATE": "UPDATE",
-				"INSERT": "INSERT"
-			}
+			"schema": "public",
+			"values": ["ERROR", "TRUNCATE", "DELETE", "UPDATE", "INSERT"]
 		},
-		"code_challenge_method": {
+		"public.code_challenge_method": {
 			"name": "code_challenge_method",
-			"values": {
-				"plain": "plain",
-				"s256": "s256"
-			}
+			"schema": "public",
+			"values": ["plain", "s256"]
 		},
-		"equality_op": {
+		"public.equality_op": {
 			"name": "equality_op",
-			"values": {
-				"in": "in",
-				"gte": "gte",
-				"gt": "gt",
-				"lte": "lte",
-				"lt": "lt",
-				"neq": "neq",
-				"eq": "eq"
-			}
+			"schema": "public",
+			"values": ["in", "gte", "gt", "lte", "lt", "neq", "eq"]
 		},
-		"factor_status": {
+		"public.factor_status": {
 			"name": "factor_status",
-			"values": {
-				"verified": "verified",
-				"unverified": "unverified"
-			}
+			"schema": "public",
+			"values": ["verified", "unverified"]
 		},
-		"factor_type": {
+		"public.factor_type": {
 			"name": "factor_type",
-			"values": {
-				"webauthn": "webauthn",
-				"totp": "totp"
-			}
+			"schema": "public",
+			"values": ["webauthn", "totp"]
 		},
-		"key_status": {
+		"public.key_status": {
 			"name": "key_status",
-			"values": {
-				"expired": "expired",
-				"invalid": "invalid",
-				"valid": "valid",
-				"default": "default"
-			}
+			"schema": "public",
+			"values": ["expired", "invalid", "valid", "default"]
 		},
-		"key_type": {
+		"public.key_type": {
 			"name": "key_type",
-			"values": {
-				"stream_xchacha20": "stream_xchacha20",
-				"secretstream": "secretstream",
-				"secretbox": "secretbox",
-				"kdf": "kdf",
-				"generichash": "generichash",
-				"shorthash": "shorthash",
-				"auth": "auth",
-				"hmacsha256": "hmacsha256",
-				"hmacsha512": "hmacsha512",
-				"aead-det": "aead-det",
-				"aead-ietf": "aead-ietf"
-			}
+			"schema": "public",
+			"values": [
+				"stream_xchacha20",
+				"secretstream",
+				"secretbox",
+				"kdf",
+				"generichash",
+				"shorthash",
+				"auth",
+				"hmacsha256",
+				"hmacsha512",
+				"aead-det",
+				"aead-ietf"
+			]
 		}
 	},
 	"schemas": {},
 	"_meta": {
-		"columns": {},
 		"schemas": {},
-		"tables": {}
-	}
+		"tables": {},
+		"columns": {}
+	},
+	"id": "dcc154bf-b4cc-479d-8764-898c219db936",
+	"prevId": "28802337-b199-4fd8-8ea7-5427494a98ce"
 }
