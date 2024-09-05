@@ -12,10 +12,12 @@ import Link from "next/link";
 import AuthButton from "./AuthButton";
 
 type MobileHeaderProps = {
-	isSignedIn: boolean;
+	name?: string | null;
+	email?: string | null;
+	image?: string | null;
 };
 
-const MobileHeader = ({ isSignedIn }: MobileHeaderProps) => {
+const MobileHeader = ({ name, email, image }: MobileHeaderProps) => {
 	return (
 		<Menubar className="border-none bg-transparent">
 			<MenubarMenu>
@@ -30,10 +32,9 @@ const MobileHeader = ({ isSignedIn }: MobileHeaderProps) => {
 							</Link>
 						</MenubarItem>
 					))}
-					<MenubarSeparator />
-					<MenubarItem>
-						<AuthButton isSignedIn={isSignedIn} />
-					</MenubarItem>
+
+					<MenubarSeparator className="my-2" />
+					<AuthButton name={name} email={email} image={image} />
 				</MenubarContent>
 			</MenubarMenu>
 		</Menubar>

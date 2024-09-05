@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 
 export default {
 	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-	darkMode: "class",
+	darkMode: ["class"],
 	theme: {
 		container: {
 			center: true,
@@ -14,13 +14,13 @@ export default {
 		extend: {
 			colors: {
 				gray: {
-					950: "#18181b",
+					"950": "#18181b",
 				},
 				red: {
-					450: "#fe5f55",
+					"450": "#fe5f55",
 				},
 				purple: {
-					1000: "#451B66",
+					"1000": "#451B66",
 				},
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
@@ -55,6 +55,13 @@ export default {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+				chart: {
+					"1": "hsl(var(--chart-1))",
+					"2": "hsl(var(--chart-2))",
+					"3": "hsl(var(--chart-3))",
+					"4": "hsl(var(--chart-4))",
+					"5": "hsl(var(--chart-5))",
+				},
 			},
 			borderRadius: {
 				lg: "var(--radius)",
@@ -63,12 +70,20 @@ export default {
 			},
 			keyframes: {
 				"accordion-down": {
-					from: { height: "0" },
-					to: { height: "var(--radix-accordion-content-height)" },
+					from: {
+						height: "0",
+					},
+					to: {
+						height: "var(--radix-accordion-content-height)",
+					},
 				},
 				"accordion-up": {
-					from: { height: "var(--radix-accordion-content-height)" },
-					to: { height: "0" },
+					from: {
+						height: "var(--radix-accordion-content-height)",
+					},
+					to: {
+						height: "0",
+					},
 				},
 			},
 			animation: {
