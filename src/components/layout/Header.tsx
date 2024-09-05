@@ -20,7 +20,11 @@ export default async function HeaderNew() {
 				<div className="-my-2 -mr-2 flex items-center md:hidden">
 					<ThemeToggle />
 					<SocialIcons />
-					<MobileHeader isSignedIn={!!user} />
+					<MobileHeader
+						name={user?.name}
+						email={user?.email}
+						image={user?.image}
+					/>
 				</div>
 				<nav className="absolute left-0 right-0 mx-auto hidden space-x-10 text-center md:block">
 					{NAV_ITEMS.map((item) => (
@@ -36,7 +40,11 @@ export default async function HeaderNew() {
 				<div className="z-10 hidden items-center justify-end md:flex">
 					<ThemeToggle />
 					<SocialIcons />
-					<AuthButton isSignedIn={!!user} />
+					<AuthButton
+						name={user?.name}
+						email={user?.email}
+						image={user?.image}
+					/>
 				</div>
 			</div>
 		</div>
