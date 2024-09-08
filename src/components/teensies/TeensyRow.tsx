@@ -20,7 +20,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { Teensy, Visit } from "@/server/db/schema";
+import type { Teensy, Visit } from "@/server/db/zod-schemas";
 import { showToastMessage } from "@/utils";
 import { BiPencil } from "react-icons/bi";
 import { BsQrCode } from "react-icons/bs";

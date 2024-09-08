@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Teensy } from "@/server/db/schema";
+import type { Teensy } from "@/server/db/zod-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";

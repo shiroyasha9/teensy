@@ -2,7 +2,7 @@
 
 import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
 import { env } from "@/env";
-import type { Teensy } from "@/server/db/schema";
+import type { Teensy } from "@/server/db/zod-schemas";
 import { api } from "@/trpc/react";
 import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
