@@ -1,9 +1,11 @@
 {
+	"id": "2eb235ca-40a2-48f1-a755-f4002b06a509",
+	"prevId": "aa5f3fc4-80ed-4c7e-a359-f3f52b2d2486",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
-		"public.User": {
-			"name": "User",
+		"public.user": {
+			"name": "user",
 			"schema": "",
 			"columns": {
 				"id": {
@@ -38,7 +40,8 @@
 				}
 			},
 			"indexes": {
-				"User_email_key": {
+				"user_email_key": {
+					"name": "user_email_key",
 					"columns": [
 						{
 							"expression": "email",
@@ -47,11 +50,10 @@
 							"nulls": "last"
 						}
 					],
-					"with": {},
-					"name": "User_email_key",
 					"isUnique": true,
+					"concurrently": false,
 					"method": "btree",
-					"concurrently": false
+					"with": {}
 				}
 			},
 			"foreignKeys": {},
@@ -120,11 +122,11 @@
 				"Visit_teensyId_Teensy_id_fk": {
 					"name": "Visit_teensyId_Teensy_id_fk",
 					"tableFrom": "Visit",
-					"columnsFrom": ["teensyId"],
 					"tableTo": "Teensy",
+					"columnsFrom": ["teensyId"],
 					"columnsTo": ["id"],
-					"onUpdate": "cascade",
-					"onDelete": "cascade"
+					"onDelete": "cascade",
+					"onUpdate": "cascade"
 				}
 			},
 			"compositePrimaryKeys": {},
@@ -226,14 +228,14 @@
 			},
 			"indexes": {},
 			"foreignKeys": {
-				"account_userId_User_id_fk": {
-					"name": "account_userId_User_id_fk",
+				"account_userId_user_id_fk": {
+					"name": "account_userId_user_id_fk",
 					"tableFrom": "account",
+					"tableTo": "user",
 					"columnsFrom": ["userId"],
-					"tableTo": "User",
 					"columnsTo": ["id"],
-					"onUpdate": "cascade",
-					"onDelete": "cascade"
+					"onDelete": "cascade",
+					"onUpdate": "cascade"
 				}
 			},
 			"compositePrimaryKeys": {
@@ -269,14 +271,14 @@
 			},
 			"indexes": {},
 			"foreignKeys": {
-				"session_userId_User_id_fk": {
-					"name": "session_userId_User_id_fk",
+				"session_userId_user_id_fk": {
+					"name": "session_userId_user_id_fk",
 					"tableFrom": "session",
+					"tableTo": "user",
 					"columnsFrom": ["userId"],
-					"tableTo": "User",
 					"columnsTo": ["id"],
-					"onUpdate": "no action",
-					"onDelete": "cascade"
+					"onDelete": "cascade",
+					"onUpdate": "no action"
 				}
 			},
 			"compositePrimaryKeys": {},
@@ -288,9 +290,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "serial",
+					"type": "integer",
 					"primaryKey": true,
-					"notNull": true
+					"notNull": true,
+					"identity": {
+						"type": "always",
+						"name": "Teensy_id_seq",
+						"schema": "public",
+						"increment": "1",
+						"startWith": "808",
+						"minValue": "1",
+						"maxValue": "2147483647",
+						"cache": "1",
+						"cycle": false
+					}
 				},
 				"url": {
 					"name": "url",
@@ -315,7 +328,8 @@
 					"name": "updatedAt",
 					"type": "timestamp (3)",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"ownerId": {
 					"name": "ownerId",
@@ -338,6 +352,7 @@
 			},
 			"indexes": {
 				"Teensy_slug_key": {
+					"name": "Teensy_slug_key",
 					"columns": [
 						{
 							"expression": "slug",
@@ -346,13 +361,13 @@
 							"nulls": "last"
 						}
 					],
-					"with": {},
-					"name": "Teensy_slug_key",
 					"isUnique": true,
+					"concurrently": false,
 					"method": "btree",
-					"concurrently": false
+					"with": {}
 				},
 				"Teensy_slug_idx": {
+					"name": "Teensy_slug_idx",
 					"columns": [
 						{
 							"expression": "slug",
@@ -361,22 +376,21 @@
 							"nulls": "last"
 						}
 					],
-					"with": {},
-					"name": "Teensy_slug_idx",
 					"isUnique": false,
+					"concurrently": false,
 					"method": "btree",
-					"concurrently": false
+					"with": {}
 				}
 			},
 			"foreignKeys": {
-				"Teensy_ownerId_User_id_fk": {
-					"name": "Teensy_ownerId_User_id_fk",
+				"Teensy_ownerId_user_id_fk": {
+					"name": "Teensy_ownerId_user_id_fk",
 					"tableFrom": "Teensy",
+					"tableTo": "user",
 					"columnsFrom": ["ownerId"],
-					"tableTo": "User",
 					"columnsTo": ["id"],
-					"onUpdate": "cascade",
-					"onDelete": "set null"
+					"onDelete": "set null",
+					"onUpdate": "cascade"
 				}
 			},
 			"compositePrimaryKeys": {},
@@ -388,9 +402,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "serial",
+					"type": "integer",
 					"primaryKey": true,
-					"notNull": true
+					"notNull": true,
+					"identity": {
+						"type": "always",
+						"name": "ExpiredTeensy_id_seq",
+						"schema": "public",
+						"increment": "1",
+						"startWith": "21",
+						"minValue": "1",
+						"maxValue": "2147483647",
+						"cache": "1",
+						"cycle": false
+					}
 				},
 				"url": {
 					"name": "url",
@@ -433,6 +458,7 @@
 			},
 			"indexes": {
 				"ExpiredTeensy_slug_idx": {
+					"name": "ExpiredTeensy_slug_idx",
 					"columns": [
 						{
 							"expression": "slug",
@@ -441,84 +467,23 @@
 							"nulls": "last"
 						}
 					],
-					"with": {},
-					"name": "ExpiredTeensy_slug_idx",
 					"isUnique": false,
+					"concurrently": false,
 					"method": "btree",
-					"concurrently": false
+					"with": {}
 				}
 			},
 			"foreignKeys": {
-				"ExpiredTeensy_ownerId_User_id_fk": {
-					"name": "ExpiredTeensy_ownerId_User_id_fk",
+				"ExpiredTeensy_ownerId_user_id_fk": {
+					"name": "ExpiredTeensy_ownerId_user_id_fk",
 					"tableFrom": "ExpiredTeensy",
+					"tableTo": "user",
 					"columnsFrom": ["ownerId"],
-					"tableTo": "User",
 					"columnsTo": ["id"],
-					"onUpdate": "cascade",
-					"onDelete": "set null"
+					"onDelete": "set null",
+					"onUpdate": "cascade"
 				}
 			},
-			"compositePrimaryKeys": {},
-			"uniqueConstraints": {}
-		},
-		"public._prisma_migrations": {
-			"name": "_prisma_migrations",
-			"schema": "",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "varchar(36)",
-					"primaryKey": true,
-					"notNull": true
-				},
-				"checksum": {
-					"name": "checksum",
-					"type": "varchar(64)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"finished_at": {
-					"name": "finished_at",
-					"type": "timestamp with time zone",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"migration_name": {
-					"name": "migration_name",
-					"type": "varchar(255)",
-					"primaryKey": false,
-					"notNull": true
-				},
-				"logs": {
-					"name": "logs",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"rolled_back_at": {
-					"name": "rolled_back_at",
-					"type": "timestamp with time zone",
-					"primaryKey": false,
-					"notNull": false
-				},
-				"started_at": {
-					"name": "started_at",
-					"type": "timestamp with time zone",
-					"primaryKey": false,
-					"notNull": true,
-					"default": "now()"
-				},
-				"applied_steps_count": {
-					"name": "applied_steps_count",
-					"type": "integer",
-					"primaryKey": false,
-					"notNull": true,
-					"default": 0
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {}
 		}
@@ -578,12 +543,10 @@
 		}
 	},
 	"schemas": {},
+	"sequences": {},
 	"_meta": {
+		"columns": {},
 		"schemas": {},
-		"tables": {},
-		"columns": {}
-	},
-	"id": "28802337-b199-4fd8-8ea7-5427494a98ce",
-	"prevId": "00000000-0000-0000-0000-000000000000",
-	"sequences": {}
+		"tables": {}
+	}
 }

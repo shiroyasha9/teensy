@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { Teensy, Visit } from "./server/db/schema";
+import type { Teensy, Visit } from "./server/db/zod-schemas";
 
 export async function middleware(req: NextRequest) {
 	const isIgnoredPath =
@@ -55,6 +55,6 @@ export async function middleware(req: NextRequest) {
  */
 export const config = {
 	matcher: [
-		"/((?!protected|bmc.svg|icon-|.well-known|manifest.json|multiple|teensies|success|498|api|blogs|_next/static|_next/image|favicon.ico|sw.js).*)*",
+		"/((?!protected|bmc.svg|icon-|.well-known|manifest.json|multiple|teensies|success|498|api|blogs|_next|_next/static|_next/image|favicon.ico|sw.js).*)*",
 	],
 };

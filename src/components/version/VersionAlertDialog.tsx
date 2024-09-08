@@ -10,10 +10,10 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@radix-ui/react-toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type VersionAlertDialogProps = {
 	backendVersion: string;
@@ -21,27 +21,21 @@ type VersionAlertDialogProps = {
 
 const VersionAlertDialog = ({ backendVersion }: VersionAlertDialogProps) => {
 	const [show, setShow] = useState(false);
-	const { toast } = useToast();
+	const router = useRouter();
 
 	const handleChangeShowModal = (open: boolean) => {
 		setShow(open);
 	};
 
 	const handleShowToast = () => {
-		toast({
-			variant: "destructive",
-			title: "Revisit it later!",
+		toast.error("Revisit it later!", {
 			description: `You can always read the blog later by clicking on ${backendVersion} at the top.`,
-			action: (
-				<ToastAction altText="Read!" asChild>
-					<Link
-						href={`/blogs/releases/${backendVersion}`}
-						className="rounded border border-zinc-300 px-2 py-1"
-					>
-						Read!
-					</Link>
-				</ToastAction>
-			),
+			action: {
+				label: "Read!",
+				onClick: () => {
+					router.push(`/blogs/releases/${backendVersion}`);
+				},
+			},
 		});
 	};
 

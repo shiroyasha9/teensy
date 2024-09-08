@@ -1,0 +1,4 @@
+ALTER TABLE "Teensy" ALTER COLUMN "id" SET DATA TYPE integer;--> statement-breakpoint
+ALTER TABLE "Teensy" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (sequence name "Teensy_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 808 CACHE 1);--> statement-breakpoint
+ALTER TABLE "ExpiredTeensy" ALTER COLUMN "id" SET DATA TYPE integer;--> statement-breakpoint
+ALTER TABLE "ExpiredTeensy" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (sequence name "ExpiredTeensy_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 21 CACHE 1);

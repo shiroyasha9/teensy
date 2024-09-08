@@ -15,6 +15,7 @@ const config = {
 	pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 	experimental: {
 		mdxRs: true,
+		reactCompiler: true,
 	},
 };
 

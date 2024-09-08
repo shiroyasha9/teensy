@@ -8,9 +8,9 @@ import { db } from "@/server/db";
 import {
 	expiredTeensy,
 	globalVisits,
-	selectTeensySchema,
 	teensy as teensyTable,
 } from "@/server/db/schema";
+import { selectTeensySchema } from "@/server/db/zod-schemas";
 import { getExpiryDate } from "@/utils";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
