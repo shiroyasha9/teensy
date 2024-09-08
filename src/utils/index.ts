@@ -1,7 +1,7 @@
 import { SLUG_CHARACTERS } from "@/constants";
 import clsx, { type ClassValue } from "clsx";
 import { customAlphabet } from "nanoid";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -25,23 +25,13 @@ export function isValidEmail(email: string) {
 export const nanoidForSlug = customAlphabet(SLUG_CHARACTERS, 5);
 
 export function showToastMessage(message: string) {
-	toast(message, {
+	toast.success(message, {
 		icon: "✅",
-		style: {
-			borderRadius: "10px",
-			background: "#333",
-			color: "#fff",
-		},
 	});
 }
 export function showErrorMessage(message: string) {
-	toast(message, {
+	toast.error(message, {
 		icon: "❌",
-		style: {
-			borderRadius: "10px",
-			background: "#333",
-			color: "#fff",
-		},
 	});
 }
 

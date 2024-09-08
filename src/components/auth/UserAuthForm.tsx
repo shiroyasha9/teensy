@@ -2,8 +2,8 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 
 const UserAuthForm = () => {
 	const [isLoading, setIsLoading] = useState(false);

@@ -1,11 +1,10 @@
 import AddVisitCount from "@/components/layout/AddVisitCount";
 import Providers from "@/components/layout/Providers";
-import { Toaster as ShadcnToast } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Rubik } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 
 import Confetti from "@/components/layout/Confetti";
 import Footer from "@/components/layout/Footer";
@@ -56,7 +55,6 @@ export default function RootLayout({
 					<AddVisitCount>
 						<Header />
 						{authModal}
-						<Toaster />
 						<section className="mt-12 flex flex-1 flex-col items-center justify-center">
 							{children}
 						</section>
@@ -66,7 +64,7 @@ export default function RootLayout({
 					</AddVisitCount>
 					<Confetti />
 					<VersionModal />
-					<ShadcnToast />
+					<Toaster richColors />
 				</Providers>
 				<Analytics />
 				<SpeedInsights />
