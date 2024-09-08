@@ -11,7 +11,10 @@ export const user = pgTable(
 			.notNull(),
 		name: text("name"),
 		email: text("email").notNull(),
-		emailVerified: timestamp("emailVerified", { mode: "date" }),
+		emailVerified: timestamp("emailVerified", {
+			mode: "date",
+			withTimezone: true,
+		}),
 		image: text("image"),
 	},
 	(table) => {

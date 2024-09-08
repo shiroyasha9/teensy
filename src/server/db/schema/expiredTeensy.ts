@@ -2,7 +2,6 @@ import {
 	index,
 	integer,
 	pgTable,
-	serial,
 	text,
 	timestamp,
 	varchar,
@@ -14,10 +13,10 @@ import { user } from "./user";
 export const expiredTeensy = pgTable(
 	"ExpiredTeensy",
 	{
-		id: serial("id").primaryKey().notNull(),
+		id: integer("id").primaryKey().generatedAlwaysAsIdentity({ startWith: 21 }),
 		url: varchar("url", { length: 2000 }).notNull(),
 		slug: text("slug").notNull(),
-		createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
+		createdAt: timestamp("createdAt", { mode: "date", withTimezone: true })
 			.defaultNow()
 			.notNull(),
 		password: text("password"),

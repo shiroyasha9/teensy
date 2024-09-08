@@ -1,7 +1,7 @@
 import {
 	index,
+	integer,
 	pgTable,
-	serial,
 	text,
 	timestamp,
 	uniqueIndex,
@@ -14,24 +14,23 @@ import { user } from "./user";
 export const teensy = pgTable(
 	"Teensy",
 	{
-		id: serial("id").primaryKey().notNull(),
+		id: integer("id")
+			.primaryKey()
+			.generatedAlwaysAsIdentity({ startWith: 808 }),
 		url: varchar("url", { length: 2000 }).notNull(),
 		slug: text("slug").notNull(),
-		createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+		createdAt: timestamp("createdAt", { mode: "date", withTimezone: true })
 			.defaultNow()
 			.notNull(),
-		updatedAt: timestamp("updatedAt", {
-			precision: 3,
-			mode: "date",
-		})
-			.notNull()
-			.defaultNow(),
+		updatedAt: timestamp("updatedAt", { mode: "date", withTimezone: true })
+			.defaultNow()
+			.notNull(),
 		ownerId: text("ownerId").references(() => user.id, {
 			onDelete: "set null",
 			onUpdate: "cascade",
 		}),
 		password: text("password"),
-		expiresAt: timestamp("expiresAt", { precision: 3, mode: "date" }),
+		expiresAt: timestamp("expiresAt", { mode: "date", withTimezone: true }),
 	},
 	(table) => {
 		return {

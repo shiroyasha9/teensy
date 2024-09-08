@@ -1,5 +1,5 @@
 {
-	"version": "6",
+	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
 		"public.user": {
@@ -39,9 +39,19 @@
 			},
 			"indexes": {
 				"user_email_key": {
+					"columns": [
+						{
+							"expression": "email",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"with": {},
 					"name": "user_email_key",
-					"columns": ["email"],
-					"isUnique": true
+					"isUnique": true,
+					"method": "btree",
+					"concurrently": false
 				}
 			},
 			"foreignKeys": {},
@@ -329,14 +339,34 @@
 			},
 			"indexes": {
 				"Teensy_slug_key": {
+					"columns": [
+						{
+							"expression": "slug",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"with": {},
 					"name": "Teensy_slug_key",
-					"columns": ["slug"],
-					"isUnique": true
+					"isUnique": true,
+					"method": "btree",
+					"concurrently": false
 				},
 				"Teensy_slug_idx": {
+					"columns": [
+						{
+							"expression": "slug",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"with": {},
 					"name": "Teensy_slug_idx",
-					"columns": ["slug"],
-					"isUnique": false
+					"isUnique": false,
+					"method": "btree",
+					"concurrently": false
 				}
 			},
 			"foreignKeys": {
@@ -404,9 +434,19 @@
 			},
 			"indexes": {
 				"ExpiredTeensy_slug_idx": {
+					"columns": [
+						{
+							"expression": "slug",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"with": {},
 					"name": "ExpiredTeensy_slug_idx",
-					"columns": ["slug"],
-					"isUnique": false
+					"isUnique": false,
+					"method": "btree",
+					"concurrently": false
 				}
 			},
 			"foreignKeys": {
@@ -485,5 +525,6 @@
 		"columns": {}
 	},
 	"id": "aa5f3fc4-80ed-4c7e-a359-f3f52b2d2486",
-	"prevId": "5e3226d2-c083-4e11-83af-67787b555c81"
+	"prevId": "5e3226d2-c083-4e11-83af-67787b555c81",
+	"sequences": {}
 }

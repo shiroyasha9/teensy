@@ -9,12 +9,15 @@ export const visit = pgTable("Visit", {
 		.primaryKey()
 		.notNull()
 		.$defaultFn(() => nanoid()),
-	createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+	createdAt: timestamp("createdAt", { mode: "date", withTimezone: true })
 		.defaultNow()
 		.notNull(),
 	teensyId: integer("teensyId")
 		.notNull()
-		.references(() => teensy.id, { onDelete: "cascade", onUpdate: "cascade" }),
+		.references(() => teensy.id, {
+			onDelete: "cascade",
+			onUpdate: "cascade",
+		}),
 });
 
 export const selectVisitSchema = createSelectSchema(visit);

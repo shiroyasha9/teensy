@@ -8,7 +8,7 @@ export const session = pgTable("session", {
 	userId: text("userId")
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
-	expires: timestamp("expires", { mode: "date" }).notNull(),
+	expires: timestamp("expires", { mode: "date", withTimezone: true }).notNull(),
 });
 
 export const selectSessionSchema = createSelectSchema(session);

@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { relations } from "drizzle-orm/relations";
 import { account } from "./account";
 import { expiredTeensy } from "./expiredTeensy";
 import { session } from "./session";

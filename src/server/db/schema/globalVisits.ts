@@ -8,7 +8,7 @@ export const globalVisits = pgTable("GlobalVisits", {
 		.primaryKey()
 		.notNull()
 		.$defaultFn(() => nanoid()),
-	createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
+	createdAt: timestamp("createdAt", { mode: "date", withTimezone: true })
 		.defaultNow()
 		.notNull(),
 });
