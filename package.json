@@ -41,6 +41,7 @@
 		"@trpc/server": "next",
 		"@vercel/analytics": "^1.2.2",
 		"@vercel/speed-insights": "^1.0.10",
+		"babel-plugin-react-compiler": "^0.0.0-experimental-7449567-20240905",
 		"chart.js": "^4.4.2",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
@@ -52,14 +53,14 @@
 		"lodash.debounce": "^4.0.8",
 		"lucide-react": "^0.438.0",
 		"nanoid": "^5.0.7",
-		"next": "14.2.8",
+		"next": "^15.0.0-canary.145",
 		"next-auth": "^4.24.7",
 		"next-qrcode": "^2.5.1",
 		"next-themes": "^0.3.0",
 		"postgres": "^3.4.4",
-		"react": "18.3.1",
+		"react": "^19.0.0-rc-a03254bc-20240905",
 		"react-chartjs-2": "^5.2.0",
-		"react-dom": "18.3.1",
+		"react-dom": "^19.0.0-rc-a03254bc-20240905",
 		"react-dom-confetti": "^0.2.0",
 		"react-hook-form": "^7.51.4",
 		"react-hot-toast": "^2.4.1",
@@ -76,8 +77,8 @@
 		"@types/lodash.debounce": "^4.0.9",
 		"@types/mdx": "^2.0.13",
 		"@types/node": "^20.12.12",
-		"@types/react": "^18.3.2",
-		"@types/react-dom": "^18.3.0",
+		"@types/react": "npm:types-react@rc",
+		"@types/react-dom": "npm:types-react-dom@rc",
 		"autoprefixer": "^10.4.19",
 		"drizzle-kit": "^0.21.2",
 		"lefthook": "^1.6.11",
@@ -91,5 +92,16 @@
 		"initVersion": "7.3.2"
 	},
 	"packageManager": "bun@1.1.6",
-	"trustedDependencies": ["@biomejs/biome", "es5-ext", "esbuild", "lefthook"]
+	"trustedDependencies": [
+		"@biomejs/biome",
+		"@vercel/speed-insights",
+		"es5-ext",
+		"esbuild",
+		"lefthook",
+		"sharp"
+	],
+	"overrides": {
+		"@types/react": "npm:types-react@rc",
+		"@types/react-dom": "npm:types-react-dom@rc"
+	}
 }
