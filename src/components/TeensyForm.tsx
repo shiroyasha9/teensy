@@ -70,9 +70,9 @@ const TeensyForm = (props: TeensyFormProps) => {
 		defaultValues: {
 			slug: currentTeensy?.slug ?? "",
 			url: currentTeensy?.url ?? "",
-			isPasswordProtected: !!currentTeensy?.password ?? false,
+			isPasswordProtected: !!currentTeensy?.password,
 			password: currentTeensy?.password ?? undefined,
-			isAutoDelete: !!currentTeensy?.expiresAt ?? false,
+			isAutoDelete: !!currentTeensy?.expiresAt,
 			expiresIn: undefined,
 			expiresAt: currentTeensy?.expiresAt ?? undefined,
 		},
