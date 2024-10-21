@@ -9,9 +9,9 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOutServerFn } from "@/server/functions";
 import { cn } from "@/utils";
 import { AvatarIcon } from "@radix-ui/react-icons";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { Button, buttonVariants } from "../ui/button";
 import { Label } from "../ui/label";
@@ -44,11 +44,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 					<Button
 						variant="ghost"
 						className="p-0 h-auto text-sm font-normal justify-start"
-						onClick={() => {
-							void signOut({
-								redirectTo: `${window.location.origin}/login`,
-							});
-						}}
+						onClick={signOutServerFn}
 					>
 						Logout
 					</Button>
@@ -68,11 +64,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							className="cursor-pointer"
-							onClick={() => {
-								void signOut({
-									redirectTo: `${window.location.origin}/login`,
-								});
-							}}
+							onClick={signOutServerFn}
 						>
 							Logout
 						</DropdownMenuItem>

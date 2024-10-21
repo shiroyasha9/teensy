@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signInServerFn } from "@/server/functions";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
@@ -8,13 +8,11 @@ import { toast } from "sonner";
 const UserAuthForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
-	const signInWithGoogle = () => {
+	const signInWithGoogle = async () => {
 		toast.loading("Redirecting...");
 		setIsLoading(true);
 		try {
-			void signIn("google", {
-				callbackUrl: `${window.location.origin}/`,
-			});
+			await signInServerFn();
 		} catch (_err) {
 			toast.error("There was an error signing in.");
 		} finally {
