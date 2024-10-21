@@ -28,14 +28,13 @@ export const metadata = {
 };
 
 type ProtectedTeensyPageProps = {
-	searchParams: {
+	searchParams: Promise<{
 		slug: string;
-	};
+	}>;
 };
 
-export default async function Page({
-	searchParams: { slug },
-}: ProtectedTeensyPageProps) {
+export default async function Page({ searchParams }: ProtectedTeensyPageProps) {
+	const { slug } = await searchParams;
 	const teensy = await db.query.teensy.findFirst({
 		where: (t, { eq }) => eq(t.slug, slug),
 	});
