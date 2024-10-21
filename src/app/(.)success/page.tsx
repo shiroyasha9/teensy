@@ -3,13 +3,13 @@ import { env } from "@/env";
 import { notFound } from "next/navigation";
 
 type SuccessPageProps = {
-	searchParams: {
+	searchParams: Promise<{
 		slug: string;
-	};
+	}>;
 };
 
-// biome-ignore lint/suspicious/useAwait: Next.js breaking change - https://teensy.tech/nextjs-async-req-api
-const Page = async ({ searchParams: { slug } }: SuccessPageProps) => {
+const Page = async ({ searchParams }: SuccessPageProps) => {
+	const { slug } = await searchParams;
 	if (!slug) {
 		return notFound();
 	}
