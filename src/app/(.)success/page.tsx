@@ -8,7 +8,8 @@ type SuccessPageProps = {
 	};
 };
 
-const Page = ({ searchParams: { slug } }: SuccessPageProps) => {
+// biome-ignore lint/suspicious/useAwait: Next.js breaking change - https://teensy.tech/nextjs-async-req-api
+const Page = async ({ searchParams: { slug } }: SuccessPageProps) => {
 	if (!slug) {
 		return notFound();
 	}
