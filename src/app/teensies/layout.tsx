@@ -1,9 +1,9 @@
 import SelectedSegment from "@/components/SelectedSegment";
 import Login from "@/components/auth/Login";
-import { getServerAuthSession } from "@/server/auth";
+import { auth } from "@/server/auth";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-	const session = await getServerAuthSession();
+	const session = await auth();
 
 	return (
 		<>

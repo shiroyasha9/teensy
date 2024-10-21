@@ -1,10 +1,7 @@
 import { db } from "@/server/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import {
-	type DefaultSession,
-	type NextAuthOptions,
-	getServerSession,
-} from "next-auth";
+import type { DefaultSession } from "next-auth";
+import NextAuth from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -34,7 +31,7 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const authOptions: NextAuthOptions = {
+export const { auth, handlers, signIn, signOut } = NextAuth({
 	pages: {
 		signIn: "/login",
 		signOut: "/login",
@@ -64,11 +61,4 @@ export const authOptions: NextAuthOptions = {
 		 * @see https://next-auth.js.org/providers/github
 		 */
 	],
-};
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = () => getServerSession(authOptions);
+});

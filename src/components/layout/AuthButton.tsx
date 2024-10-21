@@ -46,7 +46,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 						className="p-0 h-auto text-sm font-normal justify-start"
 						onClick={() => {
 							void signOut({
-								callbackUrl: `${window.location.origin}/login`,
+								redirectTo: `${window.location.origin}/login`,
 							});
 						}}
 					>
@@ -70,7 +70,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 							className="cursor-pointer"
 							onClick={() => {
 								void signOut({
-									callbackUrl: `${window.location.origin}/login`,
+									redirectTo: `${window.location.origin}/login`,
 								});
 							}}
 						>

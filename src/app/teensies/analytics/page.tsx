@@ -1,10 +1,10 @@
 import AnalyticsPieChart from "@/components/AnalyticsPieChart";
-import { getServerAuthSession } from "@/server/auth";
+import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-	const session = await getServerAuthSession();
+	const session = await auth();
 
 	if (!session) {
 		redirect("/login");
