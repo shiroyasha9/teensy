@@ -26,7 +26,7 @@
 		"@hookform/resolvers": "^3.9.0",
 		"@mdx-js/loader": "^3.1.0",
 		"@mdx-js/react": "^3.1.0",
-		"@next/mdx": "15.0.0-rc.1",
+		"@next/mdx": "15.0.0",
 		"@radix-ui/react-alert-dialog": "^1.1.2",
 		"@radix-ui/react-avatar": "^1.1.1",
 		"@radix-ui/react-dialog": "^1.1.2",
@@ -56,14 +56,14 @@
 		"lodash.debounce": "^4.0.8",
 		"lucide-react": "^0.453.0",
 		"nanoid": "^5.0.7",
-		"next": "15.0.0-rc.1",
+		"next": "15.0.0",
 		"next-auth": "^5.0.0-beta.25",
 		"next-qrcode": "^2.5.1",
 		"next-themes": "^0.3.0",
 		"postgres": "^3.4.4",
-		"react": "19.0.0-rc-cd22717c-20241013",
+		"react": "19.0.0-rc-65a56d0e-20241020",
 		"react-chartjs-2": "^5.2.0",
-		"react-dom": "19.0.0-rc-cd22717c-20241013",
+		"react-dom": "19.0.0-rc-65a56d0e-20241020",
 		"react-dom-confetti": "^0.2.0",
 		"react-hook-form": "^7.53.1",
 		"react-icons": "^5.3.0",
@@ -93,7 +93,7 @@
 	"ct3aMetadata": {
 		"initVersion": "7.3.2"
 	},
-	"packageManager": "bun@1.1.6",
+	"packageManager": "bun@1.1.32",
 	"trustedDependencies": [
 		"@biomejs/biome",
 		"@vercel/speed-insights",
@@ -101,5 +101,9 @@
 		"esbuild",
 		"lefthook",
 		"sharp"
-	]
+	],
+	"resolutions": {
+		"@types/react": "npm:types-react@19.0.0-rc.1",
+		"@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+	}
 }
