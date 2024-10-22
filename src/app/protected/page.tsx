@@ -1,5 +1,6 @@
 import PasswordForm from "@/components/protected/PasswordForm";
 import { db } from "@/server/db";
+import type { Viewport } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata = {
@@ -23,8 +24,11 @@ export const metadata = {
 		shortcut: "/favicon.ico",
 		apple: "/icon-192x192.png",
 	},
-	themeColor: "#712fb9",
 	manifest: "/manifest.json",
+};
+
+export const viewport: Viewport = {
+	themeColor: "#712fb9",
 };
 
 type ProtectedTeensyPageProps = {
