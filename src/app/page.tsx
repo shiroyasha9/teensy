@@ -1,5 +1,6 @@
 import TeensyForm from "@/components/TeensyForm";
-import { getServerAuthSession } from "@/server/auth";
+import { auth } from "@/server/auth";
+import type { Viewport } from "next";
 import Link from "next/link";
 
 export const metadata = {
@@ -30,8 +31,12 @@ export const metadata = {
 	manifest: "/manifest.json",
 };
 
+export const viewport: Viewport = {
+	themeColor: "#712fb9",
+};
+
 const Page = async () => {
-	const session = await getServerAuthSession();
+	const session = await auth();
 
 	return (
 		<>
@@ -52,7 +57,3 @@ const Page = async () => {
 };
 
 export default Page;
-
-export const viewport = {
-	themeColor: "#712fb9",
-};

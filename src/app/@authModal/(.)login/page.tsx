@@ -1,8 +1,9 @@
 import CloseModal from "@/components/CloseModal";
 import Login from "@/components/auth/Login";
-import type { FC } from "react";
 
-const page: FC = () => {
+export const dynamic = "force-dynamic";
+
+function LoginPage() {
 	return (
 		<div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm">
 			<div className="container mx-auto flex h-full max-w-lg items-center">
@@ -15,6 +16,6 @@ const page: FC = () => {
 			</div>
 		</div>
 	);
-};
+}
 
-export default page;
+export default LoginPage;

@@ -3,12 +3,13 @@ import { env } from "@/env";
 import { notFound } from "next/navigation";
 
 type SuccessPageProps = {
-	searchParams: {
+	searchParams: Promise<{
 		slug: string;
-	};
+	}>;
 };
 
-const Page = ({ searchParams: { slug } }: SuccessPageProps) => {
+const Page = async ({ searchParams }: SuccessPageProps) => {
+	const { slug } = await searchParams;
 	if (!slug) {
 		return notFound();
 	}

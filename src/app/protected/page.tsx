@@ -1,5 +1,6 @@
 import PasswordForm from "@/components/protected/PasswordForm";
 import { db } from "@/server/db";
+import type { Viewport } from "next";
 import { notFound } from "next/navigation";
 
 export const metadata = {
@@ -23,19 +24,21 @@ export const metadata = {
 		shortcut: "/favicon.ico",
 		apple: "/icon-192x192.png",
 	},
-	themeColor: "#712fb9",
 	manifest: "/manifest.json",
 };
 
-type ProtectedTeensyPageProps = {
-	searchParams: {
-		slug: string;
-	};
+export const viewport: Viewport = {
+	themeColor: "#712fb9",
 };
 
-export default async function Page({
-	searchParams: { slug },
-}: ProtectedTeensyPageProps) {
+type ProtectedTeensyPageProps = {
+	searchParams: Promise<{
+		slug: string;
+	}>;
+};
+
+export default async function Page({ searchParams }: ProtectedTeensyPageProps) {
+	const { slug } = await searchParams;
 	const teensy = await db.query.teensy.findFirst({
 		where: (t, { eq }) => eq(t.slug, slug),
 	});

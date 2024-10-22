@@ -1,5 +1,4 @@
 import withMdxInit from "@next/mdx";
-import withSerwistInit from "@serwist/next";
 
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
@@ -19,12 +18,13 @@ const config = {
 	},
 };
 
-const withSerwist = withSerwistInit({
-	swSrc: "src/sw.ts",
-	swDest: "public/sw.js",
-	disable: process.env.NODE_ENV === "development",
-});
+// const withSerwist = withSerwistInit({
+// 	swSrc: "src/sw.ts",
+// 	swDest: "public/sw.js",
+// 	disable: process.env.NODE_ENV === "development",
+// });
 
 const withMdx = withMdxInit({});
 
-export default withSerwist(withMdx(config));
+// export default withSerwist(withMdx(config));
+export default withMdx(config);

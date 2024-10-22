@@ -1,5 +1,5 @@
 import { NAV_ITEMS } from "@/constants";
-import { getServerAuthSession } from "@/server/auth";
+import { auth } from "@/server/auth";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 import MobileHeader from "./MobileHeader";
@@ -7,7 +7,7 @@ import SocialIcons from "./SocialIcons";
 import ThemeToggle from "./ThemeToggle";
 
 export default async function HeaderNew() {
-	const session = await getServerAuthSession();
+	const session = await auth();
 
 	const user = session?.user;
 
