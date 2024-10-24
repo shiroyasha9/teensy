@@ -49,7 +49,11 @@ export default function RootLayout({
 	authModal: React.ReactNode;
 }) {
 	return (
-		<html lang="en" className={cn("antialiased", rubik.className)}>
+		<html
+			lang="en"
+			className={cn("antialiased", rubik.className)}
+			suppressHydrationWarning // next-themes hydration warning
+		>
 			<body className="flex h-screen flex-col p-6 md:overflow-x-hidden">
 				<Providers>
 					<AddVisitCount>
