@@ -1,19 +1,15 @@
 "use client";
 
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
-import { LuX } from "react-icons/lu";
 import { Button } from "./ui/button";
 
 const CloseModal: FC = () => {
 	const router = useRouter();
 	return (
-		<Button
-			variant="ghost"
-			className="h-6 w-6 rounded-md p-0"
-			onClick={() => router.back()}
-		>
-			<LuX aria-label="close modal" className="h-4 w-4" />
+		<Button variant="ghost" size="icon" onClick={() => router.back()}>
+			<Cross1Icon aria-label="close modal" className="size-4" />
 		</Button>
 	);
 };

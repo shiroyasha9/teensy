@@ -3,8 +3,8 @@
 import { Input } from "@/components/ui/input";
 import type { Teensy, Visit } from "@/server/db/zod-schemas";
 import debounce from "lodash.debounce";
+import { Search } from "lucide-react";
 import { type ChangeEvent, useEffect, useMemo, useState } from "react";
-import { MdSearch } from "react-icons/md";
 import TeensyRow from "./TeensyRow";
 
 type TeensyTableProps = {
@@ -50,7 +50,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 				</label>
 				<div className="relative mx-[2px] mt-1">
 					<div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-						<MdSearch className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
+						<Search className="size-4 text-zinc-500 dark:text-zinc-400" />
 					</div>
 					<Input
 						type="text"

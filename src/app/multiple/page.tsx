@@ -3,12 +3,12 @@
 import { multipleFormAtom } from "@/store";
 import { api } from "@/trpc/react";
 import { nanoidForSlug, showErrorMessage, showToastMessage } from "@/utils";
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 import { flushSync } from "react-dom";
-import { MdBlock } from "react-icons/md";
 
 const Multiple = () => {
 	const router = useRouter();
@@ -157,7 +157,7 @@ const Multiple = () => {
 															setMultipleTeensiesData(newTeensies);
 														}}
 													>
-														<MdBlock className="h-5 w-5" />
+														<Cross1Icon className="size-5" />
 													</button>
 												)}
 											</div>

@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
+import { LoaderCircle } from "lucide-react";
 import * as React from "react";
-import { LuLoader2 } from "react-icons/lu";
 
 import { cn } from "@/utils";
 
@@ -64,7 +64,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				disabled={isLoading}
 				{...props}
 			>
-				{isLoading ? <LuLoader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+				{isLoading ? (
+					<LoaderCircle className="mr-2 size-4 animate-spin" />
+				) : null}
 				{children}
 			</Comp>
 		);
