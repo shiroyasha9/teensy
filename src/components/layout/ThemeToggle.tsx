@@ -1,8 +1,8 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 export default function ThemeToggle() {
 	const [mounted, setMounted] = useState(false);
@@ -21,16 +21,16 @@ export default function ThemeToggle() {
 
 		if (currentTheme === "dark") {
 			return (
-				<MdOutlineLightMode
-					className="h-7 w-7"
+				<Sun
+					className="size-6 hover:text-primary"
 					role="button"
 					onClick={() => setTheme("light")}
 				/>
 			);
 		}
 		return (
-			<MdOutlineDarkMode
-				className="h-7 w-7"
+			<Moon
+				className="size-6 hover:text-primary"
 				role="button"
 				onClick={() => setTheme("dark")}
 			/>

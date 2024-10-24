@@ -1,6 +1,6 @@
 import type { AutoDeleteDropdownData } from "@/types";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
 
 type DropdownProps = {
 	label: string;
@@ -22,7 +22,7 @@ const Dropdown = (props: DropdownProps) => {
 				type="button"
 			>
 				{label}
-				<FiChevronDown className="ml-2 h-4 w-4" />
+				<ChevronDownIcon className="ml-2 size-4" />
 			</button>
 			<div
 				className={`z-10 mt-1 w-full divide-y divide-zinc-100 rounded-lg bg-white shadow dark:bg-zinc-900  ${

@@ -2,11 +2,11 @@
 
 import { env } from "@/env";
 import { showToastMessage } from "@/utils";
+import { DownloadIcon } from "@radix-ui/react-icons";
 import copy from "copy-to-clipboard";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { AiOutlineCloudDownload } from "react-icons/ai";
 import { Button } from "./ui/button";
 
 type SuccessProps = {
@@ -59,10 +59,7 @@ const Success = ({ slug }: SuccessProps) => {
 						showDownloadQRButton ? "absolute" : "hidden"
 					}`}
 				>
-					<AiOutlineCloudDownload
-						onClick={downloadQRCode}
-						className="h-10 w-10"
-					/>
+					<DownloadIcon onClick={downloadQRCode} className="h-10 w-10" />
 				</div>
 			</div>
 

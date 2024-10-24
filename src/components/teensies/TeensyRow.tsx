@@ -22,16 +22,14 @@ import {
 } from "@/components/ui/dialog";
 import type { Teensy, Visit } from "@/server/db/zod-schemas";
 import { showToastMessage } from "@/utils";
-import { BiPencil } from "react-icons/bi";
-import { BsQrCode } from "react-icons/bs";
 
 import { env } from "@/env";
 import { api } from "@/trpc/react";
 import copy from "copy-to-clipboard";
+import { Pencil, QrCode, Trash } from "lucide-react";
 import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { MdOutlineDelete } from "react-icons/md";
 import TeensyForm from "../TeensyForm";
 import { buttonVariants } from "../ui/button";
 
@@ -74,7 +72,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 			<td className="flex justify-center gap-x-4 p-4">
 				<Dialog open={showQRCodeModal} onOpenChange={setShowQRCodeModal}>
 					<DialogTrigger>
-						<BsQrCode className="ml-1 inline-block text-lg text-black hover:underline dark:text-zinc-200" />
+						<QrCode className="size-4 ml-1 inline-block text-lg text-black hover:underline dark:text-zinc-200" />
 					</DialogTrigger>
 					<DialogContent className="text-black dark:text-white">
 						<DialogHeader>
@@ -129,7 +127,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 				</Dialog>
 				<Dialog open={showEditModal} onOpenChange={setShowEditModal}>
 					<DialogTrigger>
-						<BiPencil className="ml-1 inline-block text-lg text-purple-600 hover:underline dark:text-primary" />
+						<Pencil className="size-4 ml-1 inline-block text-lg text-purple-600 hover:underline dark:text-primary" />
 					</DialogTrigger>
 					<DialogContent className="text-black dark:text-white">
 						<DialogHeader>
@@ -145,7 +143,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 				</Dialog>
 				<AlertDialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
 					<AlertDialogTrigger>
-						<MdOutlineDelete className="ml-1 inline-block text-lg text-red-500 hover:underline dark:text-red-450" />
+						<Trash className="size-4 ml-1 inline-block text-lg text-red-500 hover:underline dark:text-red-450" />
 					</AlertDialogTrigger>
 					<AlertDialogContent>
 						<AlertDialogHeader>
