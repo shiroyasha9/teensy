@@ -4,11 +4,7 @@ import { api } from "@/trpc/react";
 import { isDevEnvironment } from "@/utils";
 import { useEffect } from "react";
 
-type AddVisitCountProps = {
-	children: React.ReactNode;
-};
-
-export default function AddVisitCount({ children }: AddVisitCountProps) {
+export default function AddVisitCount() {
 	const addGlobalVisitCount = api.teensy.addGlobalVisit.useMutation();
 
 	useEffect(() => {
@@ -19,7 +15,7 @@ export default function AddVisitCount({ children }: AddVisitCountProps) {
 				sessionStorage.setItem("isVisited", "true");
 			}
 		}
-	}, []);
+	}, [addGlobalVisitCount.mutate]);
 
-	return <>{children}</>;
+	return null;
 }

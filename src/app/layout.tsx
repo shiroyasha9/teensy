@@ -9,10 +9,10 @@ import { Rubik } from "next/font/google";
 import Confetti from "@/components/layout/Confetti";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
-import VersionModal from "@/components/version/VersionModal";
 import "@/styles/globals.css";
+import VersionUpdateToast from "@/components/version/VersionUpdateToast";
+import { appVersion } from "@/constants/config";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 
 const APP_NAME = "Teensy";
 const APP_DEFAULT_TITLE = "Teensy your URLs";
@@ -56,18 +56,15 @@ export default function RootLayout({
 		>
 			<body className="flex h-screen flex-col p-6 md:overflow-x-hidden">
 				<Providers>
-					<AddVisitCount>
-						<Header />
-						{authModal}
-						<section className="mt-12 flex flex-1 flex-col items-center justify-center">
-							{children}
-						</section>
-						<Suspense fallback={null}>
-							<Footer />
-						</Suspense>
-					</AddVisitCount>
+					<Header />
+					{authModal}
+					<section className="mt-12 flex flex-1 flex-col items-center justify-center">
+						{children}
+					</section>
+					<Footer />
 					<Confetti />
-					<VersionModal />
+					<VersionUpdateToast backendVersion={appVersion} />
+					<AddVisitCount />
 					<Toaster richColors />
 				</Providers>
 				<Analytics />

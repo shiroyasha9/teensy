@@ -1,12 +1,17 @@
 import { db } from "@/server/db";
 import { globalVisits } from "@/server/db/schema";
 import Image from "next/image";
+import { Suspense } from "react";
 
-export default async function Footer() {
+const VisitorCount = async () => {
 	const visitorsCount = await db.$count(globalVisits);
 
+	return <p>{visitorsCount} Unique Visitors</p>;
+};
+
+export default function Footer() {
 	return (
-		<div className="flex flex-col items-center justify-center pb-4">
+		<div className="flex flex-col items-center justify-center pb-4 gap-3 text-xs font-mono">
 			<a
 				href="https://www.buymeacoffee.com/mubinansari"
 				target="_blank"
@@ -20,7 +25,9 @@ export default async function Footer() {
 					priority
 				/>
 			</a>
-			<p className="mt-2 font-mono text-xs">{visitorsCount} Unique Visitors</p>
+			<Suspense fallback={<p>Loading Unique Visitors</p>}>
+				<VisitorCount />
+			</Suspense>
 		</div>
 	);
 }
