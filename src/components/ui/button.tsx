@@ -60,7 +60,6 @@ const Button = ({
 	tooltip,
 	tooltipSide,
 	disabled,
-	ref,
 	...props
 }: ButtonProps) => {
 	const Comp = asChild ? Slot : "button";
@@ -71,7 +70,6 @@ const Button = ({
 				buttonVariants({ variant, size, className }),
 				tooltip && "disabled:pointer-events-auto",
 			)}
-			ref={ref}
 			disabled={loading || disabled}
 			{...props}
 		>
