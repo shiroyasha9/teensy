@@ -70,7 +70,7 @@ const PasswordForm = ({ teensy }: PasswordFormProps) => {
 			<Button
 				className="mt-6 w-full"
 				disabled={!isValid}
-				isLoading={isSubmitting}
+				loading={isSubmitting}
 			>
 				Submit
 			</Button>

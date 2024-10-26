@@ -267,7 +267,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 			)}
 			<Button
 				className="mb-2 w-full self-center"
-				isLoading={isSubmitting || createSlug.isPending || updateSlug.isPending}
+				loading={isSubmitting || createSlug.isPending || updateSlug.isPending}
 				disabled={isSlugInvalid || !isValid || slugCheck.isRefetching}
 			>
 				{mode === "create" ? "Teensy it!" : "Edit it!"}

@@ -52,7 +52,7 @@ const WhatsAppForm = () => {
 			/>
 			<Button
 				className="mx-0 text-lg"
-				isLoading={isSubmitting}
+				loading={isSubmitting}
 				disabled={!isValid}
 			>
 				WhatsApp them!
