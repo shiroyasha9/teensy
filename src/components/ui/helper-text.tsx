@@ -4,7 +4,7 @@ import { cn } from "@/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 import type { ClassAttributes, HTMLAttributes } from "react";
 
-const helperTextVariants = cva("text-xs leading-tight break-words", {
+const helperTextVariants = cva("break-words text-xs leading-tight", {
 	variants: {
 		variant: {
 			default: "text-muted-foreground",

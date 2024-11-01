@@ -14,7 +14,7 @@ const tabButtonClassNames = (
 		{
 			"active bg-white text-black dark:bg-zinc-600 dark:text-white":
 				segment === activePath,
-			"bg-zinc-300  text-zinc-800 dark:bg-zinc-800 dark:text-white":
+			"bg-zinc-300 text-zinc-800 dark:bg-zinc-800 dark:text-white":
 				segment !== activePath,
 		},
 		className,

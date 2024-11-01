@@ -47,7 +47,13 @@
 				"useSimplifiedLogicExpression": "error"
 			},
 			"nursery": {
-				"useSortedClasses": "warn"
+				"useSortedClasses": {
+					"level": "warn",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "tw", "cn"]
+					}
+				}
 			}
 		}
 	}
