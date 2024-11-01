@@ -83,7 +83,7 @@ const Multiple = () => {
 							<tbody className="max-h-64 overflow-y-auto">
 								{multipleTeensiesData.map((teensy, index) => (
 									<tr
-										key={index}
+										key={teensy.slug}
 										className="border-zinc-200 border-b dark:border-zinc-600"
 									>
 										<td className="px-6 py-4">
@@ -95,7 +95,9 @@ const Multiple = () => {
 												value={teensy.url}
 												onChange={(e) => {
 													const newTeensies = [...multipleTeensiesData];
-													newTeensies[index]!.url = e.target.value;
+													if (newTeensies[index]) {
+														newTeensies[index].url = e.target.value;
+													}
 													flushSync(() => {
 														setMultipleTeensiesData(newTeensies);
 													});
@@ -120,8 +122,10 @@ const Multiple = () => {
 												value={teensy.slug}
 												onChange={(e) => {
 													const newTeensies = [...multipleTeensiesData];
-													newTeensies[index]!.slug = e.target.value;
-													newTeensies[index]!.used = false;
+													if (newTeensies[index]) {
+														newTeensies[index].slug = e.target.value;
+														newTeensies[index].used = false;
+													}
 													flushSync(() => {
 														setMultipleTeensiesData(newTeensies);
 													});
@@ -137,8 +141,10 @@ const Multiple = () => {
 													onClick={() => {
 														const slug = nanoidForSlug();
 														const newTeensies = [...multipleTeensiesData];
-														newTeensies[index]!.slug = slug;
-														newTeensies[index]!.used = false;
+														if (newTeensies[index]) {
+															newTeensies[index].slug = slug;
+															newTeensies[index].used = false;
+														}
 														setMultipleTeensiesData(newTeensies);
 													}}
 												>

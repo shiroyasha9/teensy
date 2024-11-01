@@ -2,9 +2,9 @@
 
 import { Input } from "@/components/ui/input";
 import type { Teensy, Visit } from "@/server/db/zod-schemas";
-import debounce from "lodash.debounce";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { Search } from "lucide-react";
-import { type ChangeEvent, useEffect, useMemo, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 import TeensyRow from "./TeensyRow";
 
 type TeensyTableProps = {
@@ -28,19 +28,12 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 		}
 	}, [userTeensies, search]);
 
-	function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
-		setSearch(e.target.value);
-	}
-
-	const debouncedSearchChangeHandler = useMemo(() => {
-		return debounce(handleSearchChange, 300);
-	}, []);
-
-	useEffect(() => {
-		return () => {
-			debouncedSearchChangeHandler.cancel();
-		};
-	});
+	const handleSearchChange = useDebouncedCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			setSearch(e.target.value);
+		},
+		300,
+	);
 
 	return (
 		<div className="flex flex-col items-center justify-center gap-3">
@@ -57,7 +50,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 						className="!p-2 !pl-10 my-0 block w-full rounded-lg border px-3 py-0 text-sm"
 						placeholder="Search for any url or slug..."
 						defaultValue=""
-						onChange={debouncedSearchChangeHandler}
+						onChange={handleSearchChange}
 					/>
 				</div>
 			</div>

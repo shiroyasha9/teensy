@@ -23,6 +23,7 @@
 		"@auth/drizzle-adapter": "^1.7.2",
 		"@babel/core": "^7.25.8",
 		"@hookform/resolvers": "^3.9.0",
+		"@mantine/hooks": "^7.13.4",
 		"@mdx-js/loader": "^3.1.0",
 		"@mdx-js/react": "^3.1.0",
 		"@next/mdx": "15.0.1",
