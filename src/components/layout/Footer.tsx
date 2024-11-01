@@ -11,7 +11,7 @@ const VisitorCount = async () => {
 
 export default function Footer() {
 	return (
-		<div className="flex flex-col items-center justify-center pb-4 gap-3 text-xs font-mono">
+		<div className="flex flex-col items-center justify-center gap-3 pb-4 font-mono text-xs">
 			<a
 				href="https://www.buymeacoffee.com/mubinansari"
 				target="_blank"

@@ -66,7 +66,7 @@ const Multiple = () => {
 				<div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
 					<div className="table-wrp block h-64 max-h-64 rounded-md">
 						<table className="w-full rounded-md text-left text-sm text-zinc-500 dark:text-zinc-400">
-							<thead className="sticky top-0 z-0 bg-zinc-50 text-xs uppercase text-zinc-700 dark:bg-zinc-700 dark:text-zinc-400">
+							<thead className="sticky top-0 z-0 bg-zinc-50 text-xs text-zinc-700 uppercase dark:bg-zinc-700 dark:text-zinc-400">
 								<tr>
 									<th scope="col" className=" px-6 py-3 sm:w-[30vw]">
 										Full URL
@@ -84,13 +84,13 @@ const Multiple = () => {
 								{multipleTeensiesData.map((teensy, index) => (
 									<tr
 										key={index}
-										className="border-b border-zinc-200 dark:border-zinc-600"
+										className="border-zinc-200 border-b dark:border-zinc-600"
 									>
 										<td className="px-6 py-4">
 											<input
 												type="url"
 												required
-												className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-zinc-700 dark:text-zinc-200 sm:px-2 sm:text-sm "
+												className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed sm:px-2 sm:text-sm dark:bg-zinc-700 dark:text-zinc-200"
 												placeholder="https://example.com"
 												value={teensy.url}
 												onChange={(e) => {
@@ -104,14 +104,14 @@ const Multiple = () => {
 										</td>
 										<td className="px-6 py-4">
 											{showErrors && teensy.used && (
-												<p className="text-xs italic text-red-500">
+												<p className="text-red-500 text-xs italic">
 													This alias is already taken
 												</p>
 											)}
 											<input
 												type="text"
 												required
-												className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed dark:bg-zinc-700 dark:text-zinc-200 sm:px-2 sm:text-sm ${
+												className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed sm:px-2 sm:text-sm dark:bg-zinc-700 dark:text-zinc-200 ${
 													showErrors && teensy.used
 														? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
 														: ""
@@ -133,7 +133,7 @@ const Multiple = () => {
 											<div className="flex items-center justify-center space-x-4 text-sm">
 												<button
 													type="button"
-													className="bg-zinc-450 rounded bg-white p-2 text-black  dark:bg-zinc-700 dark:text-zinc-200"
+													className="rounded bg-white bg-zinc-450 p-2 text-black dark:bg-zinc-700 dark:text-zinc-200"
 													onClick={() => {
 														const slug = nanoidForSlug();
 														const newTeensies = [...multipleTeensiesData];

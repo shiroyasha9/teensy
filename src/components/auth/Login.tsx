@@ -5,7 +5,7 @@ const Login = () => {
 	return (
 		<div className="py-12">
 			<div className="px-4 sm:px-12">
-				<h3 className="mt-6 text-center text-lg font-bold dark:text-white sm:text-2xl">
+				<h3 className="mt-6 text-center font-bold text-lg sm:text-2xl dark:text-white">
 					Create your account
 				</h3>
 

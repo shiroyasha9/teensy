@@ -16,7 +16,7 @@ const Page = async ({ searchParams }: SuccessPageProps) => {
 
 	return (
 		<div className="flex flex-col items-center justify-center">
-			<div className="flex flex-col items-center  justify-center">
+			<div className="flex flex-col items-center justify-center">
 				<h3 className="mb-3 text-xl">
 					Successful! 🥳 Here&apos;s your teensy:{" "}
 				</h3>

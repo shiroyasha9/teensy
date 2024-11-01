@@ -66,13 +66,13 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 
 	return (
 		<tr
-			className="border-b bg-zinc-50 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900  dark:hover:bg-zinc-800/80"
+			className="border-b bg-zinc-50 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800/80"
 			key={teensy.id}
 		>
 			<td className="flex justify-center gap-x-4 p-4">
 				<Dialog open={showQRCodeModal} onOpenChange={setShowQRCodeModal}>
 					<DialogTrigger>
-						<QrCode className="size-4 ml-1 inline-block text-lg text-black hover:underline dark:text-zinc-200" />
+						<QrCode className="ml-1 inline-block size-4 text-black text-lg hover:underline dark:text-zinc-200" />
 					</DialogTrigger>
 					<DialogContent className="text-black dark:text-white">
 						<DialogHeader>
@@ -127,7 +127,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 				</Dialog>
 				<Dialog open={showEditModal} onOpenChange={setShowEditModal}>
 					<DialogTrigger>
-						<Pencil className="size-4 ml-1 inline-block text-lg text-purple-600 hover:underline dark:text-primary" />
+						<Pencil className="ml-1 inline-block size-4 text-lg text-purple-600 hover:underline dark:text-primary" />
 					</DialogTrigger>
 					<DialogContent className="text-black dark:text-white">
 						<DialogHeader>
@@ -143,7 +143,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 				</Dialog>
 				<AlertDialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
 					<AlertDialogTrigger>
-						<Trash className="size-4 ml-1 inline-block text-lg text-red-500 hover:underline dark:text-red-450" />
+						<Trash className="ml-1 inline-block size-4 text-lg text-red-500 hover:underline dark:text-red-450" />
 					</AlertDialogTrigger>
 					<AlertDialogContent>
 						<AlertDialogHeader>

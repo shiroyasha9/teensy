@@ -63,7 +63,7 @@ const PasswordForm = ({ teensy }: PasswordFormProps) => {
 					error={!!errors.password}
 					{...register("password", { required: true })}
 				/>
-				<p className="mt-2 text-center text-sm font-medium text-red-450">
+				<p className="mt-2 text-center font-medium text-red-450 text-sm">
 					{errors.password?.message ?? <span>&nbsp;</span>}
 				</p>
 			</div>

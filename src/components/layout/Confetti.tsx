@@ -21,7 +21,7 @@ const Confetti = () => {
 	const pathname = usePathname();
 
 	return (
-		<div className="absolute left-0 top-0 -z-10 h-screen w-screen overflow-hidden">
+		<div className="-z-10 absolute top-0 left-0 h-screen w-screen overflow-hidden">
 			<div className="h-screen w-screen translate-x-1/2 translate-y-1/3">
 				<ReactDomConfetti active={pathname === "/success"} config={config} />
 			</div>

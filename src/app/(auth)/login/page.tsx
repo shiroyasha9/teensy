@@ -14,7 +14,7 @@ const Page: FC = () => {
 					buttonVariants({
 						variant: "ghost",
 					}),
-					"-mt-20 self-start space-x-2",
+					"-mt-20 space-x-2 self-start",
 				)}
 			>
 				<ChevronLeftIcon className="size-4" />

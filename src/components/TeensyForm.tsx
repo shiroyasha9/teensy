@@ -167,7 +167,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 			/>
 
 			<div className="space-y-1.5">
-				<span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
+				<span className="mr-2 flex items-center gap-2 whitespace-nowrap font-medium text-sm">
 					✍️ Customize
 					{isSlugInvalid && (
 						<span className="text-center font-medium text-red-450">
@@ -215,7 +215,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 					/>
 					<label
 						htmlFor="password-protection-checkbox"
-						className="mr-2 whitespace-nowrap text-sm font-medium"
+						className="mr-2 whitespace-nowrap font-medium text-sm"
 					>
 						Password Protection
 					</label>
@@ -237,7 +237,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 						/>
 						<label
 							htmlFor="auto-delete-checkbox"
-							className="mr-2 whitespace-nowrap text-sm font-medium"
+							className="mr-2 whitespace-nowrap font-medium text-sm"
 						>
 							Auto delete in
 						</label>
@@ -256,7 +256,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 				currentTeensy?.expiresAt && (
 					<label
 						htmlFor="auto-delete-checkbox"
-						className="whitespace-nowrap text-sm font-medium"
+						className="whitespace-nowrap font-medium text-sm"
 					>
 						Auto deletes in{" "}
 						{getFormattedTime(
@@ -273,7 +273,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 				{mode === "create" ? "Teensy it!" : "Edit it!"}
 			</Button>
 			{mode === "create" && (
-				<Link href="/multiple" className="text-center text-sm text-primary">
+				<Link href="/multiple" className="text-center text-primary text-sm">
 					or Create multiple Teensies at once🚀
 				</Link>
 			)}

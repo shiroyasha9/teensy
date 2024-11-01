@@ -23,7 +23,7 @@ const tabButtonClassNames = (
 export default function SelectedSegment() {
 	const segment = useSelectedLayoutSegment();
 	return (
-		<div className="flex divide-x divide-zinc-200 rounded-lg text-center text-sm font-medium text-zinc-500 shadow dark:divide-zinc-700 dark:text-zinc-400">
+		<div className="flex divide-x divide-zinc-200 rounded-lg text-center font-medium text-sm text-zinc-500 shadow dark:divide-zinc-700 dark:text-zinc-400">
 			<div className="w-full">
 				<Link
 					prefetch={false}
