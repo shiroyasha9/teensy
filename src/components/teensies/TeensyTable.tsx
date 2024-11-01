@@ -56,7 +56,6 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 						type="text"
 						className="my-0 block w-full rounded-lg border !p-2 px-3 py-0 !pl-10 text-sm"
 						placeholder="Search for any url or slug..."
-						noContainer
 						defaultValue=""
 						onChange={debouncedSearchChangeHandler}
 					/>

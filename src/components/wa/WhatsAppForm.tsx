@@ -44,10 +44,10 @@ const WhatsAppForm = () => {
 		>
 			<Input
 				label="Enter their number:"
-				inlineLabel
+				containerClassName="flex-row items-center"
 				type="number"
 				placeholder="+19999999999"
-				invalid={!!errors.phoneNumber}
+				error={!!errors.phoneNumber}
 				{...register("phoneNumber", { required: true })}
 			/>
 			<Button

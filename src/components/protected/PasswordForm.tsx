@@ -60,7 +60,7 @@ const PasswordForm = ({ teensy }: PasswordFormProps) => {
 					type="password"
 					autoComplete="off"
 					autoFocus
-					invalid={!!errors.password}
+					error={!!errors.password}
 					{...register("password", { required: true })}
 				/>
 				<p className="mt-2 text-center text-sm font-medium text-red-450">

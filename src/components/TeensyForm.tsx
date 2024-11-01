@@ -160,7 +160,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 				label="🤏 Link to teensy"
 				placeholder="e.g. https://github.com"
 				autoFocus
-				invalid={!!errors.url}
+				error={!!errors.url}
 				{...register("url", {
 					required: true,
 				})}
@@ -178,9 +178,9 @@ const TeensyForm = (props: TeensyFormProps) => {
 				<Input
 					type="text"
 					label={`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/`}
-					inlineLabel
+					containerClassName="flex-row items-center"
 					placeholder="alias e.g. ig for instagram"
-					invalid={isSlugInvalid}
+					error={!!errors.slug}
 					title="Only alphanumeric characters and hyphens are allowed. No spaces."
 					{...register("slug", {
 						required: true,
