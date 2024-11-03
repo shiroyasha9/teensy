@@ -25,7 +25,7 @@ const Dropdown = (props: DropdownProps) => {
 				<ChevronDownIcon className="ml-2 size-4" />
 			</button>
 			<div
-				className={`z-10 mt-1 w-full divide-y divide-zinc-100 rounded-lg bg-white shadow dark:bg-zinc-900  ${
+				className={`z-10 mt-1 w-full divide-y divide-zinc-100 rounded-lg bg-white shadow dark:bg-zinc-900 ${
 					isOpen ? "absolute" : "hidden"
 				}`}
 			>

@@ -27,7 +27,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 	if (name && email) {
 		return (
 			<>
-				<div className="md:hidden flex flex-col gap-y-2 px-2 pb-2">
+				<div className="flex flex-col gap-y-2 px-2 pb-2 md:hidden">
 					<div className="flex items-center gap-x-2">
 						<Avatar className="size-6">
 							<AvatarImage src={image ?? undefined} />
@@ -37,20 +37,20 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 						</Avatar>
 						<div className="flex flex-col">
 							<Label>{name}</Label>
-							<p className="text-xs text-muted-foreground">{email}</p>
+							<p className="text-muted-foreground text-xs">{email}</p>
 						</div>
 					</div>
 					<MenubarSeparator />
 					<Button
 						variant="ghost"
-						className="p-0 h-auto text-sm font-normal justify-start"
+						className="h-auto justify-start p-0 font-normal text-sm"
 						onClick={signOutServerFn}
 					>
 						Logout
 					</Button>
 				</div>
 				<DropdownMenu>
-					<DropdownMenuTrigger className="md:px-4 hidden md:flex">
+					<DropdownMenuTrigger className="hidden md:flex md:px-4">
 						<Avatar className="size-6">
 							<AvatarImage src={image ?? undefined} />
 							<AvatarFallback>
@@ -79,7 +79,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 			href="/login"
 			className={cn(
 				buttonVariants(),
-				"m-0 h-auto w-full px-4 py-2 text-base font-semibold md:ml-8 md:w-auto md:px-3 md:py-1",
+				"m-0 h-auto w-full px-4 py-2 font-semibold text-base md:ml-8 md:w-auto md:px-3 md:py-1",
 			)}
 		>
 			Login

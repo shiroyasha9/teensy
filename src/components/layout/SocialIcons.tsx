@@ -12,7 +12,7 @@ const VsCodeIcon = ({
 			viewBox="0 0 32 32"
 			xmlns="http://www.w3.org/2000/svg"
 			className={cn(
-				"size-5 fill-foreground hover:fill-primary transition-colors duration-500 ease-in",
+				"size-5 fill-foreground transition-colors duration-500 ease-in hover:fill-primary",
 				className,
 			)}
 			aria-label={ariaLabel}
@@ -32,7 +32,7 @@ const PlayStoreIcon = ({
 			viewBox="0 0 512 512"
 			xmlns="http://www.w3.org/2000/svg"
 			className={cn(
-				"size-5 fill-foreground hover:fill-primary transition-colors duration-500 ease-in",
+				"size-5 fill-foreground transition-colors duration-500 ease-in hover:fill-primary",
 				className,
 			)}
 			aria-label={ariaLabel}

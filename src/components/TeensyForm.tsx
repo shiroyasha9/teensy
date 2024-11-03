@@ -160,14 +160,14 @@ const TeensyForm = (props: TeensyFormProps) => {
 				label="🤏 Link to teensy"
 				placeholder="e.g. https://github.com"
 				autoFocus
-				invalid={!!errors.url}
+				error={!!errors.url}
 				{...register("url", {
 					required: true,
 				})}
 			/>
 
 			<div className="space-y-1.5">
-				<span className="mr-2 flex items-center gap-2  whitespace-nowrap text-sm font-medium">
+				<span className="mr-2 flex items-center gap-2 whitespace-nowrap font-medium text-sm">
 					✍️ Customize
 					{isSlugInvalid && (
 						<span className="text-center font-medium text-red-450">
@@ -178,9 +178,9 @@ const TeensyForm = (props: TeensyFormProps) => {
 				<Input
 					type="text"
 					label={`${env.NEXT_PUBLIC_SITE_URL.replaceAll(/https?:\/\//gi, "")}/`}
-					inlineLabel
+					containerClassName="flex-row items-center"
 					placeholder="alias e.g. ig for instagram"
-					invalid={isSlugInvalid}
+					error={!!errors.slug}
 					title="Only alphanumeric characters and hyphens are allowed. No spaces."
 					{...register("slug", {
 						required: true,
@@ -215,7 +215,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 					/>
 					<label
 						htmlFor="password-protection-checkbox"
-						className="mr-2 whitespace-nowrap text-sm font-medium"
+						className="mr-2 whitespace-nowrap font-medium text-sm"
 					>
 						Password Protection
 					</label>
@@ -237,7 +237,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 						/>
 						<label
 							htmlFor="auto-delete-checkbox"
-							className="mr-2 whitespace-nowrap text-sm font-medium"
+							className="mr-2 whitespace-nowrap font-medium text-sm"
 						>
 							Auto delete in
 						</label>
@@ -256,7 +256,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 				currentTeensy?.expiresAt && (
 					<label
 						htmlFor="auto-delete-checkbox"
-						className="whitespace-nowrap text-sm font-medium"
+						className="whitespace-nowrap font-medium text-sm"
 					>
 						Auto deletes in{" "}
 						{getFormattedTime(
@@ -267,13 +267,13 @@ const TeensyForm = (props: TeensyFormProps) => {
 			)}
 			<Button
 				className="mb-2 w-full self-center"
-				isLoading={isSubmitting || createSlug.isPending || updateSlug.isPending}
+				loading={isSubmitting || createSlug.isPending || updateSlug.isPending}
 				disabled={isSlugInvalid || !isValid || slugCheck.isRefetching}
 			>
 				{mode === "create" ? "Teensy it!" : "Edit it!"}
 			</Button>
 			{mode === "create" && (
-				<Link href="/multiple" className="text-center text-sm text-primary">
+				<Link href="/multiple" className="text-center text-primary text-sm">
 					or Create multiple Teensies at once🚀
 				</Link>
 			)}

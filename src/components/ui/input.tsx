@@ -1,59 +1,87 @@
 import { cn } from "@/utils";
-import React from "react";
+import type { LucideIcon } from "lucide-react";
+import { HelperText } from "./helper-text";
+import { Label } from "./label";
+import TooltipHOC from "./tooltip-hoc";
+
+type Icon =
+	| LucideIcon
+	| ((props: React.ComponentProps<LucideIcon>) => React.ReactNode);
 
 export interface InputProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
-	invalid?: boolean;
+	startIcon?: Icon;
+	endIcon?: Icon;
 	label?: string;
-	inlineLabel?: boolean;
-	noContainer?: boolean;
+	helperText?: string | null;
+	error?: boolean | string;
+	iconClassName?: string;
+	tooltip?: string;
+	tooltipSide?: "top" | "right" | "bottom" | "left";
+	containerClassName?: string;
+	labelClassName?: string;
+	ref?: React.Ref<HTMLInputElement>;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-	const {
-		className: overrideClassName,
-		invalid,
-		label,
-		inlineLabel,
-		noContainer,
-		id,
-		...rest
-	} = props;
-
-	const classNames = cn(
-		"flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-		{
-			"border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450":
-				invalid,
-		},
-		overrideClassName,
-	);
-
-	const containerClassNames = cn("w-full", {
-		"flex items-center": inlineLabel,
-		"space-y-1.5": !inlineLabel,
-	});
-
-	const content = <input id={id} className={classNames} ref={ref} {...rest} />;
-
-	if (noContainer) {
-		return content;
-	}
-
+const Input = ({
+	className,
+	type,
+	startIcon: StartIcon,
+	endIcon: EndIcon,
+	label,
+	helperText,
+	error,
+	iconClassName,
+	min,
+	max,
+	tooltip,
+	tooltipSide = "top",
+	containerClassName,
+	labelClassName,
+	ref,
+	...props
+}: InputProps) => {
 	return (
-		<div className={containerClassNames}>
-			{label && (
-				<label
-					htmlFor={id}
-					className="mr-2 whitespace-nowrap text-sm font-medium"
-				>
+		<div className={cn("flex flex-col gap-1.5", containerClassName)}>
+			{!!label && (
+				<Label className={cn(error ? "text-destructive" : "", labelClassName)}>
 					{label}
-				</label>
+				</Label>
 			)}
-			{content}
+			<div className="relative w-full">
+				<TooltipHOC tooltip={tooltip} tooltipSide={tooltipSide}>
+					<input
+						type={type}
+						className={cn(
+							"peer flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+							className,
+							{
+								"pl-8": StartIcon,
+								"pr-8": EndIcon,
+								"border-destructive focus-visible:ring-destructive": error,
+							},
+						)}
+						ref={ref}
+						{...props}
+					/>
+				</TooltipHOC>
+				<div className="text-muted-foreground peer-focus:text-ring">
+					{StartIcon && (
+						<div className="-translate-y-1/2 absolute top-1/2 left-1.5 transform">
+							<StartIcon className={cn("size-5", iconClassName)} />
+						</div>
+					)}
+					{EndIcon && (
+						<div className="-translate-y-1/2 absolute top-1/2 right-3 transform cursor-pointer">
+							<EndIcon className={cn("size-5", iconClassName)} />
+						</div>
+					)}
+				</div>
+			</div>
+			{!!helperText && <HelperText>{helperText}</HelperText>}
 		</div>
 	);
-});
+};
 
 Input.displayName = "Input";
 

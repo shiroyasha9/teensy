@@ -2,9 +2,9 @@
 
 import { Input } from "@/components/ui/input";
 import type { Teensy, Visit } from "@/server/db/zod-schemas";
-import debounce from "lodash.debounce";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { Search } from "lucide-react";
-import { type ChangeEvent, useEffect, useMemo, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 import TeensyRow from "./TeensyRow";
 
 type TeensyTableProps = {
@@ -28,19 +28,12 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 		}
 	}, [userTeensies, search]);
 
-	function handleSearchChange(e: ChangeEvent<HTMLInputElement>) {
-		setSearch(e.target.value);
-	}
-
-	const debouncedSearchChangeHandler = useMemo(() => {
-		return debounce(handleSearchChange, 300);
-	}, []);
-
-	useEffect(() => {
-		return () => {
-			debouncedSearchChangeHandler.cancel();
-		};
-	});
+	const handleSearchChange = useDebouncedCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			setSearch(e.target.value);
+		},
+		300,
+	);
 
 	return (
 		<div className="flex flex-col items-center justify-center gap-3">
@@ -54,18 +47,17 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 					</div>
 					<Input
 						type="text"
-						className="my-0 block w-full rounded-lg border !p-2 px-3 py-0 !pl-10 text-sm"
+						className="!p-2 !pl-10 my-0 block w-full rounded-lg border px-3 py-0 text-sm"
 						placeholder="Search for any url or slug..."
-						noContainer
 						defaultValue=""
-						onChange={debouncedSearchChangeHandler}
+						onChange={handleSearchChange}
 					/>
 				</div>
 			</div>
 			<div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
 				<div className="block h-64 max-h-64 rounded-md">
 					<table className="w-full rounded-md text-left text-sm text-zinc-500 dark:text-zinc-400">
-						<thead className="sticky top-0 z-0 bg-zinc-200 text-xs uppercase text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
+						<thead className="sticky top-0 z-0 bg-zinc-200 text-xs text-zinc-700 uppercase dark:bg-zinc-800 dark:text-zinc-400">
 							<tr>
 								<th scope="col" className="px-4 py-3 text-center">
 									Actions

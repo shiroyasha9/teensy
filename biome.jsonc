@@ -47,8 +47,13 @@
 				"useSimplifiedLogicExpression": "error"
 			},
 			"nursery": {
-				// TODO: causes issues when you use ternary for adding classes
-				// "useSortedClasses": "warn"
+				"useSortedClasses": {
+					"level": "warn",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "tw", "cn"]
+					}
+				}
 			}
 		}
 	}

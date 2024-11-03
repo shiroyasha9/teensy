@@ -60,17 +60,17 @@ const PasswordForm = ({ teensy }: PasswordFormProps) => {
 					type="password"
 					autoComplete="off"
 					autoFocus
-					invalid={!!errors.password}
+					error={!!errors.password}
 					{...register("password", { required: true })}
 				/>
-				<p className="mt-2 text-center text-sm font-medium text-red-450">
+				<p className="mt-2 text-center font-medium text-red-450 text-sm">
 					{errors.password?.message ?? <span>&nbsp;</span>}
 				</p>
 			</div>
 			<Button
 				className="mt-6 w-full"
 				disabled={!isValid}
-				isLoading={isSubmitting}
+				loading={isSubmitting}
 			>
 				Submit
 			</Button>
