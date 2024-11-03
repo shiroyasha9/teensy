@@ -36,5 +36,5 @@ export default function ThemeToggle() {
 			/>
 		);
 	};
-	return <div className="mr-2 cursor-pointer">{renderThemeChanger()}</div>;
+	return <div className="cursor-pointer">{renderThemeChanger()}</div>;
 }

@@ -9,7 +9,7 @@ import {
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { NAV_ITEMS } from "../constants";
-import AuthButton from "./AuthButton";
+import AuthButton from "./auth-button";
 
 type MobileHeaderProps = {
 	name?: string | null;
@@ -27,7 +27,7 @@ const MobileHeader = ({ name, email, image }: MobileHeaderProps) => {
 				<MenubarContent align="end">
 					{NAV_ITEMS.map((item) => (
 						<MenubarItem key={item.name} asChild>
-							<Link href={item.href}>
+							<Link href={item.href ?? "/"}>
 								<p>{item.name}</p>
 							</Link>
 						</MenubarItem>

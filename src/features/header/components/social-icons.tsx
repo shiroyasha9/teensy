@@ -48,7 +48,7 @@ const PlayStoreIcon = ({
 
 export default function SocialIcons() {
 	return (
-		<div className="flex items-center gap-2">
+		<>
 			<Link
 				href={`/blogs/releases/${appVersion}`}
 				className="hover:text-primary"
@@ -67,6 +67,6 @@ export default function SocialIcons() {
 			<a href="/ps" target="_blank" rel="noreferrer">
 				<PlayStoreIcon className="size-6" aria-label="teensy play store app" />
 			</a>
-		</div>
+		</>
 	);
 }
