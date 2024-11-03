@@ -21,9 +21,10 @@ type AuthButtonProps = {
 	name?: string | null;
 	email?: string | null;
 	image?: string | null;
+	className?: string;
 };
 
-const AuthButton = ({ name, email, image }: AuthButtonProps) => {
+const AuthButton = ({ name, email, image, className }: AuthButtonProps) => {
 	if (!(name && email)) {
 		return (
 			<Link
@@ -33,6 +34,7 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 						size: "sm",
 						className: "font-semibold text-base",
 					}),
+					className,
 				)}
 			>
 				Login
@@ -42,7 +44,9 @@ const AuthButton = ({ name, email, image }: AuthButtonProps) => {
 
 	return (
 		<>
-			<div className="flex flex-col gap-y-2 px-2 pb-2 md:hidden">
+			<div
+				className={cn("flex flex-col gap-y-2 px-2 pb-2 md:hidden", className)}
+			>
 				<div className="flex items-center gap-x-2">
 					<Avatar className="size-6">
 						<AvatarImage src={image ?? undefined} />
