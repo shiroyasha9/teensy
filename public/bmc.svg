@@ -1,11 +1,11 @@
 <svg width="545" height="153" viewBox="0 0 545 153" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg {
-        fill: hsl(262.1 83.3% 57.8%);
+        fill: hsl(266 85% 58%);
     }
     @media (prefers-color-scheme: dark) {
         .bg {
-            fill: hsl(263.4 70% 50.4%);
+          fill: hsl(266 85% 58%);
         }
     }
   </style>
