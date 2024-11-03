@@ -1,13 +1,20 @@
-import { Link, MessageCircle, Search, Sparkles, Wrench } from "lucide-react";
-import { Info } from "lucide-react";
-import { BarChart2 } from "lucide-react";
+import {
+	BarChart2,
+	Info,
+	Link,
+	Link2,
+	MessageCircle,
+	Search,
+	Sparkles,
+	Wrench,
+} from "lucide-react";
 import type { NavItem } from "./types";
 
 export const NAV_ITEMS: NavItem[] = [
 	{
 		name: "Teensy a link",
 		href: "/",
-		icon: Link,
+		icon: Link2,
 	},
 
 	{
