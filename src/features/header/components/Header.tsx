@@ -1,12 +1,12 @@
-import { NAV_ITEMS } from "@/constants";
 import { auth } from "@/server/auth";
 import Link from "next/link";
+import { NAV_ITEMS } from "../constants";
 import AuthButton from "./AuthButton";
 import MobileHeader from "./MobileHeader";
 import SocialIcons from "./SocialIcons";
 import ThemeToggle from "./ThemeToggle";
 
-export default async function HeaderNew() {
+export async function Header() {
 	const session = await auth();
 
 	const user = session?.user;

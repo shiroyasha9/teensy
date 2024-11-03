@@ -8,7 +8,7 @@ import { Rubik } from "next/font/google";
 
 import Confetti from "@/components/layout/Confetti";
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import { Header } from "@/features/header/components/Header";
 import "@/styles/globals.css";
 import VersionUpdateToast from "@/components/version/VersionUpdateToast";
 import { appVersion } from "@/constants/config";

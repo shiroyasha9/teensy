@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -9,13 +10,12 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
+import { MenubarSeparator } from "@/components/ui/menubar";
 import { signOutServerFn } from "@/server/functions";
 import { cn } from "@/utils";
 import { AvatarIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { Button, buttonVariants } from "../ui/button";
-import { Label } from "../ui/label";
-import { MenubarSeparator } from "../ui/menubar";
 
 type AuthButtonProps = {
 	name?: string | null;

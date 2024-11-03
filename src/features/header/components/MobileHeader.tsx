@@ -6,9 +6,9 @@ import {
 	MenubarSeparator,
 	MenubarTrigger,
 } from "@/components/ui/menubar";
-import { NAV_ITEMS } from "@/constants";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { NAV_ITEMS } from "../constants";
 import AuthButton from "./AuthButton";
 
 type MobileHeaderProps = {
