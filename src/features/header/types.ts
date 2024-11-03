@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 export type NavItem = {
 	name: string;
 	icon: LucideIcon;
+	disabled?: boolean;
 } & (
 	| {
 			href: string;
@@ -15,6 +16,7 @@ export type NavItem = {
 				href: string;
 				icon: LucideIcon;
 				description?: string;
+				disabled?: boolean;
 			}[];
 	  }
 );
