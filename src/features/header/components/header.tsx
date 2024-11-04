@@ -25,7 +25,7 @@ export async function Header() {
 						name={user?.name}
 						email={user?.email}
 						image={user?.image}
-						className="hidden md:flex"
+						className="max-md:hidden"
 					/>
 					<MobileHeader
 						name={user?.name}

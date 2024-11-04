@@ -46,25 +46,26 @@ const PlayStoreIcon = ({
 	);
 };
 
-export default function SocialIcons() {
+export default function SocialIcons({ onClick }: { onClick?: () => void }) {
 	return (
 		<>
 			<Link
 				href={`/blogs/releases/${appVersion}`}
 				className="hover:text-primary"
+				onClick={onClick}
 			>
 				{appVersion}
 			</Link>
-			<a href="/gh" target="_blank" rel="noreferrer">
+			<a href="/gh" target="_blank" rel="noreferrer" onClick={onClick}>
 				<GitHubLogoIcon
 					className="size-6 hover:text-primary"
 					aria-label="teensy github page"
 				/>
 			</a>
-			<a href="/vscode" target="_blank" rel="noreferrer">
+			<a href="/vscode" target="_blank" rel="noreferrer" onClick={onClick}>
 				<VsCodeIcon ariaLabel="teensy vs code extension" />
 			</a>
-			<a href="/ps" target="_blank" rel="noreferrer">
+			<a href="/ps" target="_blank" rel="noreferrer" onClick={onClick}>
 				<PlayStoreIcon className="size-6" aria-label="teensy play store app" />
 			</a>
 		</>

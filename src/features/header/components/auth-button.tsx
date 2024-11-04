@@ -16,15 +16,23 @@ import { signOutServerFn } from "@/server/functions";
 import { cn } from "@/utils";
 import { AvatarIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import SocialIcons from "./social-icons";
 
 type AuthButtonProps = {
 	name?: string | null;
 	email?: string | null;
 	image?: string | null;
 	className?: string;
+	onClick?: () => void;
 };
 
-const AuthButton = ({ name, email, image, className }: AuthButtonProps) => {
+const AuthButton = ({
+	name,
+	email,
+	image,
+	className,
+	onClick,
+}: AuthButtonProps) => {
 	if (!(name && email)) {
 		return (
 			<Link
@@ -36,17 +44,22 @@ const AuthButton = ({ name, email, image, className }: AuthButtonProps) => {
 					}),
 					className,
 				)}
+				onClick={onClick}
 			>
 				Login
 			</Link>
 		);
 	}
 
+	const handleLogout = () => {
+		onClick?.();
+		signOutServerFn();
+	};
+
 	return (
 		<>
-			<div
-				className={cn("flex flex-col gap-y-2 px-2 pb-2 md:hidden", className)}
-			>
+			{/* Mobile */}
+			<div className={cn("flex w-full flex-col gap-y-2 md:hidden", className)}>
 				<div className="flex items-center gap-x-2">
 					<Avatar className="size-6">
 						<AvatarImage src={image ?? undefined} />
@@ -60,16 +73,23 @@ const AuthButton = ({ name, email, image, className }: AuthButtonProps) => {
 					</div>
 				</div>
 				<MenubarSeparator />
-				<Button
-					variant="ghost"
-					className="h-auto justify-start p-0 font-normal text-sm"
-					onClick={signOutServerFn}
-				>
-					Logout
-				</Button>
+				<div className="flex items-center justify-between">
+					<Button
+						size="sm"
+						variant="outline"
+						className="font-normal text-sm"
+						onClick={handleLogout}
+					>
+						Logout
+					</Button>
+					<div className="flex items-center gap-x-2">
+						<SocialIcons />
+					</div>
+				</div>
 			</div>
+			{/* Desktop */}
 			<DropdownMenu>
-				<DropdownMenuTrigger className="hidden md:flex md:px-4">
+				<DropdownMenuTrigger className="hidden md:flex">
 					<Avatar className="size-6">
 						<AvatarImage src={image ?? undefined} />
 						<AvatarFallback>
@@ -81,10 +101,7 @@ const AuthButton = ({ name, email, image, className }: AuthButtonProps) => {
 					<DropdownMenuLabel>{name}</DropdownMenuLabel>
 					<DropdownMenuItem>{email}</DropdownMenuItem>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem
-						className="cursor-pointer"
-						onClick={signOutServerFn}
-					>
+					<DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
 						Logout
 					</DropdownMenuItem>
 				</DropdownMenuContent>
