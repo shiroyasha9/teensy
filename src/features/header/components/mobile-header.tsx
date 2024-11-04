@@ -96,7 +96,7 @@ const MobileHeader = ({ name, email, image, className }: MobileHeaderProps) => {
 						);
 					})}
 				</nav>
-				<SheetFooter className="flex items-center justify-between p-4">
+				<SheetFooter className="flex flex-row items-center justify-between p-4">
 					<AuthButton
 						name={name}
 						email={email}

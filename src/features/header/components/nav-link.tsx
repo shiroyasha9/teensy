@@ -28,7 +28,7 @@ export const NavLink = ({
 				<Icon className="size-5" />
 				{name}
 			</div>
-			<p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
+			<p className="line-clamp-2 text-start text-muted-foreground text-sm leading-snug">
 				{description}
 			</p>
 		</Link>
