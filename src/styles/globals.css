@@ -64,7 +64,7 @@
 	}
 
 	body {
-		@apply h-screen bg-background text-foreground accent-primary;
+		@apply h-screen bg-background text-foreground accent-primary transition-colors duration-500;
 	}
 }
 
