@@ -1,17 +1,17 @@
 <svg width="545" height="153" viewBox="0 0 545 153" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg {
-    fill: hsl(266 85% 58%);
+    fill: hsl(262 92% 56);
     }
     .stroke {
     fill: hsl(220 23% 95%);
     }
     @media (prefers-color-scheme: dark) {
     .bg {
-    fill: hsl(267 84% 81%);
+    fill: hsl(262 92% 56);
     }
     .stroke {
-    fill: hsl(240 21% 15%);
+    fill: hsl(220 23% 95%);
     }
 
     }
