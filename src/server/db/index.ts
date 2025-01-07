@@ -2,6 +2,8 @@ import { env } from "@/env";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 // biome-ignore lint/style/noNamespaceImport: needed here
+import * as relations from "./relations";
+// biome-ignore lint/style/noNamespaceImport: needed here
 import * as schema from "./schema";
 
 /**
@@ -26,4 +28,7 @@ if (env.NODE_ENV !== "production") {
 	globalForDb.conn = client;
 }
 
-export const db = drizzle(client, { schema, casing: "camelCase" });
+export const db = drizzle(client, {
+	schema: { ...schema, ...relations },
+	casing: "camelCase",
+});

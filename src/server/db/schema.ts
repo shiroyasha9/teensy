@@ -1,4 +1,3 @@
-import { relations } from "drizzle-orm";
 import {
 	index,
 	pgEnum,
@@ -73,13 +72,6 @@ export const user = pgTable(
 	}),
 );
 
-export const userRelations = relations(user, ({ many }) => ({
-	accounts: many(account),
-	sessions: many(session),
-	teensies: many(teensy),
-	expiredTeensies: many(expiredTeensy),
-}));
-
 export const teensy = pgTable(
 	"Teensy",
 	(t) => ({
@@ -104,13 +96,6 @@ export const teensy = pgTable(
 	}),
 );
 
-export const teensyRelations = relations(teensy, ({ one, many }) => ({
-	owner: one(user, {
-		fields: [teensy.ownerId],
-		references: [user.id],
-	}),
-	visits: many(visit),
-}));
 // Teensy_ownerId_user_id_fk;
 export const visit = pgTable("Visit", (t) => ({
 	id: t
@@ -129,13 +114,6 @@ export const visit = pgTable("Visit", (t) => ({
 			onDelete: "cascade",
 			onUpdate: "cascade",
 		}),
-}));
-
-export const visitRelations = relations(visit, ({ one }) => ({
-	teensy: one(teensy, {
-		fields: [visit.teensyId],
-		references: [teensy.id],
-	}),
 }));
 
 export const globalVisits = pgTable("GlobalVisits", (t) => ({
@@ -172,13 +150,6 @@ export const expiredTeensy = pgTable(
 	}),
 );
 
-export const expiredTeensyRelations = relations(expiredTeensy, ({ one }) => ({
-	owner: one(user, {
-		fields: [expiredTeensy.ownerId],
-		references: [user.id],
-	}),
-}));
-
 export const session = pgTable("session", (t) => ({
 	sessionToken: t.text().primaryKey(),
 	userId: t
@@ -186,13 +157,6 @@ export const session = pgTable("session", (t) => ({
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
 	expires: t.timestamp({ mode: "date", withTimezone: true }).notNull(),
-}));
-
-export const sessionRelations = relations(session, ({ one }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id],
-	}),
 }));
 
 export const verificationToken = pgTable(
@@ -236,10 +200,3 @@ export const account = pgTable(
 		}),
 	}),
 );
-
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id],
-	}),
-}));
