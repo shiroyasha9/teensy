@@ -11,10 +11,7 @@ const VsCodeIcon = ({
 		<svg
 			viewBox="0 0 32 32"
 			xmlns="http://www.w3.org/2000/svg"
-			className={cn(
-				"size-5 fill-foreground transition-colors duration-500 ease-in hover:fill-primary",
-				className,
-			)}
+			className={cn("size-5 fill-foreground hover:fill-primary", className)}
 			aria-label={ariaLabel}
 		>
 			<title>VS Code Icon</title>
@@ -31,10 +28,7 @@ const PlayStoreIcon = ({
 		<svg
 			viewBox="0 0 512 512"
 			xmlns="http://www.w3.org/2000/svg"
-			className={cn(
-				"size-5 fill-foreground transition-colors duration-500 ease-in hover:fill-primary",
-				className,
-			)}
+			className={cn("size-5 fill-foreground hover:fill-primary", className)}
 			aria-label={ariaLabel}
 		>
 			<title>Play Store Icon</title>
@@ -46,27 +40,28 @@ const PlayStoreIcon = ({
 	);
 };
 
-export default function SocialIcons() {
+export default function SocialIcons({ onClick }: { onClick?: () => void }) {
 	return (
-		<div className="flex items-center gap-2">
+		<>
 			<Link
 				href={`/blogs/releases/${appVersion}`}
 				className="hover:text-primary"
+				onClick={onClick}
 			>
 				{appVersion}
 			</Link>
-			<a href="/gh" target="_blank" rel="noreferrer">
+			<a href="/gh" target="_blank" rel="noreferrer" onClick={onClick}>
 				<GitHubLogoIcon
 					className="size-6 hover:text-primary"
 					aria-label="teensy github page"
 				/>
 			</a>
-			<a href="/vscode" target="_blank" rel="noreferrer">
+			<a href="/vscode" target="_blank" rel="noreferrer" onClick={onClick}>
 				<VsCodeIcon ariaLabel="teensy vs code extension" />
 			</a>
-			<a href="/ps" target="_blank" rel="noreferrer">
+			<a href="/ps" target="_blank" rel="noreferrer" onClick={onClick}>
 				<PlayStoreIcon className="size-6" aria-label="teensy play store app" />
 			</a>
-		</div>
+		</>
 	);
 }

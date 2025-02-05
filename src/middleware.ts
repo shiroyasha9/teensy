@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { Teensy, Visit } from "./server/db/zod-schemas";
+import type { Teensy, Visit } from "./server/db/types";
 
 export async function middleware(req: NextRequest) {
 	const isIgnoredPath =

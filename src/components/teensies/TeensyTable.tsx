@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import type { Teensy, Visit } from "@/server/db/zod-schemas";
+import type { Teensy, Visit } from "@/server/db/types";
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Search } from "lucide-react";
 import { type ChangeEvent, useMemo, useState } from "react";

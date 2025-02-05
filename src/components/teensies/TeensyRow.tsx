@@ -20,7 +20,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { Teensy, Visit } from "@/server/db/zod-schemas";
+import type { Teensy, Visit } from "@/server/db/types";
 import { showToastMessage } from "@/utils";
 
 import { env } from "@/env";

@@ -18,21 +18,6 @@ export const NOT_ALLOWED_SLUGS = new Set([
 	"blogs",
 ]);
 
-export const NAV_ITEMS = [
-	{
-		name: "🤏 Teensy a link",
-		href: "/",
-	},
-	{
-		name: "💬 Contactless WhatsApp",
-		href: "/wa",
-	},
-	{
-		name: "🔗 My Teensies",
-		href: "/teensies/mine",
-	},
-];
-
 export const AUTO_DELETE_OPTIONS: AutoDeleteDropdownData[] = [
 	{
 		label: "1 hour",
@@ -51,3 +36,6 @@ export const AUTO_DELETE_OPTIONS: AutoDeleteDropdownData[] = [
 		minutesToExpire: 60 * 24,
 	},
 ];
+
+export const IS_DEV = process.env.NODE_ENV === "development";
+// export const IS_DEV = false;

@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader } from "@/components/ui/loader";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -10,12 +11,11 @@ export default function ThemeToggle() {
 
 	useEffect(() => {
 		setMounted(true);
-		document.body.classList.add("transition-colors", "duration-500", "ease-in");
 	}, []);
 
 	const renderThemeChanger = () => {
 		if (!mounted) {
-			return null;
+			return <Loader className="size-6 text-foreground" />;
 		}
 		const currentTheme = theme === "system" ? systemTheme : theme;
 
@@ -36,5 +36,5 @@ export default function ThemeToggle() {
 			/>
 		);
 	};
-	return <div className="mr-2 cursor-pointer">{renderThemeChanger()}</div>;
+	return <div className="cursor-pointer">{renderThemeChanger()}</div>;
 }

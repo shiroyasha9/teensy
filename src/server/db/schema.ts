@@ -1,10 +1,13 @@
-import { relations } from "drizzle-orm";
 import {
 	index,
+	integer,
 	pgEnum,
 	pgTable,
 	primaryKey,
+	text,
+	timestamp,
 	uniqueIndex,
+	varchar,
 } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
 import type { AdapterAccount } from "next-auth/adapters";
@@ -54,192 +57,127 @@ export const keyType = pgEnum("key_type", [
 
 export const user = pgTable(
 	"user",
-	(t) => ({
-		id: t
-			.text()
+	{
+		id: text()
 			.primaryKey()
 			.$defaultFn(() => crypto.randomUUID())
 			.notNull(),
-		name: t.text(),
-		email: t.text().notNull(),
-		emailVerified: t.timestamp({
+		name: text(),
+		email: text().notNull(),
+		emailVerified: timestamp({
 			mode: "date",
 			withTimezone: true,
 		}),
-		image: t.text(),
-	}),
-	(t) => ({
-		emailKey: uniqueIndex("user_email_key").on(t.email),
-	}),
+		image: text(),
+	},
+	(t) => [uniqueIndex("user_email_key").on(t.email)],
 );
-
-export const userRelations = relations(user, ({ many }) => ({
-	accounts: many(account),
-	sessions: many(session),
-	teensies: many(teensy),
-	expiredTeensies: many(expiredTeensy),
-}));
 
 export const teensy = pgTable(
 	"Teensy",
-	(t) => ({
-		id: t.integer().primaryKey().generatedAlwaysAsIdentity({ startWith: 808 }),
-		url: t.varchar({ length: 2000 }).notNull(),
-		slug: t.text().notNull(),
-		createdAt: t
-			.timestamp({ mode: "date", withTimezone: true })
+	{
+		id: integer().primaryKey().generatedAlwaysAsIdentity({ startWith: 808 }),
+		url: varchar({ length: 2000 }).notNull(),
+		slug: text().notNull(),
+		createdAt: timestamp({ mode: "date", withTimezone: true })
 			.defaultNow()
 			.notNull(),
-		updatedAt: t
-			.timestamp({ mode: "date", withTimezone: true })
+		updatedAt: timestamp({ mode: "date", withTimezone: true })
 			.defaultNow()
 			.notNull(),
-		ownerId: t.text(),
-		password: t.text(),
-		expiresAt: t.timestamp({ mode: "date", withTimezone: true }),
-	}),
-	(t) => ({
-		slugKey: uniqueIndex("Teensy_slug_key").on(t.slug),
-		slugIdx: index("Teensy_slug_idx").on(t.slug),
-	}),
+		ownerId: text(),
+		password: text(),
+		expiresAt: timestamp({ mode: "date", withTimezone: true }),
+	},
+	(t) => [
+		uniqueIndex("Teensy_slug_key").on(t.slug),
+		index("Teensy_slug_idx").on(t.slug),
+	],
 );
 
-export const teensyRelations = relations(teensy, ({ one, many }) => ({
-	owner: one(user, {
-		fields: [teensy.ownerId],
-		references: [user.id],
-	}),
-	visits: many(visit),
-}));
-// Teensy_ownerId_user_id_fk;
-export const visit = pgTable("Visit", (t) => ({
-	id: t
-		.text()
+export const visit = pgTable("Visit", {
+	id: text()
 		.primaryKey()
 		.notNull()
 		.$defaultFn(() => nanoid()),
-	createdAt: t
-		.timestamp({ mode: "date", withTimezone: true })
+	createdAt: timestamp({ mode: "date", withTimezone: true })
 		.defaultNow()
 		.notNull(),
-	teensyId: t
-		.integer()
+	teensyId: integer()
 		.notNull()
 		.references(() => teensy.id, {
 			onDelete: "cascade",
 			onUpdate: "cascade",
 		}),
-}));
+});
 
-export const visitRelations = relations(visit, ({ one }) => ({
-	teensy: one(teensy, {
-		fields: [visit.teensyId],
-		references: [teensy.id],
-	}),
-}));
-
-export const globalVisits = pgTable("GlobalVisits", (t) => ({
-	id: t
-		.text()
+export const globalVisits = pgTable("GlobalVisits", {
+	id: text()
 		.primaryKey()
 		.notNull()
 		.$defaultFn(() => nanoid()),
-	createdAt: t
-		.timestamp({ mode: "date", withTimezone: true })
+	createdAt: timestamp({ mode: "date", withTimezone: true })
 		.defaultNow()
 		.notNull(),
-}));
+});
 
 export const expiredTeensy = pgTable(
 	"ExpiredTeensy",
-	(t) => ({
-		id: t.integer().primaryKey().generatedAlwaysAsIdentity({ startWith: 21 }),
-		url: t.varchar({ length: 2000 }).notNull(),
-		slug: t.text().notNull(),
-		createdAt: t
-			.timestamp({ mode: "date", withTimezone: true })
+	{
+		id: integer().primaryKey().generatedAlwaysAsIdentity({ startWith: 21 }),
+		url: varchar({ length: 2000 }).notNull(),
+		slug: text().notNull(),
+		createdAt: timestamp({ mode: "date", withTimezone: true })
 			.defaultNow()
 			.notNull(),
-		password: t.text(),
-		ownerId: t.text().references(() => user.id, {
+		password: text(),
+		ownerId: text().references(() => user.id, {
 			onDelete: "set null",
 			onUpdate: "cascade",
 		}),
-		visitCount: t.integer().default(0).notNull(),
-	}),
-	(t) => ({
-		slugIdx: index("ExpiredTeensy_slug_idx").on(t.slug),
-	}),
+		visitCount: integer().default(0).notNull(),
+	},
+	(t) => [index("ExpiredTeensy_slug_idx").on(t.slug)],
 );
 
-export const expiredTeensyRelations = relations(expiredTeensy, ({ one }) => ({
-	owner: one(user, {
-		fields: [expiredTeensy.ownerId],
-		references: [user.id],
-	}),
-}));
-
-export const session = pgTable("session", (t) => ({
-	sessionToken: t.text().primaryKey(),
-	userId: t
-		.text()
+export const session = pgTable("session", {
+	sessionToken: text().primaryKey(),
+	userId: text()
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
-	expires: t.timestamp({ mode: "date", withTimezone: true }).notNull(),
-}));
-
-export const sessionRelations = relations(session, ({ one }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id],
-	}),
-}));
+	expires: timestamp({ mode: "date", withTimezone: true }).notNull(),
+});
 
 export const verificationToken = pgTable(
 	"verificationToken",
-	(t) => ({
-		identifier: t.text().notNull(),
-		token: t.text().notNull(),
-		expires: t
-			.timestamp({
-				mode: "date",
-				withTimezone: true,
-			})
-			.notNull(),
-	}),
-	(t) => ({
-		compoundKey: primaryKey({ columns: [t.identifier, t.token] }),
-	}),
+	{
+		identifier: text().notNull(),
+		token: text().notNull(),
+		expires: timestamp({ mode: "date", withTimezone: true }).notNull(),
+	},
+	(t) => [primaryKey({ columns: [t.identifier, t.token] })],
 );
 
 export const account = pgTable(
 	"account",
-	(t) => ({
-		userId: t
-			.text()
+	{
+		userId: text()
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-		type: t.text().$type<AdapterAccount["type"]>().notNull(),
-		provider: t.text().notNull(),
-		providerAccountId: t.text().notNull(),
-		refresh_token: t.text("refresh_token"),
-		access_token: t.text("access_token"),
-		expires_at: t.integer("expires_at"),
-		token_type: t.text("token_type"),
-		scope: t.text(),
-		id_token: t.text("id_token"),
-		session_state: t.text("session_state"),
-	}),
-	(account) => ({
-		compoundKey: primaryKey({
-			columns: [account.provider, account.providerAccountId],
+		type: text().$type<AdapterAccount["type"]>().notNull(),
+		provider: text().notNull(),
+		providerAccountId: text().notNull(),
+		refresh_token: text("refresh_token"),
+		access_token: text("access_token"),
+		expires_at: integer("expires_at"),
+		token_type: text("token_type"),
+		scope: text(),
+		id_token: text("id_token"),
+		session_state: text("session_state"),
+	},
+	(t) => [
+		primaryKey({
+			columns: [t.provider, t.providerAccountId],
 		}),
-	}),
+	],
 );
-
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id],
-	}),
-}));

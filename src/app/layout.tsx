@@ -8,7 +8,7 @@ import { Rubik } from "next/font/google";
 
 import Confetti from "@/components/layout/Confetti";
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import { Header } from "@/features/header/components/header";
 import "@/styles/globals.css";
 import VersionUpdateToast from "@/components/version/VersionUpdateToast";
 import { appVersion } from "@/constants/config";
@@ -54,11 +54,11 @@ export default function RootLayout({
 			className={cn("antialiased", rubik.className)}
 			suppressHydrationWarning // next-themes hydration warning
 		>
-			<body className="flex h-screen flex-col p-6 md:overflow-x-hidden">
+			<body className="flex h-screen flex-col md:overflow-x-hidden">
 				<Providers>
 					<Header />
 					{authModal}
-					<section className="mt-12 flex flex-1 flex-col items-center justify-center">
+					<section className="mt-12 flex flex-1 flex-col items-center justify-center p-6">
 						{children}
 					</section>
 					<Footer />
