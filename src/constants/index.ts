@@ -36,3 +36,6 @@ export const AUTO_DELETE_OPTIONS: AutoDeleteDropdownData[] = [
 		minutesToExpire: 60 * 24,
 	},
 ];
+
+export const IS_DEV = process.env.NODE_ENV === "development";
+// export const IS_DEV = false;

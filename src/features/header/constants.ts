@@ -1,3 +1,4 @@
+import { IS_DEV } from "@/constants";
 import {
 	BarChart2,
 	Info,
@@ -37,22 +38,31 @@ export const NAV_ITEMS: NavItem[] = [
 				icon: MessageCircle,
 				description: "Send WhatsApp messages without saving the number",
 			},
-			{
-				name: "Let me Google that for you",
-				href: "/ltgtfy-it",
-				icon: Search,
-				description: "For those people who can't take the effort to Google",
-			},
+			...(IS_DEV
+				? [
+						{
+							name: "Let me Google that for you",
+							href: "/ltgtfy-it",
+							icon: Search,
+							description:
+								"For those people who can't take the effort to Google",
+						},
+					]
+				: []),
 		],
 	},
-	{
-		name: "Features",
-		href: "/features",
-		icon: Sparkles,
-	},
-	{
-		name: "About",
-		href: "/about",
-		icon: Info,
-	},
+	...(IS_DEV
+		? [
+				{
+					name: "Features",
+					href: "/features",
+					icon: Sparkles,
+				},
+				{
+					name: "About",
+					href: "/about",
+					icon: Info,
+				},
+			]
+		: []),
 ];
