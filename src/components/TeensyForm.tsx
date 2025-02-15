@@ -70,9 +70,9 @@ const TeensyForm = (props: TeensyFormProps) => {
 		defaultValues: {
 			slug: currentTeensy?.slug ?? "",
 			url: currentTeensy?.url ?? "",
-			isPasswordProtected: !!currentTeensy?.password,
+			isPasswordProtected: currentTeensy ? !!currentTeensy.password : false,
 			password: currentTeensy?.password ?? undefined,
-			isAutoDelete: !!currentTeensy?.expiresAt,
+			isAutoDelete: currentTeensy ? !!currentTeensy.expiresAt : false,
 			expiresIn: undefined,
 			expiresAt: currentTeensy?.expiresAt ?? undefined,
 		},
@@ -205,7 +205,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 					</Button>
 				</div>
 			</div>
-
+			<div className="h-px w-full bg-gradient-to-r from-secondary via-primary to-secondary opacity-30" />
 			<div className="space-y-1.5">
 				<div className="flex items-center gap-x-1">
 					<input
@@ -220,12 +220,16 @@ const TeensyForm = (props: TeensyFormProps) => {
 						Password Protection
 					</label>
 				</div>
-				<Input
-					disabled={!isPasswordProtected}
-					placeholder="e.g. 12345"
-					type="password"
-					{...register("password")}
-				/>
+				{isPasswordProtected && (
+					<Input
+						placeholder="e.g. 12345"
+						type="password"
+						{...register("password", {
+							required: isPasswordProtected,
+							minLength: 5,
+						})}
+					/>
+				)}
 			</div>
 			{mode === "create" ? (
 				<div className="space-y-1.5">
@@ -242,15 +246,20 @@ const TeensyForm = (props: TeensyFormProps) => {
 							Auto delete in
 						</label>
 					</div>
-					<Dropdown
-						data={AUTO_DELETE_OPTIONS}
-						disabled={!isAutoDelete}
-						label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
-						onChange={(mins: number) => {
-							setValue("expiresIn", mins);
-							void trigger("expiresIn");
-						}}
-					/>
+					{isAutoDelete && (
+						<Dropdown
+							data={AUTO_DELETE_OPTIONS}
+							disabled={!isAutoDelete}
+							label={expiresIn ? getFormattedTime(expiresIn) : "e.g 1 day"}
+							{...register("expiresIn", {
+								required: isAutoDelete,
+							})}
+							onChange={(mins: number) => {
+								setValue("expiresIn", mins);
+								void trigger("expiresIn");
+							}}
+						/>
+					)}
 				</div>
 			) : (
 				currentTeensy?.expiresAt && (
