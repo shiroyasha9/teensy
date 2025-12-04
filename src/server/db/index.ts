@@ -2,6 +2,8 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { env } from "@/env";
 // biome-ignore lint/performance/noNamespaceImport: needed here
+import * as authSchema from "./auth-schema";
+// biome-ignore lint/performance/noNamespaceImport: needed here
 import * as relations from "./relations";
 // biome-ignore lint/performance/noNamespaceImport: needed here
 import * as schema from "./schema";
@@ -29,6 +31,6 @@ if (env.NODE_ENV !== "production") {
 }
 
 export const db = drizzle(client, {
-	schema: { ...schema, ...relations },
+	schema: { ...schema, ...authSchema, ...relations },
 	casing: "camelCase",
 });

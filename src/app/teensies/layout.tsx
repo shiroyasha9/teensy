@@ -1,9 +1,12 @@
+import { headers } from "next/headers";
 import Login from "@/components/auth/Login";
 import SelectedSegment from "@/components/SelectedSegment";
-import { auth } from "@/server/auth";
+import { auth } from "@/lib/auth";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	return (
 		<>

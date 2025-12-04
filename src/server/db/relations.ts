@@ -1,17 +1,18 @@
 import { relations } from "drizzle-orm";
-import { account, expiredTeensy, session, teensy, user, visit } from "./schema";
+import { accounts, sessions, users } from "./auth-schema";
+import { expiredTeensy, teensy, visit } from "./schema";
 
-export const userRelations = relations(user, ({ many }) => ({
-	accounts: many(account),
-	sessions: many(session),
+export const userRelations = relations(users, ({ many }) => ({
+	accounts: many(accounts),
+	sessions: many(sessions),
 	teensies: many(teensy),
 	expiredTeensies: many(expiredTeensy),
 }));
 
 export const teensyRelations = relations(teensy, ({ one, many }) => ({
-	owner: one(user, {
+	owner: one(users, {
 		fields: [teensy.ownerId],
-		references: [user.id],
+		references: [users.id],
 	}),
 	visits: many(visit),
 }));
@@ -24,22 +25,22 @@ export const visitRelations = relations(visit, ({ one }) => ({
 }));
 
 export const expiredTeensyRelations = relations(expiredTeensy, ({ one }) => ({
-	owner: one(user, {
+	owner: one(users, {
 		fields: [expiredTeensy.ownerId],
-		references: [user.id],
+		references: [users.id],
 	}),
 }));
 
-export const sessionRelations = relations(session, ({ one }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id],
+export const sessionRelations = relations(sessions, ({ one }) => ({
+	user: one(users, {
+		fields: [sessions.userId],
+		references: [users.id],
 	}),
 }));
 
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id],
+export const accountRelations = relations(accounts, ({ one }) => ({
+	user: one(users, {
+		fields: [accounts.userId],
+		references: [users.id],
 	}),
 }));

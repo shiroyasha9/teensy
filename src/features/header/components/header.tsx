@@ -1,5 +1,6 @@
+import { headers } from "next/headers";
 import Link from "next/link";
-import { auth } from "@/server/auth";
+import { auth } from "@/lib/auth";
 import AuthButton from "./auth-button";
 import MobileHeader from "./mobile-header";
 import { NavMenu } from "./nav-menu";
@@ -7,7 +8,9 @@ import SocialIcons from "./social-icons";
 import ThemeToggle from "./theme-toggle";
 
 export async function Header() {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	const user = session?.user;
 

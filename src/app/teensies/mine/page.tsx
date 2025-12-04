@@ -1,10 +1,11 @@
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import TeensyTable from "@/components/teensies/TeensyTable";
-import { auth } from "@/server/auth";
+import { auth } from "@/lib/auth";
 import { db } from "@/server/db";
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: "My Teensies",
 	description: "Save your teensies to edit/delete them later!",
 	keywords: ["url", "shortener", "teensy"],
@@ -36,7 +37,9 @@ export const viewport: Viewport = {
 };
 
 export default async function TeensiesPage() {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	if (!session) {
 		redirect("/login");

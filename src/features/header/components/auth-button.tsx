@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { MenubarSeparator } from "@/components/ui/menubar";
-import { signOutServerFn } from "@/server/functions";
+import { signOut } from "@/lib/auth-client";
 import { cn } from "@/utils";
 import SocialIcons from "./social-icons";
 
@@ -53,7 +53,7 @@ const AuthButton = ({
 
 	const handleLogout = () => {
 		onClick?.();
-		signOutServerFn();
+		signOut();
 	};
 
 	return (

@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { signInServerFn } from "@/server/functions";
+import { signIn } from "@/lib/auth-client";
 import { cn } from "@/utils";
 
 const GoogleIcon = ({
@@ -31,7 +31,8 @@ const GoogleIcon = ({
 
 const UserAuthForm = () => {
 	const { mutate: signInHandler, isPending } = useMutation({
-		mutationFn: async () => await signInServerFn(),
+		mutationFn: async () =>
+			await signIn.social({ provider: "google", callbackURL: "/" }),
 		onMutate: () => {
 			toast.loading("Redirecting...");
 		},

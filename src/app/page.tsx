@@ -1,9 +1,10 @@
-import type { Viewport } from "next";
+import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
 import TeensyForm from "@/components/TeensyForm";
-import { auth } from "@/server/auth";
+import { auth } from "@/lib/auth";
 
-export const metadata = {
+export const metadata: Metadata = {
 	title: "Teensy your URLs",
 	description: "A Customizable URL shortener. Paste URL, give it a name, done!",
 	keywords: ["url", "shortener", "teensy"],
@@ -36,7 +37,9 @@ export const viewport: Viewport = {
 };
 
 const Page = async () => {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	return (
 		<>
