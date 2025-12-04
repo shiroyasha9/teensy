@@ -64,7 +64,7 @@ const TeensyForm = (props: TeensyFormProps) => {
 		register,
 		trigger,
 		formState: { errors, isSubmitting, isValid },
-	} = useForm<FormValues>({
+	} = useForm({
 		resolver: zodResolver(formSchema),
 		mode: "onChange",
 		defaultValues: {

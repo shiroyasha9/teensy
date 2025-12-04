@@ -23,7 +23,7 @@ const WhatsAppForm = () => {
 		handleSubmit,
 		register,
 		formState: { errors, isSubmitting, isValid },
-	} = useForm<FormValues>({
+	} = useForm({
 		resolver: zodResolver(formSchema),
 		mode: "onChange",
 	});
