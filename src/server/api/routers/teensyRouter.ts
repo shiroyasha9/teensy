@@ -31,7 +31,6 @@ export const teensyRouter = createTRPCRouter({
 			}),
 		)
 		.query(async ({ input }) => {
-			console.log("input", input);
 			const teensy = await db.query.teensy.findFirst({
 				where: (t, { eq }) => eq(t.slug, input.slug),
 				with: {

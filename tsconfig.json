@@ -8,22 +8,23 @@
 		"resolveJsonModule": true,
 		"moduleDetection": "force",
 		"isolatedModules": true,
-
 		/* Strictness */
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
 		"checkJs": true,
-
 		/* Bundled projects */
 		"lib": ["dom", "dom.iterable", "ES2022", "WebWorker"],
 		"types": ["@serwist/next/typings"],
 		"noEmit": true,
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"jsx": "preserve",
-		"plugins": [{ "name": "next" }],
+		"jsx": "react-jsx",
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
 		"incremental": true,
-
 		/* Path Aliases */
 		"paths": {
 			"@/*": ["./src/*"]
@@ -36,6 +37,7 @@
 		"**/*.cjs",
 		"**/*.mjs",
 		"**/*.js",
+		".next/dev/types/**/*.ts",
 		".next/types/**/*.ts"
 	],
 	"exclude": ["node_modules", "public"]

@@ -2,6 +2,8 @@
 
 import { AvatarIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { revalidateUrlPath } from "@/actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -33,6 +35,8 @@ const AuthButton = ({
 	className,
 	onClick,
 }: AuthButtonProps) => {
+	const pathname = usePathname();
+
 	if (!(name && email)) {
 		return (
 			<Link
@@ -54,6 +58,7 @@ const AuthButton = ({
 	const handleLogout = () => {
 		onClick?.();
 		signOut();
+		revalidateUrlPath(pathname);
 	};
 
 	return (
