@@ -47,7 +47,7 @@ const TeensyTable = ({ userTeensies, ownerId }: TeensyTableProps) => {
 					</div>
 					<Input
 						type="text"
-						className="!p-2 !pl-10 my-0 block w-full rounded-lg border px-3 py-0 text-sm"
+						className="my-0 block w-full rounded-lg border p-2! px-3 py-0 pl-10! text-sm"
 						placeholder="Search for any url or slug..."
 						defaultValue=""
 						onChange={handleSearchChange}

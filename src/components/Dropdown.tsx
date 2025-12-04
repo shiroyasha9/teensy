@@ -16,7 +16,7 @@ const Dropdown = (props: DropdownProps) => {
 	return (
 		<div className="relative w-full">
 			<button
-				className="inline-flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-1 text-center text-sm shadow-sm placeholder:text-muted-foreground hover:bg-background/10 focus:outline-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+				className="inline-flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-1 text-center text-sm shadow-xs placeholder:text-muted-foreground hover:bg-background/10 focus:outline-hidden focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
 				onClick={() => setIsOpen((prev) => !prev)}
 				disabled={disabled}
 				type="button"

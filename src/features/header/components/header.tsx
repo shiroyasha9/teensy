@@ -13,7 +13,7 @@ export async function Header() {
 
 	return (
 		<div className="fixed inset-x-0 top-0 px-6 pt-4 pb-2">
-			<nav className="mx-auto flex h-10 items-center justify-between gap-x-2 md:max-w-screen-2xl">
+			<nav className="mx-auto flex h-10 items-center justify-between gap-x-2 md:max-w-(--breakpoint-2xl)">
 				<Link href="/" className="z-10">
 					<p className="text-4xl text-primary">teensy</p>
 				</Link>

@@ -56,7 +56,7 @@ const Success = ({ slug }: SuccessProps) => {
 					}}
 				/>
 				<div
-					className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-sm dark:bg-black/50 ${
+					className={`grid h-[150px] w-[150px] cursor-pointer place-items-center backdrop-blur-xs dark:bg-black/50 ${
 						showDownloadQRButton ? "absolute" : "hidden"
 					}`}
 				>
