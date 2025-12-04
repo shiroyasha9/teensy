@@ -1,23 +1,24 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"vcs": {
 		"clientKind": "git",
 		"useIgnoreFile": true,
 		"enabled": true,
 		"defaultBranch": "master"
 	},
-	"organizeImports": { "enabled": true },
-	// "files": {
-	//   "ignore": ["**/__generated__/**"],
-	// },
-	// "javascript": {
-	//   "globals": ["$", "_", "React", "JSX", "__DEV__"],
-	// },
+	"javascript": {
+		"globals": ["React"]
+	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"formatter": {
 		"enabled": true
 	},
 	"linter": {
 		"enabled": true,
+		"domains": {
+			"next": "recommended",
+			"react": "recommended"
+		},
 		"rules": {
 			"recommended": true,
 			"correctness": {
@@ -28,18 +29,20 @@
 			},
 			"style": {
 				"noNonNullAssertion": "warn",
-				"noNamespaceImport": "warn",
 				"noNamespace": "warn",
 				"useBlockStatements": "warn",
-				"useShorthandArrayType": "warn"
+				"useConsistentArrayType": {
+					"level": "warn",
+					"options": { "syntax": "shorthand" }
+				}
 			},
 			"suspicious": {
 				"noExplicitAny": "warn",
 				"noArrayIndexKey": "warn",
 				"noImplicitAnyLet": "warn",
-				"noConsoleLog": "warn",
 				"noEmptyBlockStatements": "warn",
-				"useAwait": "warn"
+				"useAwait": "warn",
+				"noConsole": { "level": "warn", "options": { "allow": ["log"] } }
 			},
 			"complexity": {
 				"noForEach": "warn",
@@ -49,11 +52,14 @@
 			"nursery": {
 				"useSortedClasses": {
 					"level": "warn",
+					"fix": "safe",
 					"options": {
-						"attributes": ["classList"],
-						"functions": ["clsx", "cva", "tw", "cn"]
+						"functions": ["clsx", "cva", "cn"]
 					}
 				}
+			},
+			"performance": {
+				"noNamespaceImport": "warn"
 			}
 		}
 	}
