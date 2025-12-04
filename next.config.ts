@@ -1,4 +1,4 @@
-import withMdxInit from "@next/mdx";
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
 /**
@@ -22,7 +22,9 @@ const config: NextConfig = {
 // 	disable: process.env.NODE_ENV === "development",
 // });
 
-const withMdx = withMdxInit({});
+const withMDX = createMDX({
+	extension: /\.(md|mdx)$/,
+});
 
 // export default withSerwist(withMdx(config));
-export default withMdx(config);
+export default withMDX(config);
