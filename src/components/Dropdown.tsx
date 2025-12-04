@@ -1,6 +1,6 @@
-import type { AutoDeleteDropdownData } from "@/types";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
+import type { AutoDeleteDropdownData } from "@/types";
 
 type DropdownProps = {
 	label: string;

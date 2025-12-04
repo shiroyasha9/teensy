@@ -1,8 +1,8 @@
+import type { Viewport } from "next";
+import { redirect } from "next/navigation";
 import TeensyTable from "@/components/teensies/TeensyTable";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import type { Viewport } from "next";
-import { redirect } from "next/navigation";
 
 export const metadata = {
 	title: "My Teensies",

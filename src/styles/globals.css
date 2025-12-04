@@ -73,7 +73,10 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"] {
 	-webkit-appearance: none;
 	margin: 0;
+	/* biome-ignore lint/complexity/noImportantStyles: Required to override the default browser styles */
 	-moz-appearance: textfield !important;
+	/* biome-ignore lint/complexity/noImportantStyles: Required to override the default browser styles */
+	appearance: textfield !important;
 }
 
 * {

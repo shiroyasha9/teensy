@@ -1,5 +1,5 @@
-import CloseModal from "@/components/CloseModal";
 import Login from "@/components/auth/Login";
+import CloseModal from "@/components/CloseModal";
 
 export const dynamic = "force-dynamic";
 

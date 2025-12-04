@@ -1,5 +1,5 @@
-import { auth } from "@/server/auth";
 import Link from "next/link";
+import { auth } from "@/server/auth";
 import AuthButton from "./auth-button";
 import MobileHeader from "./mobile-header";
 import { NavMenu } from "./nav-menu";

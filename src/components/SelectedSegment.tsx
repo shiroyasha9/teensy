@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@/utils";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { cn } from "@/utils";
 
 const tabButtonClassNames = (
 	segment: string | null,

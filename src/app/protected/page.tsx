@@ -1,7 +1,7 @@
-import PasswordForm from "@/components/protected/PasswordForm";
-import { db } from "@/server/db";
 import type { Viewport } from "next";
 import { notFound } from "next/navigation";
+import PasswordForm from "@/components/protected/PasswordForm";
+import { db } from "@/server/db";
 
 export const metadata = {
 	title: "Protected Teensy",

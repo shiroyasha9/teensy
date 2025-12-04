@@ -1,6 +1,6 @@
-import { cn } from "@/utils";
 import type { LucideIcon } from "lucide-react";
 import Link, { type LinkProps } from "next/link";
+import { cn } from "@/utils";
 
 type Props = LinkProps & {
 	name: string;

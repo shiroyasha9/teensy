@@ -7,7 +7,7 @@
  * need to use are documented accordingly near the end.
  */
 
-import { TRPCError, initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -96,7 +96,7 @@ const _timingMiddleware = t.middleware(async ({ next, path }) => {
 	const result = await next();
 
 	const end = Date.now();
-	// biome-ignore lint/suspicious/noConsoleLog: local only
+	// biome-ignore lint/suspicious/noConsole: local only
 	console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
 
 	return result;

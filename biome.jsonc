@@ -13,6 +13,11 @@
 	"formatter": {
 		"enabled": true
 	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
 	"linter": {
 		"enabled": true,
 		"domains": {
@@ -42,7 +47,10 @@
 				"noImplicitAnyLet": "warn",
 				"noEmptyBlockStatements": "warn",
 				"useAwait": "warn",
-				"noConsole": { "level": "warn", "options": { "allow": ["log"] } }
+				"noConsole": {
+					"level": "warn",
+					"options": { "allow": ["error", "info"] }
+				}
 			},
 			"complexity": {
 				"noForEach": "warn",

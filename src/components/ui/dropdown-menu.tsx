@@ -1,6 +1,6 @@
 "use client";
 
-// biome-ignore lint/style/noNamespaceImport: required
+// biome-ignore lint/performance/noNamespaceImport: required
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import {
 	CheckIcon,

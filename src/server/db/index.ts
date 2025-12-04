@@ -1,9 +1,9 @@
-import { env } from "@/env";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-// biome-ignore lint/style/noNamespaceImport: needed here
+import { env } from "@/env";
+// biome-ignore lint/performance/noNamespaceImport: needed here
 import * as relations from "./relations";
-// biome-ignore lint/style/noNamespaceImport: needed here
+// biome-ignore lint/performance/noNamespaceImport: needed here
 import * as schema from "./schema";
 
 /**

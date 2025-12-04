@@ -1,6 +1,6 @@
 "use client";
 
-// biome-ignore lint/style/noNamespaceImport: required
+// biome-ignore lint/performance/noNamespaceImport: required
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 

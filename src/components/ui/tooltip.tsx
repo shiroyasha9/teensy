@@ -1,6 +1,6 @@
 "use client";
 
-// biome-ignore lint/style/noNamespaceImport: required
+// biome-ignore lint/performance/noNamespaceImport: required
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "@/utils";

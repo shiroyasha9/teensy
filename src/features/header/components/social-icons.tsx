@@ -1,12 +1,15 @@
-import { appVersion } from "@/constants/config";
-import { cn } from "@/utils";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { appVersion } from "@/constants/config";
+import { cn } from "@/utils";
 
 const VsCodeIcon = ({
 	className,
 	ariaLabel = "vs code icon",
-}: { className?: string; ariaLabel?: string }) => {
+}: {
+	className?: string;
+	ariaLabel?: string;
+}) => {
 	return (
 		<svg
 			viewBox="0 0 32 32"
@@ -23,7 +26,10 @@ const VsCodeIcon = ({
 const PlayStoreIcon = ({
 	className,
 	ariaLabel = "play store icon",
-}: { className?: string; ariaLabel?: string }) => {
+}: {
+	className?: string;
+	ariaLabel?: string;
+}) => {
 	return (
 		<svg
 			viewBox="0 0 512 512"

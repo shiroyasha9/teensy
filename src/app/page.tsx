@@ -1,7 +1,7 @@
-import TeensyForm from "@/components/TeensyForm";
-import { auth } from "@/server/auth";
 import type { Viewport } from "next";
 import Link from "next/link";
+import TeensyForm from "@/components/TeensyForm";
+import { auth } from "@/server/auth";
 
 export const metadata = {
 	title: "Teensy your URLs",

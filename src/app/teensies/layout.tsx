@@ -1,5 +1,5 @@
-import SelectedSegment from "@/components/SelectedSegment";
 import Login from "@/components/auth/Login";
+import SelectedSegment from "@/components/SelectedSegment";
 import { auth } from "@/server/auth";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {

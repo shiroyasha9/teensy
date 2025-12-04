@@ -1,4 +1,7 @@
 "use client";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { useState } from "react";
 import {
 	Accordion,
 	AccordionContent,
@@ -15,9 +18,6 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/utils";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import { useState } from "react";
 import { NAV_ITEMS } from "../constants";
 import AuthButton from "./auth-button";
 import { NavLink } from "./nav-link";

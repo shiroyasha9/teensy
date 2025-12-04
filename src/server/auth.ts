@@ -1,9 +1,9 @@
-import { db } from "@/server/db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type { DefaultSession } from "next-auth";
 import NextAuth from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
+import { db } from "@/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

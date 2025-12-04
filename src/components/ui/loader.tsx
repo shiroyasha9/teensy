@@ -1,5 +1,5 @@
-import { cn } from "@/utils";
 import { Loader2, type LucideProps } from "lucide-react";
+import { cn } from "@/utils";
 
 export const Loader = ({ className, ...props }: LucideProps) => {
 	return (

@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { api } from "@/trpc/react";
 import { isDevEnvironment } from "@/utils";
-import { useEffect } from "react";
 
 export default function AddVisitCount() {
 	const addGlobalVisitCount = api.teensy.addGlobalVisit.useMutation();

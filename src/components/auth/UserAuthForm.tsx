@@ -1,14 +1,17 @@
 "use client";
 
-import { signInServerFn } from "@/server/functions";
-import { cn } from "@/utils";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { signInServerFn } from "@/server/functions";
+import { cn } from "@/utils";
 
 const GoogleIcon = ({
 	className,
 	ariaLabel = "google icon",
-}: { className?: string; ariaLabel?: string }) => {
+}: {
+	className?: string;
+	ariaLabel?: string;
+}) => {
 	return (
 		<svg
 			viewBox="0 0 210 210"

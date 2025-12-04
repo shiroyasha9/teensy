@@ -1,12 +1,12 @@
 "use client";
 
-import { env } from "@/env";
-import { showToastMessage } from "@/utils";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import copy from "copy-to-clipboard";
-import { useQRCode } from "next-qrcode";
 import { useRouter } from "next/navigation";
+import { useQRCode } from "next-qrcode";
 import { useState } from "react";
+import { env } from "@/env";
+import { showToastMessage } from "@/utils";
 import { Button } from "./ui/button";
 
 type SuccessProps = {
@@ -33,6 +33,7 @@ const Success = ({ slug }: SuccessProps) => {
 
 	return (
 		<>
+			{/** biome-ignore lint/a11y/noStaticElementInteractions: Required to set the state of the button */}
 			<div
 				className="mt-3 flex items-center justify-center"
 				onMouseOver={() => setShowDownloadQRButton(true)}

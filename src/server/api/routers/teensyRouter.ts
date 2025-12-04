@@ -1,3 +1,5 @@
+import { eq } from "drizzle-orm";
+import { z } from "zod";
 import {
 	createTRPCRouter,
 	enforceUserIsAuthorized,
@@ -12,8 +14,6 @@ import {
 } from "@/server/db/schema";
 import { selectTeensySchema } from "@/server/db/zod-schemas";
 import { getExpiryDate } from "@/utils";
-import { eq } from "drizzle-orm";
-import { z } from "zod";
 
 export const teensyRouter = createTRPCRouter({
 	addGlobalVisit: protectedProcedure.mutation(async () => {

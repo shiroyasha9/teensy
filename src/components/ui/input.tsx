@@ -1,5 +1,5 @@
-import { cn } from "@/utils";
 import type { LucideIcon } from "lucide-react";
+import { cn } from "@/utils";
 import { HelperText } from "./helper-text";
 import { Label } from "./label";
 import TooltipHOC from "./tooltip-hoc";

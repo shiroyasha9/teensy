@@ -1,8 +1,8 @@
-import { SLUG_CHARACTERS } from "@/constants";
 import clsx, { type ClassValue } from "clsx";
 import { customAlphabet } from "nanoid";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+import { SLUG_CHARACTERS } from "@/constants";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -19,7 +19,7 @@ export const getBaseUrl = () => {
 };
 
 export function isValidEmail(email: string) {
-	return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+	return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
 
 export const nanoidForSlug = customAlphabet(SLUG_CHARACTERS, 5);
