@@ -21,7 +21,7 @@ const formSchema = z
 			.min(1, "Enter a valid alias.")
 			.max(20, "Enter a valid alias.")
 			.regex(/^[a-zA-Z0-9-]+$/, "Use only alphanumeric values or -"),
-		url: z.string().url("Enter a valid URL").min(1, "Enter a valid URL"),
+		url: z.url("Enter a valid URL").min(1, "Enter a valid URL"),
 		isPasswordProtected: z.boolean(),
 		password: z.string().optional(),
 		isAutoDelete: z.boolean(),

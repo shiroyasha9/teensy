@@ -49,6 +49,7 @@
 				"useAwait": "warn",
 				"noConsole": {
 					"level": "warn",
+					"fix": "none",
 					"options": { "allow": ["error", "info"] }
 				}
 			},
