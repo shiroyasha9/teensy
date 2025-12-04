@@ -1,4 +1,3 @@
-import { IS_DEV } from "@/constants";
 import {
 	BarChart2,
 	Info,
@@ -9,6 +8,7 @@ import {
 	Sparkles,
 	Wrench,
 } from "lucide-react";
+import { IS_DEV } from "@/constants";
 import type { NavItem } from "./types";
 
 export const NAV_ITEMS: NavItem[] = [

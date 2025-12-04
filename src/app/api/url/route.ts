@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/server/db";
 import {
 	expiredTeensy as expiredTeensyTable,
@@ -6,7 +7,6 @@ import {
 	visit,
 } from "@/server/db/schema";
 import { isDevEnvironment } from "@/utils";
-import { eq } from "drizzle-orm";
 
 export async function GET(req: Request) {
 	const url = new URL(req.url);

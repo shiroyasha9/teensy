@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -8,7 +9,6 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/utils";
-import Link from "next/link";
 import { NAV_ITEMS } from "../constants";
 import { NavLink } from "./nav-link";
 

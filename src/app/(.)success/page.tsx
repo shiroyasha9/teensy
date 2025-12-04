@@ -1,6 +1,6 @@
+import { notFound } from "next/navigation";
 import Success from "@/components/Success";
 import { env } from "@/env";
-import { notFound } from "next/navigation";
 
 type SuccessPageProps = {
 	searchParams: Promise<{

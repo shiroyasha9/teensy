@@ -1,15 +1,15 @@
 "use client";
 
-import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
-import { env } from "@/env";
-import type { Teensy } from "@/server/db/types";
-import { api } from "@/trpc/react";
-import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
+import { AUTO_DELETE_OPTIONS, NOT_ALLOWED_SLUGS } from "@/constants";
+import { env } from "@/env";
+import type { Teensy } from "@/server/db/types";
+import { api } from "@/trpc/react";
+import { cn, getFormattedTime, getRemaingTime, nanoidForSlug } from "@/utils";
 import Dropdown from "./Dropdown";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -21,7 +21,7 @@ const formSchema = z
 			.min(1, "Enter a valid alias.")
 			.max(20, "Enter a valid alias.")
 			.regex(/^[a-zA-Z0-9-]+$/, "Use only alphanumeric values or -"),
-		url: z.string().url("Enter a valid URL").min(1, "Enter a valid URL"),
+		url: z.url("Enter a valid URL").min(1, "Enter a valid URL"),
 		isPasswordProtected: z.boolean(),
 		password: z.string().optional(),
 		isAutoDelete: z.boolean(),

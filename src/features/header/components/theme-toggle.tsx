@@ -1,9 +1,9 @@
 "use client";
 
-import { Loader } from "@/components/ui/loader";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { Loader } from "@/components/ui/loader";
 
 export default function ThemeToggle() {
 	const [mounted, setMounted] = useState(false);

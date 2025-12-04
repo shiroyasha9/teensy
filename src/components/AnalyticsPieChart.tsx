@@ -18,7 +18,7 @@ export default function AnalyticsPieChart({
 			<Pie
 				height={10}
 				width={10}
-				className="max-h-[20rem]"
+				className="max-h-80"
 				options={{
 					responsive: true,
 					plugins: {

@@ -1,7 +1,7 @@
 "use client";
 
-import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "next-themes";
+import { TRPCReactProvider } from "@/trpc/react";
 import { TooltipProvider } from "../ui/tooltip";
 
 type ProviderProps = {

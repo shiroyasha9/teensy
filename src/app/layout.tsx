@@ -1,18 +1,17 @@
-import AddVisitCount from "@/components/layout/AddVisitCount";
-import Providers from "@/components/layout/Providers";
-import { Toaster } from "@/components/ui/sonner";
-import { cn } from "@/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Rubik } from "next/font/google";
-
+import AddVisitCount from "@/components/layout/AddVisitCount";
 import Confetti from "@/components/layout/Confetti";
 import Footer from "@/components/layout/Footer";
+import Providers from "@/components/layout/Providers";
+import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/features/header/components/header";
+import { cn } from "@/utils";
 import "@/styles/globals.css";
+import type { Metadata } from "next";
 import VersionUpdateToast from "@/components/version/VersionUpdateToast";
 import { appVersion } from "@/constants/config";
-import type { Metadata } from "next";
 
 const APP_NAME = "Teensy";
 const APP_DEFAULT_TITLE = "Teensy your URLs";

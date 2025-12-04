@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import type { Teensy } from "@/server/db/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import type { Teensy } from "@/server/db/types";
 
 const formSchema = z.object({
 	password: z.string().min(5, "Enter a valid password"),

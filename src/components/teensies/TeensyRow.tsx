@@ -1,5 +1,10 @@
 "use client";
 
+import copy from "copy-to-clipboard";
+import { Pencil, QrCode, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useQRCode } from "next-qrcode";
+import { useState } from "react";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -20,16 +25,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import type { Teensy, Visit } from "@/server/db/types";
-import { showToastMessage } from "@/utils";
-
 import { env } from "@/env";
+import type { Teensy, Visit } from "@/server/db/types";
 import { api } from "@/trpc/react";
-import copy from "copy-to-clipboard";
-import { Pencil, QrCode, Trash } from "lucide-react";
-import { useQRCode } from "next-qrcode";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { showToastMessage } from "@/utils";
 import TeensyForm from "../TeensyForm";
 import { buttonVariants } from "../ui/button";
 
@@ -98,6 +97,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 									/>
 									<p className="mt-4 flex gap-1">
 										<span>QR Code for</span>
+										{/** biome-ignore lint/a11y/noStaticElementInteractions: Required to copy the link */}
 										<span
 											className="cursor-pointer text-purple-600 hover:underline dark:text-primary"
 											onKeyDown={(e) => {
@@ -170,7 +170,7 @@ const TeensyRow = ({ teensy, ownerId }: TeensyRowProps) => {
 				</AlertDialog>
 			</td>
 			<td
-				className="cursor-pointer p-4 font-medium text-zinc-900 hover:underline dark:text-white "
+				className="cursor-pointer p-4 font-medium text-zinc-900 hover:underline dark:text-white"
 				onClick={() => {
 					copy(`${env.NEXT_PUBLIC_SITE_URL}/${teensy.slug}`);
 					showToastMessage("Link Copied!");

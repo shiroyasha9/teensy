@@ -1,9 +1,9 @@
-import Login from "@/components/auth/Login";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import type { FC } from "react";
+import Login from "@/components/auth/Login";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/utils";
 
 const Page: FC = () => {
 	return (

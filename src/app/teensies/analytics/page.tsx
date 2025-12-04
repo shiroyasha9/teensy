@@ -1,10 +1,13 @@
-import AnalyticsPieChart from "@/components/AnalyticsPieChart";
-import { auth } from "@/server/auth";
-import { db } from "@/server/db";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import AnalyticsPieChart from "@/components/AnalyticsPieChart";
+import { auth } from "@/lib/auth";
+import { db } from "@/server/db";
 
 const Page = async () => {
-	const session = await auth();
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
 
 	if (!session) {
 		redirect("/login");

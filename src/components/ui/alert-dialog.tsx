@@ -1,6 +1,6 @@
 "use client";
 
-// biome-ignore lint/style/noNamespaceImport: required
+// biome-ignore lint/performance/noNamespaceImport: required
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 
 import { buttonVariants } from "@/components/ui/button";

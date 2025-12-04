@@ -1,5 +1,7 @@
 "use client";
 
+import { AvatarIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -12,10 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { MenubarSeparator } from "@/components/ui/menubar";
-import { signOutServerFn } from "@/server/functions";
+import { signOut } from "@/lib/auth-client";
 import { cn } from "@/utils";
-import { AvatarIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import SocialIcons from "./social-icons";
 
 type AuthButtonProps = {
@@ -53,7 +53,7 @@ const AuthButton = ({
 
 	const handleLogout = () => {
 		onClick?.();
-		signOutServerFn();
+		signOut();
 	};
 
 	return (

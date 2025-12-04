@@ -1,14 +1,17 @@
 "use client";
 
-import { signInServerFn } from "@/server/functions";
-import { cn } from "@/utils";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { signIn } from "@/lib/auth-client";
+import { cn } from "@/utils";
 
 const GoogleIcon = ({
 	className,
 	ariaLabel = "google icon",
-}: { className?: string; ariaLabel?: string }) => {
+}: {
+	className?: string;
+	ariaLabel?: string;
+}) => {
 	return (
 		<svg
 			viewBox="0 0 210 210"
@@ -28,7 +31,8 @@ const GoogleIcon = ({
 
 const UserAuthForm = () => {
 	const { mutate: signInHandler, isPending } = useMutation({
-		mutationFn: async () => await signInServerFn(),
+		mutationFn: async () =>
+			await signIn.social({ provider: "google", callbackURL: "/" }),
 		onMutate: () => {
 			toast.loading("Redirecting...");
 		},
@@ -42,7 +46,7 @@ const UserAuthForm = () => {
 			type="button"
 			disabled={isPending}
 			onClick={() => signInHandler()}
-			className="mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 text-zinc-500 hover:border-zinc-400 hover:bg-zinc-50 hover:text-zinc-600 focus:outline-none focus:ring-4 focus:ring-zinc-400 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-zinc-200 disabled:hover:bg-transparent disabled:hover:text-zinc-500 dark:border-zinc-500 dark:text-zinc-300 dark:focus:ring-zinc-600 dark:hover:bg-zinc-600 dark:hover:text-zinc-200"
+			className="mx-auto flex h-[46px] w-full items-center justify-center space-x-2 rounded-md border p-2 text-zinc-500 hover:border-zinc-400 hover:bg-zinc-50 hover:text-zinc-600 focus:outline-hidden focus:ring-4 focus:ring-zinc-400 focus:ring-opacity-25 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-zinc-200 disabled:hover:bg-transparent disabled:hover:text-zinc-500 dark:border-zinc-500 dark:text-zinc-300 dark:focus:ring-zinc-600 dark:hover:bg-zinc-600 dark:hover:text-zinc-200"
 		>
 			<GoogleIcon className="hover:fill-foreground" />
 			<span>Sign in with Google</span>

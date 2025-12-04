@@ -1,7 +1,7 @@
-import { db } from "@/server/db";
-import { globalVisits } from "@/server/db/schema";
 import Image from "next/image";
 import { Suspense } from "react";
+import { db } from "@/server/db";
+import { globalVisits } from "@/server/db/schema";
 
 const VisitorCount = async () => {
 	const visitorsCount = await db.$count(globalVisits);

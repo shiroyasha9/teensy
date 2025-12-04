@@ -1,14 +1,14 @@
 "use client";
 
-import { multipleFormAtom } from "@/store";
-import { api } from "@/trpc/react";
-import { nanoidForSlug, showErrorMessage, showToastMessage } from "@/utils";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 import { flushSync } from "react-dom";
+import { multipleFormAtom } from "@/store";
+import { api } from "@/trpc/react";
+import { nanoidForSlug, showErrorMessage, showToastMessage } from "@/utils";
 
 const Multiple = () => {
 	const router = useRouter();
@@ -63,12 +63,12 @@ const Multiple = () => {
 					void handleSubmitCreateTeensies(e)
 				}
 			>
-				<div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg ">
+				<div className="relative w-[90vw] overflow-x-auto sm:w-[85vw] sm:rounded-lg">
 					<div className="table-wrp block h-64 max-h-64 rounded-md">
 						<table className="w-full rounded-md text-left text-sm text-zinc-500 dark:text-zinc-400">
 							<thead className="sticky top-0 z-0 bg-zinc-50 text-xs text-zinc-700 uppercase dark:bg-zinc-700 dark:text-zinc-400">
 								<tr>
-									<th scope="col" className=" px-6 py-3 sm:w-[30vw]">
+									<th scope="col" className="px-6 py-3 sm:w-[30vw]">
 										Full URL
 									</th>
 									<th scope="col" className="px-6 py-3">
@@ -90,7 +90,7 @@ const Multiple = () => {
 											<input
 												type="url"
 												required
-												className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed sm:px-2 sm:text-sm dark:bg-zinc-700 dark:text-zinc-200"
+												className="my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-xs focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary disabled:cursor-not-allowed sm:px-2 sm:text-sm dark:bg-zinc-700 dark:text-zinc-200"
 												placeholder="https://example.com"
 												value={teensy.url}
 												onChange={(e) => {
@@ -113,7 +113,7 @@ const Multiple = () => {
 											<input
 												type="text"
 												required
-												className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:cursor-not-allowed sm:px-2 sm:text-sm dark:bg-zinc-700 dark:text-zinc-200 ${
+												className={`my-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-black placeholder-slate-400 shadow-xs focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary disabled:cursor-not-allowed sm:px-2 sm:text-sm dark:bg-zinc-700 dark:text-zinc-200 ${
 													showErrors && teensy.used
 														? "border-red-450 text-red-450 focus:border-red-450 focus:ring-red-450"
 														: ""
@@ -153,7 +153,7 @@ const Multiple = () => {
 												{multipleTeensiesData.length !== 1 && (
 													<button
 														type="button"
-														className="rounded bg-red-450 p-2 text-white dark:text-zinc-200 "
+														className="rounded bg-red-450 p-2 text-white dark:text-zinc-200"
 														onClick={() => {
 															if (multipleTeensiesData.length === 1) {
 																return;

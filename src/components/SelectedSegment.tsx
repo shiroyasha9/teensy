@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@/utils";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { cn } from "@/utils";
 
 const tabButtonClassNames = (
 	segment: string | null,
@@ -10,7 +10,7 @@ const tabButtonClassNames = (
 	className?: string,
 ) =>
 	cn(
-		"inline-block w-full px-4 py-2 focus:outline-none",
+		"inline-block w-full px-4 py-2 focus:outline-hidden",
 		{
 			"active bg-white text-black dark:bg-zinc-600 dark:text-white":
 				segment === activePath,
@@ -23,7 +23,7 @@ const tabButtonClassNames = (
 export default function SelectedSegment() {
 	const segment = useSelectedLayoutSegment();
 	return (
-		<div className="flex divide-x divide-zinc-200 rounded-lg text-center font-medium text-sm text-zinc-500 shadow dark:divide-zinc-700 dark:text-zinc-400">
+		<div className="flex divide-x divide-zinc-200 rounded-lg text-center font-medium text-sm text-zinc-500 shadow-sm dark:divide-zinc-700 dark:text-zinc-400">
 			<div className="w-full">
 				<Link
 					prefetch={false}
