@@ -31,7 +31,7 @@ const PasswordForm = ({ teensy }: PasswordFormProps) => {
 		register,
 		setError,
 		formState: { errors, isSubmitting, isValid },
-	} = useForm<FormValues>({
+	} = useForm({
 		resolver: zodResolver(formSchema),
 	});
 
