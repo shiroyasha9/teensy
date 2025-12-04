@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "next build",
-		"dev": "next dev --turbopack",
+		"dev": "next dev",
 		"check": "biome check .",
 		"check:error": "biome check . --diagnostic-level=error",
 		"check:fix": "biome check --write .",
@@ -26,7 +26,7 @@
 		"@mantine/hooks": "^7.16.2",
 		"@mdx-js/loader": "^3.1.0",
 		"@mdx-js/react": "^3.1.0",
-		"@next/mdx": "15.5.7",
+		"@next/mdx": "16.0.7",
 		"@radix-ui/react-accordion": "^1.2.2",
 		"@radix-ui/react-alert-dialog": "^1.1.5",
 		"@radix-ui/react-avatar": "^1.1.2",
@@ -47,7 +47,7 @@
 		"@trpc/server": "^11.0.0-rc.730",
 		"@vercel/analytics": "^1.4.1",
 		"@vercel/speed-insights": "^1.1.0",
-		"babel-plugin-react-compiler": "^19.0.0-beta-714736e-20250131",
+		"babel-plugin-react-compiler": "^1.0.0",
 		"better-auth": "^1.4.5",
 		"chart.js": "^4.4.7",
 		"class-variance-authority": "^0.7.1",
@@ -60,13 +60,13 @@
 		"lodash.debounce": "^4.0.8",
 		"lucide-react": "^0.474.0",
 		"nanoid": "^5.0.9",
-		"next": "15.5.7",
+		"next": "16.0.7",
 		"next-qrcode": "^2.5.1",
 		"next-themes": "^0.4.4",
 		"postgres": "^3.4.5",
-		"react": "19.0.0",
+		"react": "19.2.1",
 		"react-chartjs-2": "^5.3.0",
-		"react-dom": "19.0.0",
+		"react-dom": "19.2.1",
 		"react-dom-confetti": "^0.2.0",
 		"react-hook-form": "^7.54.2",
 		"server-only": "^0.0.1",
@@ -83,8 +83,8 @@
 		"@types/lodash.debounce": "^4.0.9",
 		"@types/mdx": "^2.0.13",
 		"@types/node": "^22.10.5",
-		"@types/react": "19.0.8",
-		"@types/react-dom": "19.0.3",
+		"@types/react": "19.2.7",
+		"@types/react-dom": "19.2.3",
 		"drizzle-kit": "^0.31.7",
 		"lefthook": "^1.10.10",
 		"postcss": "^8.5.6",
@@ -103,5 +103,9 @@
 		"esbuild",
 		"lefthook",
 		"sharp"
-	]
+	],
+	"overrides": {
+		"@types/react": "19.2.7",
+		"@types/react-dom": "19.2.3"
+	}
 }

@@ -8,14 +8,12 @@ import type { NextConfig } from "next";
 import "./src/env.js";
 
 const config: NextConfig = {
-	eslint: {
-		ignoreDuringBuilds: true,
-	},
+	typescript: { ignoreBuildErrors: true },
 	pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 	experimental: {
 		mdxRs: true,
-		reactCompiler: true,
 	},
+	reactCompiler: true,
 };
 
 // const withSerwist = withSerwistInit({

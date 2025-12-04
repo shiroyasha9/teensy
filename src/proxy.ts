@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { Teensy, Visit } from "./server/db/types";
+import { handleTeensyVisit } from "./actions";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
 	const isIgnoredPath =
 		req.nextUrl.pathname === "/" || req.nextUrl.pathname === "/wa";
 
@@ -20,24 +20,19 @@ export async function middleware(req: NextRequest) {
 		return;
 	}
 
-	const params = req.nextUrl.searchParams.toString();
-	const slugFetch = await fetch(
-		`${req.nextUrl.origin}/api/url?slug=${slug || ""}`,
-	);
+	const { data, status } = await handleTeensyVisit(slug);
 
-	if (slugFetch.status === 404) {
+	const params = req.nextUrl.searchParams.toString();
+
+	if (status === 404 || !data) {
 		return;
 	}
 
-	if (slugFetch.status === 498) {
+	if (status === 498) {
 		const url = req.nextUrl;
 		url.pathname = "/498";
 		return NextResponse.rewrite(url);
 	}
-
-	const data = (await slugFetch.json()) as Teensy & {
-		visits: Visit[];
-	};
 
 	if (data.password) {
 		const searchParams = params ? `&${params}` : "";
