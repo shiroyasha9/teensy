@@ -1,0 +1,47 @@
+import { BlogTitleAndChangelog } from "@/components/BlogTitleAndChangelog";
+import Link from "next/link";
+
+<BlogTitleAndChangelog
+  tabTitle={"Teensy v7: Release Notes"}
+  blogTitle={"Teensy v7"}
+  blogSubtitle={"Better than ever 🚀"}
+  changeLogURL={
+    "https://github.com/shiroyasha9/teensy/compare/teensy@6...teensy@7"
+  }
+/>
+
+<p className="text-purple-700 dark:text-yellow-200">Looking for the changelog for Teensy v6? Check out the previous <Link className="text-purple-800 dark:text-yellow-300 hover:text-purple-900 dark:hover:text-yellow-400" href="/blogs/releases/v6">release notes</Link>.</p>
+
+Hello!
+
+We are excited to announce Teensy v7! This release is packed with major updates to our core technology stack, ensuring Teensy remains fast, secure, and modern.
+
+## Next.js 16
+
+Teensy has been updated to Next.js 16. This is a significant update that includes:
+
+- **Security**: Resolves [CVE-2025-66478](https://nextjs.org/blog/CVE-2025-66478).
+- **Stable React Compiler**: Enabled by default for optimized rendering.
+- **Turbopack**: Delivering crazy fast build times (3m -> 50s).
+- **Node Runtime**: The workaround of calling `/api/url` in the middleware is no longer needed, as the proxy (RIP middleware 😭) file now runs on Node Runtime.
+
+## Tailwind CSS v4
+
+We've upgraded to Tailwind CSS v4 - a long time overdue. 
+
+## Better Auth
+
+As Next Auth (Auth.js) was acquired by Better Auth, it no longer receives regular updates. As such, we have migrated our authentication system to [Better Auth](https://www.better-auth.com/), providing a much streamlined experience. Nothing changes for you, the user - your account and teensies all are retained!
+
+## General Maintenance
+
+We've also performed general maintenance to keep the codebase healthy:
+
+- Updated **Biome** to the latest version.
+- Updated **Drizzle** and other packages to their respective latest versions.
+
+Enjoy the new and improved Teensy!
+
+The Teensy Team
+
+---
