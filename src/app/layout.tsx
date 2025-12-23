@@ -5,6 +5,7 @@ import AddVisitCount from "@/components/layout/AddVisitCount";
 import Confetti from "@/components/layout/Confetti";
 import Footer from "@/components/layout/Footer";
 import Providers from "@/components/layout/Providers";
+import Snowfall from "@/components/Snowfall";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/features/header/components/header";
 import { cn } from "@/utils";
@@ -53,7 +54,8 @@ export default function RootLayout({
 			className={cn("antialiased", rubik.className)}
 			suppressHydrationWarning // next-themes hydration warning
 		>
-			<body className="flex h-screen flex-col md:overflow-x-hidden">
+			<body className="relative flex h-screen flex-col md:overflow-x-hidden">
+				<Snowfall />
 				<Providers>
 					<Header />
 					{authModal}
